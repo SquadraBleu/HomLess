@@ -1,0 +1,26 @@
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:#FFB000;">
+    <a class="navbar-brand"  href="#">
+      <img src="assets/images/Homless-White.png" class="logo"  alt="" (click)='iconClick()' >
+    </a>
+  
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" *ngIf="!isLogged">
+          <button class="btn btn-outline-light" (click)="registrarse()">Registrarse
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="!isLogged">
+          <button class="btn btn-outline-light" (click)="iniciarSesion()">Iniciar sesion
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="!isLogged">
+          <button class="btn btn-outline-light" (click)="buscar()">Buscar
+          </button>
+        <li class="nav-item" *ngIf="isLogged">
+          <button class="btn btn-outline-light" (click)="onLogout()">Cerrar Sesion
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
