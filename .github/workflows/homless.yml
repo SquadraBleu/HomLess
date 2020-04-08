@@ -5,7 +5,7 @@ name: Homless CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, Front-End ]
   pull_request:
     branches: [ master ]
 
