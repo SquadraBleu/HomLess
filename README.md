@@ -1,5 +1,10 @@
 # HomLess
 
+## Build Status
+
+![Homless CI](https://github.com/SquadraBleu/HomLess/workflows/Homless%20CI/badge.svg)
+![Homless No Verify](https://github.com/SquadraBleu/HomLess/workflows/Homless%20No%20Verify/badge.svg?branch=master)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
 
 ## Development server
