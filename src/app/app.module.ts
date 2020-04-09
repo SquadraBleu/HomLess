@@ -16,7 +16,7 @@ import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble
     NavbarComponent,
     FooterComponent,
     LoginComponent,
-    VerInmuebleComponent
+    VerInmuebleComponent,
     CrearInmuebleComponent
   ],
   imports: [
