@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -9,9 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   constructor(/*private authService: AuthService, private afsAuth: AngularFireAuth*/) { }
-  
-  public isLogged: boolean = false;
-  
+  public isLogged = false;
   ngOnInit() {
     // this.getCurrentUser();
   }
@@ -29,23 +26,23 @@ export class NavbarComponent implements OnInit {
   // }
 
   onLogout() {
-    //this.afsAuth.auth.signOut();
+    // this.afsAuth.auth.signOut();
   }
 
   iconClick(){
-    console.log("Navigate To Home");
+    console.log('Navigate To Home');
   }
 
   buscar(){
-    console.log("Navigate to Register");
+    console.log('Navigate to Register');
   }
 
   registrarse(){
-    console.log("Navigate To Register");
+    console.log('Navigate To Register');
   }
 
   iniciarSesion(){
-    console.log("Navigate To Iniciar Sesion");
+    console.log('Navigate To Iniciar Sesion');
   }
 
 }
