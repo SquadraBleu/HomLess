@@ -9,6 +9,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(/*private authService: AuthService, private afsAuth: AngularFireAuth*/) { }
   public isLogged = false;
+
   ngOnInit() {
     // this.getCurrentUser();
   }
