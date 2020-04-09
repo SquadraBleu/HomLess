@@ -17,7 +17,7 @@
 }
 .btn:focus, .btn:active, .btn:not(:disabled):not(.disabled):focus
 {
-  background-color: #ff7f 00;
+  background-color: #ff7f00;
   border: 0;
   border-radius: 0.6ch;
   outline: 0 none;

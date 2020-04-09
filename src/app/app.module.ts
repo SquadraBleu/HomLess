@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
+import { VerInmuebleComponent } from './components/inmobiliaria/ver-inmueble/ver-inmueble.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble/crear-inmueble.component';
 
@@ -15,6 +16,7 @@ import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble
     NavbarComponent,
     FooterComponent,
     LoginComponent,
+    VerInmuebleComponent
     CrearInmuebleComponent
   ],
   imports: [
