@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { VerInmuebleComponent } from './components/inmobiliaria/ver-inmueble/ver-inmueble.component';
-import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble/ver-inmueble.component';
+import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble/crear-inmueble.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/login'},
