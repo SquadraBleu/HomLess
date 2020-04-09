@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-// import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -9,8 +7,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private route: Router){}
-
+  constructor(/*private authService: AuthService, private afsAuth: AngularFireAuth*/) { }
   public isLogged = false;
 
   ngOnInit() {
@@ -30,23 +27,23 @@ export class NavbarComponent implements OnInit {
   // }
 
   onLogout() {
-    //this.afsAuth.auth.signOut();
+    // this.afsAuth.auth.signOut();
   }
 
   iconClick(){
-    console.log("Navigate To Home");
+    console.log('Navigate To Home');
   }
 
   buscar(){
-    console.log("Navigate to Register");
+    console.log('Navigate to Register');
   }
 
   registrarse(){
-    console.log("Navigate To Register");
+    console.log('Navigate To Register');
   }
 
   iniciarSesion(){
-    console.log("Navigate To Iniciar Sesion");
+    console.log('Navigate To Iniciar Sesion');
   }
 
 }
