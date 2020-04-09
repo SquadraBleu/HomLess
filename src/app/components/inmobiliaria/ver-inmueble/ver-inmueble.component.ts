@@ -37,4 +37,14 @@ export class VerInmuebleComponent implements OnInit {
     else { return false; }
   }
 
+  onEdit(): void
+  {
+    console.log('Navigate To Edit');
+  }
+
+  onErase(): void
+  {
+    console.log('Navigate To Erase');
+  }
+
 }

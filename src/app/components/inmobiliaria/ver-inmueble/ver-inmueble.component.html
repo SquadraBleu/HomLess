@@ -23,7 +23,17 @@
                                 <p class="atributo" *ngIf="isVenta()"> <strong>Precio Venta:</strong> ${{inmueble.MontoVenta}}</p>
                                 <p class="atributo"> <strong>Barrio:</strong> {{inmueble.Barrio}} </p>
                             </div>
-                        </div>                       
+                        </div>  
+                        <div class="row">
+                            <div class="col">
+                            <button class="btn btn-editar" (click)="onEdit()">Editar Inmueble
+                            </button>
+                            </div>
+                            <div class="col">
+                            <button class="btn btn-danger" (click)="onErase()">Borrar Inmueble
+                            </button>
+                            </div>
+                        </div>                     
                     </div>
                     <div class="col-5 align-items-center text-center">
                         <!--<div id="myCarousel" class="carousel slide" data-ride="carousel">
