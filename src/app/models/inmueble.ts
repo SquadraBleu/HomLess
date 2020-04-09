@@ -1,5 +1,7 @@
 export class Inmueble {
     constructor(
+        public Titulo: string,
+        public Barrio: string,
         public AreaConstruida: number,
         public AreaDeposito: number,
         public MontoArriendo: number,
@@ -12,6 +14,8 @@ export class Inmueble {
         public TipoInmueble: string,
         public DirFotos: string[],
         public IDInmobiliaria: string,
-        public IDInmueble: number
+        public IDInmueble: number,
+        public Localidad: string,
+        public Zona: string
     ){}
 }

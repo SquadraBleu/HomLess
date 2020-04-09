@@ -4,23 +4,24 @@
                     <div class="col-1 align-self-center justify-content-start">
                     </div>
                     <div class="col-6">
-                        <p class="title"> {{this.Titulo}} </p>
-                        <p class="description"> {{this.Descripcion}} </p>                    
+                        <p class="title"> {{inmueble.Titulo}} </p>
+                        <p class="description"> {{inmueble.Descripcion}} </p>                    
                         <div class="row">
                             <div class="col-5">
-                                <p class="atributo"> <strong>Área (m&#178;):</strong> {{this.AreaConstruida}} </p>
-                                <p class="atributo"> <strong>N° Habitaciones:</strong> {{this.NHabitaciones}} </p>
-                                <p class="atributo"> <strong>Zona:</strong> {{this.Zona}} </p>
+                                <p class="atributo"> <strong>Área (m&#178;):</strong> {{inmueble.AreaConstruida}} </p>
+                                <p class="atributo"> <strong>N° Habitaciones:</strong> {{inmueble.NHabitaciones}} </p>
+                                <p class="atributo"> <strong>Zona:</strong> {{inmueble.Zona}} </p>
                             </div>
                             <div class="col-4">
-                                <p class="atributo"> <strong>Estrato:</strong> {{this.Estrato}} </p>
-                                <p class="atributo"> <strong>N° Baños:</strong> {{this.NBanos}} </p>
-                                <p class="atributo"> <strong>Localidad:</strong> {{this.Localidad}} </p>
+                                <p class="atributo"> <strong>Estrato:</strong> {{inmueble.Estrato}} </p>
+                                <p class="atributo"> <strong>N° Baños:</strong> {{inmueble.NBanos}} </p>
+                                <p class="atributo"> <strong>Localidad:</strong> {{inmueble.Localidad}} </p>
                             </div>
                             <div class="col-3">
-                                <p class="atributo"> <strong>Área Depósito (m&#178;):</strong> {{this.AreaDeposito}}</p>
-                                <p class="atributo"> <strong>Precio:</strong> ${{this.Precio}}</p>
-                                <p class="atributo"> <strong>Barrio:</strong> {{this.Barrio}} </p>
+                                <p class="atributo"> <strong>Área Depósito (m&#178;):</strong> {{inmueble.AreaDeposito}}</p>
+                                <p class="atributo" *ngIf="isArriendo()"> <strong>Precio Arriendo:</strong> ${{inmueble.MontoArriendo}}</p>
+                                <p class="atributo" *ngIf="isVenta()"> <strong>Precio Venta:</strong> ${{inmueble.MontoVenta}}</p>
+                                <p class="atributo"> <strong>Barrio:</strong> {{inmueble.Barrio}} </p>
                             </div>
                         </div>                       
                     </div>
