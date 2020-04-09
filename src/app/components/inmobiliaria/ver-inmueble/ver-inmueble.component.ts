@@ -21,7 +21,7 @@ export class VerInmuebleComponent implements OnInit {
 
   isVenta(): boolean
   {
-    if(this.inmueble.MontoVenta !== undefined && this.inmueble.MontoVenta !== 0)
+    if (this.inmueble.MontoVenta !== undefined && this.inmueble.MontoVenta !== 0)
     {
       return true;
     }
@@ -30,7 +30,7 @@ export class VerInmuebleComponent implements OnInit {
 
   isArriendo(): boolean
   {
-    if(this.inmueble.MontoArriendo !== undefined && this.inmueble.MontoArriendo !== 0)
+    if (this.inmueble.MontoArriendo !== undefined && this.inmueble.MontoArriendo !== 0)
     {
       return true;
     }
