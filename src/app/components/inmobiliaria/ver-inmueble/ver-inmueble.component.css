@@ -1,0 +1,38 @@
+.logo
+{
+    height: auto;
+    width: 100%;
+}
+
+.title
+{
+    font-weight: 700;
+    font-size: x-large;
+}
+
+.description
+{
+    text-align: justify; 
+}
+
+*
+{
+    font-family: 'Rubik', sans-serif;
+}
+
+#myCarousel
+{
+    height: 90%;
+}
+
+.img-carou
+{
+    margin: auto;
+    height: auto;
+    width: 70%;
+}
+
+.pie-de-foto
+{
+    text-align: center;
+}
