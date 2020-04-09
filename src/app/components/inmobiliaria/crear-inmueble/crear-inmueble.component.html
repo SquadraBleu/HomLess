@@ -1,0 +1,116 @@
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<h1 align="center">Pon aqui tu propiedad</h1>
+<div class="container">
+    <form (ngSubmit)="crearInmueble()" >
+        <div class="row">    
+            <div class="col">
+                <label for="titulo">Titulo</label>
+                <input type="text" name="titulo" id="titulo" class="form-control" required
+                 [(ngModel)]="inmueble.Titulo" #txtTitulo="ngModel">
+                <label for="direccion">Direccion</label>
+                <input type="text" name="direccion" id="direccion" class="form-control" required
+                 [(ngModel)]="inmueble.Direccion" #txtDireccion="ngModel">
+                <label for="area">Area (Metros Cuadrados)</label>
+                <input type="number" name="area" id="area" class="form-control" required
+                 [(ngModel)]="inmueble.AreaConstruida" #numArea="ngModel">
+                <label for="area">Area de deposito (Metros Cuadrados)</label>
+                <input type="number" name="deposito" id="deposito" class="form-control" required
+                 [(ngModel)]="inmueble.AreaDeposito" #numArea="ngModel">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkParking">
+                    <label class="form-check-label" for="checkParking">
+                      Parqueadero
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkTransport">
+                    <label class="form-check-label" for="checkTransport">
+                      Transporte publico
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkRecreative">
+                    <label class="form-check-label" for="checkRecreative">
+                      Zonas recreativas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkKitchen">
+                    <label class="form-check-label" for="checkKitchen">
+                      Cocina integral
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkAdmin">
+                    <label class="form-check-label" for="checkAdmin">
+                      Pago administracion
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkShopping">
+                    <label class="form-check-label" for="checkShopping">
+                      Centros Comerciales
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkPrivacy">
+                    <label class="form-check-label" for="checkPrivacy">
+                      Privacidad
+                    </label>
+                </div>
+            </div>
+            <div class="col" >
+                <label for="Nbanos">Numero de baños</label>
+                <input type="number" name="banos" id="banos" class="form-control" required
+                 [(ngModel)]="inmueble.NBanos" #numBanos="ngModel">
+                <label for="numHabitaciones">Numero de habitaciones</label>
+                <input type="number" name="habitaciones" id="habitaciones" class="form-control" required
+                 [(ngModel)]="inmueble.NHabitaciones" #txtTitulo="ngModel">
+                 <label for="zonas">Zona</label>
+                 <select name="zonas" id="zonas" class="form-control">
+                    <option *ngFor="let zona of zonas">
+                        {{zona}}
+                    </option>
+                 </select> 
+                 <label for="estrato">Estrato</label>
+                 <input type="number" name="estrato" id="estrato" class="form-control" required
+                 [(ngModel)]="inmueble.Estrato" #numEstrato="ngModel">
+                 <label for="localidad">Localidad</label>
+                 <select name="localidades" id="localidades" class="form-control">
+                    <option *ngFor="let localidad of localidades">
+                        {{localidad}}
+                    </option>
+                 </select>
+                 <label for="barrio">Barrio</label>
+                 <input type="text" name="barrio" id="barrio" class="form-control" required
+                 [(ngModel)]="inmueble.Barrio" #txtBarrio="ngModel"> 
+            </div>
+            <div class="col">
+                <label for="tipos">Tipo de inmueble</label>
+                 <select name="tipos" id="tipos" class="form-control">
+                    <option *ngFor="let tipo of tiposDeInmueble">
+                        {{tipo}}
+                    </option>
+                 </select>
+                <label for="numVenta">Monto de venta</label>
+                <input type="number" name="numVenta" id="numVenta" class="form-control" required
+                [(ngModel)]="inmueble.MontoVenta" #numBanos="ngModel">
+                <label for="numArriendo">Monto de arriendo</label>
+                <input type="number" name="numArriendo" id="numArriendo" class="form-control" required
+                [(ngModel)]="inmueble.MontoArriendo" #numBanos="ngModel">
+                <label for="descripcion">Descripcion</label>
+                <textarea name="" id="" cols="36" rows="5" class="form-control"
+                [(ngModel)]="inmueble.Descripcion" #txtDescripcion="ngModel"></textarea>
+            </div>
+        </div>
+        <div class="row align-items-center alert alert-warning">
+            <div class="col align-items-center">
+                <label for="Imagenes">Agregar Imagenes</label>
+                <input type="file"> 
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-lg btn-block">
+            Agregar inmueble
+        </button>
+    </form>
+</div>
