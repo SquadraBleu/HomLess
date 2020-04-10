@@ -103,14 +103,32 @@
                 [(ngModel)]="inmueble.Descripcion" #txtDescripcion="ngModel"></textarea>
             </div>
         </div>
-        <div class="row align-items-center alert alert-warning">
-            <div class="col align-items-center">
+        <div class="row alert alert-warning">
+            <div class="col">
+
+            </div>
+            <div class="col">
                 <label for="Imagenes">Agregar Imagenes</label>
-                <input type="file"> 
+                <input type="file" multiple accept="image/*"> 
+            </div>
+            <div class="col">
+               
             </div>
         </div>
-        <button type="submit" class="btn btn-success btn-lg btn-block">
-            Agregar inmueble
-        </button>
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-info btn-lg btn-block">
+                    Cancelar
+                </button> 
+            </div>
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-success btn-lg btn-block">
+                    Agregar inmueble
+                </button>
+            </div>
+        </div>
     </form>
 </div>
