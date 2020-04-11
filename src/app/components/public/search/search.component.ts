@@ -79,7 +79,7 @@ export class SearchComponent implements OnInit {
     'Suroccidente',
     'Suroriente'
   ];
-  
+
   ngOnInit(): void
   {
 
@@ -87,8 +87,8 @@ export class SearchComponent implements OnInit {
 
   submitSearch(): void
   {
-	console.log('Make search');
-	this.router.navigate(['public/search-results']);
+    console.log('Make search');
+    this.router.navigate(['public/search-results']);
   }
 
   getMinVentaSliderValue(event: any)
