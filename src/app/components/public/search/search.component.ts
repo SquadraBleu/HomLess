@@ -26,7 +26,10 @@ export class SearchComponent implements OnInit {
   isArriendo = false;
 
   searchTerm: string;
-  area: number;
+  minArea = 0;
+  maxArea = 0;
+  isMinArea = false;
+  isMaxArea = false;
   nhabitaciones: number;
   nbanos: number;
 
@@ -101,6 +104,16 @@ export class SearchComponent implements OnInit {
   getMaxArriendoSliderValue(event: any)
   {
     this.maxPriceArriendo = event.target.value;
+  }
+
+  getMinAreaSliderValue(event: any)
+  {
+    this.minArea = event.target.value;
+  }
+
+  getMaxAreaSliderValue(event: any)
+  {
+    this.maxArea = event.target.value;
   }
 
 }

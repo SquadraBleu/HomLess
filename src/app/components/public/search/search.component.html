@@ -24,16 +24,39 @@
                 </select>
             </div>
             <div class="col-2">
-                <label class="small" for="titulo">Área (m&#178;): </label>
-                    <input type="text" name="area" id="area" class="form-control" [(ngModel)]="area">
+                <div class="row">
+                    <div class="col">
+                        <label class="small" for="titulo">Área (m&#178;): </label>
+                        <p class="small">Área mínima: ${{minArea}}m&#178;</p>
+                        <div class="row area">
+                            <div class="col-2 text-right">
+                                <input type="checkbox" class="form-check-input" name="isMinArea" [(ngModel)]="isMinArea">
+                            </div>
+                            <div class="col-10">
+                                <input [disabled]="!isMinArea" type="range" min="0" max="500" value="0" class="slider-s slider" id="myRange"
+                                (change)="getMinAreaSliderValue($event)" (oninput)="getMinAreaSliderValue($event)">
+                            </div>
+                        </div>
+                        <p class="small">Área máxima: ${{maxArea}}m&#178;</p>
+                        <div class="row area">
+                            <div class="col-2">
+                                <input type="checkbox" class="form-check-input" name="isMaxArea" [(ngModel)]="isMaxArea">
+                            </div>
+                            <div class="col-10">
+                                <input [disabled]="!isMaxArea" type="range" min="0" max="500" value="0" class="slider-s slider" id="myRange"
+                                (change)="getMaxAreaSliderValue($event)" (oninput)="getMaxAreaSliderValue($event)">
+                            </div>
+                        </div>        
+                    </div>
+                </div>
             </div>
             <div class="col-2">
                 <label class="small" for="titulo">Número de habitaciones </label>
-                    <input type="text" name="nhabitaciones" id="nhabitaciones" class="form-control" [(ngModel)]="nhabitaciones">
+                <input type="text" name="nhabitaciones" id="nhabitaciones" class="form-control" [(ngModel)]="nhabitaciones">
             </div>
             <div class="col-2">
                 <label class="small" for="titulo">Número de baños: </label>
-                    <input type="text" name="nbanos" id="nbanos" class="form-control" [(ngModel)]="nbanos">
+                <input type="text" name="nbanos" id="nbanos" class="form-control" [(ngModel)]="nbanos">
             </div>
             <div class="col-2">
                 <label class="small" for="zonas">Zona: </label>
@@ -68,7 +91,7 @@
                             <input [disabled]="!isVenta" type="checkbox" class="form-check-input" name="isMinPriceVenta" [(ngModel)]="isMinPriceVenta">
                         </div>
                         <div class="col-11">
-                            <input [disabled]="!isVenta || !isMinPriceVenta" type="range" min="0" max="1000" value="0" class="slider" id="myRange"
+                            <input [disabled]="!isVenta || !isMinPriceVenta" type="range" min="0" max="1000" value="0" class="slider-m slider" id="myRange"
                             (change)="getMinVentaSliderValue($event)" (oninput)="getMinVentaSliderValue($event)">
                         </div>
                     </div>
@@ -79,7 +102,7 @@
                         </div>
                         <div class="col-11">
                             <div class="slidecontainer">
-                            <input [disabled]="!isVenta || !isMaxPriceVenta"  type="range" min="0" max="1000" value="0" class="slider" id="myRange"
+                            <input [disabled]="!isVenta || !isMaxPriceVenta"  type="range" min="0" max="1000" value="0" class="slider-m slider" id="myRange"
                             (change)="getMaxVentaSliderValue($event)" (oninput)="getMaxVentaSliderValue($event)">
                             </div>
                         </div>
@@ -97,7 +120,7 @@
                         </div>
                         <div class="col-11">
                             <div class="slidecontainer">
-                                <input [disabled]="!isArriendo || !isMinPriceArriendo" type="range" min="0" max="5000000" step="50000" class="slider" id="myRange"
+                                <input [disabled]="!isArriendo || !isMinPriceArriendo" type="range" min="0" max="5000000" step="50000" class="slider-m slider" id="myRange"
                                 (change)="getMinArriendoSliderValue($event)" (oninput)="getMinArriendoSliderValue($event)">
                             </div>
                         </div>
@@ -109,7 +132,7 @@
                         </div>
                         <div class="col-11">
                             <div class="slidecontainer">
-                                <input [disabled]="!isArriendo || !isMaxPriceArriendo" type="range" min="0" max="5000000" step="50000" class="slider" id="myRange"
+                                <input [disabled]="!isArriendo || !isMaxPriceArriendo" type="range" min="0" max="5000000" step="50000" class="slider-m slider" id="myRange"
                                 (change)="getMaxArriendoSliderValue($event)" (oninput)="getMaxArriendoSliderValue($event)">
                             </div>
                         </div>

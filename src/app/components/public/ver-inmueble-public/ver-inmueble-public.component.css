@@ -1,0 +1,54 @@
+.logo
+{
+    height: auto;
+    width: 100%;
+}
+
+.title
+{
+    font-weight: 700;
+    font-size: x-large;
+}
+
+.description
+{
+    text-align: justify; 
+}
+
+*
+{
+    font-family: 'Rubik', sans-serif;
+}
+
+#myCarousel
+{
+    height: 90%;
+}
+
+.img-carou
+{
+    margin: auto;
+    height: auto;
+    width: 70%;
+}
+
+.pie-de-foto
+{
+    text-align: center;
+}
+
+.btn-estilo
+{
+  background-color: #ffb000;
+  border: 0;
+  border-radius: 0.6ch;
+  
+}
+.btn-estilo:focus, .btn-estilo:active, .btn-estilo:not(:disabled):not(.disabled):focus
+{
+  background-color: #ff7f00;
+  border: 0;
+  border-radius: 0.6ch;
+  outline: 0 none;
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.075) inset, 0 0 8px rgba(153, 114, 96, 0.6);
+}
