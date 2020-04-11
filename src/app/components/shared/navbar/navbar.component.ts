@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
   }
 
   buscar(){
-    console.log('Navigate to Register');
+    this.router.navigate(['public/search']);
   }
 
   registrarse(){

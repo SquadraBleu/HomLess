@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: 'inmobiliaria/ver-inmueble/:id', component: VerInmuebleComponent},
   {path: 'inmobiliaria/crear-inmueble', component: CrearInmuebleComponent},
   {path: 'public/search', component: SearchComponent},
-  {path: 'public/search/ver-inmueble/:id', component: VerInmueblePublicComponent}
+  {path: 'public/search/ver-inmueble/:id', component: VerInmueblePublicComponent},
   {path: 'public/search-results', component: SearchResultsComponent},
   {path: 'logged/search-results', component: SearchResultsComponent},
   {path: 'public/home', component: HomeComponent},

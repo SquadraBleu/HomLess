@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -8,7 +9,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() {
+  constructor(private router: Router) {
     // this.searchGroup = new FormGroup({search: new FormControl() });
   }
 
@@ -86,7 +87,8 @@ export class SearchComponent implements OnInit {
 
   submitSearch(): void
   {
-
+	console.log('Make search');
+	this.router.navigate(['public/search-results']);
   }
 
   getMinVentaSliderValue(event: any)
