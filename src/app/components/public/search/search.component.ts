@@ -14,10 +14,10 @@ export class SearchComponent implements OnInit {
 
   // searchGroup: FormGroup;
 
-  minPriceArriendo = 0;
-  maxPriceArriendo = 0;
-  minPriceVenta = 0;
-  maxPriceVenta = 0;
+  minPriceArriendo = 0; // de 0 a 5000000, de 50000
+  maxPriceArriendo = 0; // de 0 a 5000000, de 50000
+  minPriceVenta = 0; // de 0 a 1000, de 1 en 1
+  maxPriceVenta = 0; // de 0 a 1000, de 1 en 1
   isMinPriceArriendo = false;
   isMaxPriceArriendo = false;
   isMinPriceVenta = false;
@@ -26,12 +26,15 @@ export class SearchComponent implements OnInit {
   isArriendo = false;
 
   searchTerm: string;
-  minArea = 0;
-  maxArea = 0;
+  minArea = 0; // de 0 a 500, de 1 en 1
+  maxArea = 0; // de 0 a 500, de 1 en 1
   isMinArea = false;
   isMaxArea = false;
   nhabitaciones: number;
   nbanos: number;
+  zona: string;
+  localidad: string;
+  tipoInmueble: string;
 
   tiposDeInmueble: string[] = [
     '',
