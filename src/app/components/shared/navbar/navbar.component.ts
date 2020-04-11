@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(/*private authService: AuthService, private afsAuth: AngularFireAuth*/) { }
+  constructor(/*private authService: AuthService, private afsAuth: AngularFireAuth*/
+    private router: Router) { }
   public isLogged = false;
+  public tituloNavBar = 'Bienvenido';
 
   ngOnInit() {
     // this.getCurrentUser();
@@ -31,7 +34,7 @@ export class NavbarComponent implements OnInit {
   }
 
   iconClick(){
-    console.log('Navigate To Home');
+    this.router.navigate(['public/home']);
   }
 
   buscar(){
@@ -43,7 +46,7 @@ export class NavbarComponent implements OnInit {
   }
 
   iniciarSesion(){
-    console.log('Navigate To Iniciar Sesion');
+    this.router.navigate(['public/login']);
   }
 
 }

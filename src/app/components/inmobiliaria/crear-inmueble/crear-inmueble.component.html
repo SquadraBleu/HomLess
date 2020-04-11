@@ -1,6 +1,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 <h1 align="center">Pon aqui tu propiedad</h1>
-<div class="container">
+<div class="container-fluid">
     <form (ngSubmit)="crearInmueble()" >
         <div class="row">    
             <div class="col">
@@ -10,10 +10,10 @@
                 <label for="direccion">Direccion</label>
                 <input type="text" name="direccion" id="direccion" class="form-control" required
                  [(ngModel)]="inmueble.Direccion" #txtDireccion="ngModel">
-                <label for="area">Area (Metros Cuadrados)</label>
+                <label for="area">Área (m&#178;)</label>
                 <input type="number" name="area" id="area" class="form-control" required
                  [(ngModel)]="inmueble.AreaConstruida" #numArea="ngModel">
-                <label for="area">Area de deposito (Metros Cuadrados)</label>
+                <label for="area">Área de deposito (m&#178;)</label>
                 <input type="number" name="deposito" id="deposito" class="form-control" required
                  [(ngModel)]="inmueble.AreaDeposito" #numArea="ngModel">
                 <div class="form-check">
