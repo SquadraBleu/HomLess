@@ -12,11 +12,12 @@ export class VerInmueblePublicComponent implements OnInit {
   constructor(private router: Router)
   {
   }
-
+  public urlImagenes: string[];
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined, '',
   '', undefined, undefined, '', undefined, '', undefined, '', '');
 
   ngOnInit(): void{
+    this.urlImagenes = ['assets/images/H-Gold.png', 'assets/images/H-Black.png', 'assets/images/Homless-Sad.png'];
   }
 
   isVenta(): boolean

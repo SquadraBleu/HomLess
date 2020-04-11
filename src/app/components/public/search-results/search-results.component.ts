@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Inmueble } from 'src/app/models/inmueble';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-results',
@@ -13,7 +14,7 @@ export class SearchResultsComponent implements OnInit {
     new Inmueble('Esta es una propiedad', '', 200, undefined, 0, 2000000, undefined
     , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', undefined, '', '')
   ];
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -27,6 +28,9 @@ export class SearchResultsComponent implements OnInit {
   }
   verInmueble(){
     console.log('Entre a la Funcion');
+    const id = 10;
+    this.router.navigate(['public/search/ver-inmueble/' + id]);
+
   }
 
 }
