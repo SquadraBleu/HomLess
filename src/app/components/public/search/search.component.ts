@@ -62,6 +62,17 @@ export class SearchComponent implements OnInit {
     'Sumapaz'
   ];
 
+  zonas: string[] = [
+    '',
+    'Norte',
+    'Noroccidente',
+    'Centro',
+    'Occidente',
+    'Sur',
+    'Suroccidente',
+    'Suroriente'
+  ];
+  
   ngOnInit(): void
   {
 
