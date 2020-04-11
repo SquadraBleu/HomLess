@@ -12,6 +12,7 @@ import { LoginComponent } from './components/login/login.component';
 import { VerInmuebleComponent } from './components/inmobiliaria/ver-inmueble/ver-inmueble.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble/crear-inmueble.component';
+import { SearchComponent } from './components/public/search/search.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble
     FooterComponent,
     LoginComponent,
     VerInmuebleComponent,
-    CrearInmuebleComponent
+    CrearInmuebleComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
