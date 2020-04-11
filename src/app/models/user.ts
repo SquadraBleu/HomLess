@@ -1,4 +1,11 @@
+export interface Roles {
+  inmobiliaria: boolean;
+  clinte: boolean;
+}
+
 export interface User {
-  email: string;
-  password: string;
+  id?: string;
+  email?: string;
+  password?: string;
+  roles?: Roles;
 }
