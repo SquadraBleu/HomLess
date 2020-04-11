@@ -13,6 +13,8 @@ import { LoginComponent } from './components/login/login.component';
 import { VerInmuebleComponent } from './components/inmobiliaria/ver-inmueble/ver-inmueble.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble/crear-inmueble.component';
+import { SearchComponent } from './components/public/search/search.component';
+import { VerInmueblePublicComponent } from './components/public/ver-inmueble-public/ver-inmueble-public.component';
 import { SearchResultsComponent } from './components/public/search-results/search-results.component';
 import { HomeComponent } from './components/public/home/home.component';
 import { NotFoundComponent } from './components/public/not-found/not-found.component';
@@ -25,6 +27,8 @@ import { NotFoundComponent } from './components/public/not-found/not-found.compo
     LoginComponent,
     VerInmuebleComponent,
     CrearInmuebleComponent,
+    SearchComponent,
+    VerInmueblePublicComponent,
     SearchResultsComponent,
     HomeComponent,
     NotFoundComponent
