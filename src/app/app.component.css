@@ -1,0 +1,12 @@
+main{
+    padding-top: 60px;
+    z-index: -1;
+    padding-bottom: 70px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  #page-container{
+    position: relative;
+    min-height: 100vh;
+  }
+  

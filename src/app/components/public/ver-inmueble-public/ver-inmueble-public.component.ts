@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Inmueble } from 'src/app/models/inmueble';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-ver-inmueble',
-  templateUrl: './ver-inmueble.component.html',
-  styleUrls: ['./ver-inmueble.component.css']
+  selector: 'app-ver-inmueble-public',
+  templateUrl: './ver-inmueble-public.component.html',
+  styleUrls: ['./ver-inmueble-public.component.css']
 })
-export class VerInmuebleComponent implements OnInit {
+export class VerInmueblePublicComponent implements OnInit {
 
-  constructor()
+  constructor(private router: Router)
   {
-
   }
-
   public urlImagenes: string[];
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined, '',
   '', undefined, undefined, '', undefined, '', undefined, '', '');
@@ -39,14 +38,12 @@ export class VerInmuebleComponent implements OnInit {
     else { return false; }
   }
 
-  onEdit(): void
-  {
-    console.log('Navigate To Edit');
+  onScheduleAppointment(): void{
+    console.log('Navigate to schedule appointment');
   }
 
-  onErase(): void
-  {
-    console.log('Navigate To Erase');
+  onWriteMessage(): void{
+    console.log('Navigate to send message');
   }
 
 }

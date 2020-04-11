@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SliderModule } from 'angular-image-slider';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -12,6 +13,11 @@ import { LoginComponent } from './components/login/login.component';
 import { VerInmuebleComponent } from './components/inmobiliaria/ver-inmueble/ver-inmueble.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble/crear-inmueble.component';
+import { SearchComponent } from './components/public/search/search.component';
+import { VerInmueblePublicComponent } from './components/public/ver-inmueble-public/ver-inmueble-public.component';
+import { SearchResultsComponent } from './components/public/search-results/search-results.component';
+import { HomeComponent } from './components/public/home/home.component';
+import { NotFoundComponent } from './components/public/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -20,10 +26,17 @@ import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble
     FooterComponent,
     LoginComponent,
     VerInmuebleComponent,
-    CrearInmuebleComponent
+    CrearInmuebleComponent,
+    SearchComponent,
+    VerInmueblePublicComponent,
+    SearchResultsComponent,
+    HomeComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    SliderModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
