@@ -13,11 +13,23 @@ export class InmuebleServiceService {
   tagsCollection: AngularFirestoreCollection<any>;
   tags: Observable<any[]>;
 
+  inmueblesCollection: AngularFirestoreCollection<any>;
+  inmuebles: Observable<any[]>;
+
   constructor(
     private afsAut: AngularFireAuth,
     private afs: AngularFirestore
   ) { this.tagsCollection = afs.collection<any>('Tags');
       this.tags = this.tagsCollection.snapshotChanges().pipe(map(
+      actions => actions.map ( a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return{id, ...data};
+      })
+    ));
+
+      this.inmueblesCollection = afs.collection<any>('Inmuebles');
+      this.inmuebles = this.inmueblesCollection.snapshotChanges().pipe(map(
       actions => actions.map ( a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
@@ -55,6 +67,14 @@ export class InmuebleServiceService {
 
   getTags(){
     return this.tags;
+  }
+
+  getInmuebles(){
+    return this.inmuebles;
+  }
+
+  deleteInmueble(id: string){
+    return this.inmueblesCollection.doc(id).delete();
   }
 
   updateTags(value: any){

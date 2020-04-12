@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Inmueble } from 'src/app/models/inmueble';
 import { Inmobiliaria } from '../../../models/inmobiliaria';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { InmuebleServiceService } from '../../../services/inmueble-service.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -107,18 +107,28 @@ export class CrearInmuebleComponent implements OnInit {
       console.log(this.IDinmueble);
       this.actualizarTags();
     }).catch ( err => console.log('err', err.message));
-
+    // this.actualizarTags();
   }
 
   onUpload(e) {
-    const num: any = this.fotos.length;
-    const name = '' + num + '_' + e.target.files[0].name;
-    const file = e.target.files[0];
-    console.log(name);
-    const filePath = 'imagenes/inmuebles/' + name;
-    const ref = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath, file);
-    this.fotos.push(filePath);
+    // console.log(e.target.files.length);
+    // tslint:disable-next-line: prefer-for-of
+    for (let index = 0; index < e.target.files.length; index++) {
+      const num: any = this.fotos.length;
+      const name = '' + num + '_' + e.target.files[index].name;
+      const file = e.target.files[index];
+      console.log(name);
+      const filePath = 'imagenes/inmuebles/' + name;
+      const ref = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, file).snapshotChanges().pipe(
+        finalize(() => {
+          ref.getDownloadURL().subscribe((url) => {
+            this.fotos.push(url);
+            // console.log('rrrrrr', url);
+          });
+        })
+      ).subscribe();
+    }
   }
 
   obtenerTags(){
@@ -135,13 +145,14 @@ export class CrearInmuebleComponent implements OnInit {
         if (e.Hashtag === 'Parqueadero'){
           exist = true;
           e.IDInmuebles.push(this.IDinmueble);
+          this.tagsN.push(e.id);
         }
       });
       if (!exist){
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Parqueadero';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n);
+        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
       }
     }
     if (this.transportePublico){
@@ -150,13 +161,14 @@ export class CrearInmuebleComponent implements OnInit {
         if (e.Hashtag === 'Transporte publico'){
           exist = true;
           e.IDInmuebles.push(this.IDinmueble);
+          this.tagsN.push(e.id);
         }
       });
       if (!exist){
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Transporte publico';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n);
+        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
       }
     }
     if (this.zonasRecreativas){
@@ -165,13 +177,14 @@ export class CrearInmuebleComponent implements OnInit {
         if (e.Hashtag === 'Zonas recreativas'){
           exist = true;
           e.IDInmuebles.push(this.IDinmueble);
+          this.tagsN.push(e.id);
         }
       });
       if (!exist){
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Zonas recreativas';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n);
+        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
       }
     }
     if (this.cocinaIntegral){
@@ -180,13 +193,14 @@ export class CrearInmuebleComponent implements OnInit {
         if (e.Hashtag === 'Cocina integral'){
           exist = true;
           e.IDInmuebles.push(this.IDinmueble);
+          this.tagsN.push(e.id);
         }
       });
       if (!exist){
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Cocina integral';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n);
+        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
       }
     }
     if (this.pagoAdmin){
@@ -195,13 +209,14 @@ export class CrearInmuebleComponent implements OnInit {
         if (e.Hashtag === 'Pago administracion'){
           exist = true;
           e.IDInmuebles.push(this.IDinmueble);
+          this.tagsN.push(e.id);
         }
       });
       if (!exist){
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Pago administracion';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n);
+        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
       }
     }
     if (this.cc){
@@ -210,13 +225,14 @@ export class CrearInmuebleComponent implements OnInit {
         if (e.Hashtag === 'Centros Comerciales'){
           exist = true;
           e.IDInmuebles.push(this.IDinmueble);
+          this.tagsN.push(e.id);
         }
       });
       if (!exist){
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Centros Comerciales';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n);
+        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
       }
     }
     if (this.privacidad){
@@ -225,29 +241,26 @@ export class CrearInmuebleComponent implements OnInit {
         if (e.Hashtag === 'Privacidad'){
           exist = true;
           e.IDInmuebles.push(this.IDinmueble);
+          this.tagsN.push(e.id);
         }
       });
       if (!exist){
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Privacidad';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n);
+        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
       }
     }
+    // console.log(this.tagsN);
     this.tagsExistentes.forEach(ele => {
       this.inmuService.updateTags(ele);
-      ele.IDInmuebles.forEach(element => {
-        if (element === this.IDinmueble){
-          this.tagsN.push(ele.id);
-        }
-      });
     });
-
-    this.inmueble.TagsIDs = this.tagsN;
+    // console.log('despues', this.tagsN);
+    this.inmueble.TagsIDS = this.tagsN;
     this.inmueble.DirFotos = this.fotos;
     this.inmueble.IDInmobiliaria = this.userUid;
-    this.inmueble.Descripcion = 'MIERDDAAAAAAAAAAAA';
     console.log(this.inmueble);
     this.inmuService.updateInmueble(this.inmueble, this.IDinmueble);
+    // window.location.reload();
   }
 }
