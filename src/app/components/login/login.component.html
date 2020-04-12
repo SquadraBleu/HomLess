@@ -8,7 +8,7 @@
              <div class="card">
                <img class="logo" src="assets/images/Homless-Gold.png"/>
                <div class="card-body text-center">
-                 <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
+                 <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                    <h1 class="h2 mb-3" *ngIf="!isError">Login</h1>
                    <div class="alert alert-danger" role="alert" *ngIf="isError">
                       {{errMessage}}
