@@ -30,6 +30,9 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
 
+  isError = false;
+  errMessage: string;
+
   ngOnInit(): void {
   }
 
@@ -37,7 +40,11 @@ export class LoginComponent implements OnInit {
     this.authSvc.loginByEmail(this.email, this.password)
     .then((res) => {
       console.log('resUser', res);
-    }).catch(err => console.log('err', err.message));
+    }).catch(err => {
+        console.log('err', err.message);
+        this.isError = true;
+        this.errMessage = err.message;
+    });
 
     /*
     this.authSvc.registerUser('laurito@hom.com', '12345634', true, false)
