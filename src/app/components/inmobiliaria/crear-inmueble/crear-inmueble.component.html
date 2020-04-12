@@ -2,7 +2,7 @@
 <h1 align="center">Pon aqui tu propiedad</h1>
 <div class="container-fluid">
     <form (ngSubmit)="crearInmueble()" >
-        <div class="row">    
+        <div class="row">
             <div class="col">
                 <label for="titulo">Titulo</label>
                 <input type="text" name="titulo" id="titulo" class="form-control" required
@@ -17,43 +17,43 @@
                 <input type="number" name="deposito" id="deposito" class="form-control" required
                  [(ngModel)]="inmueble.AreaDeposito" #numArea="ngModel">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="checkParking">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkParking" [(ngModel)]="parqueadero" [ngModelOptions]="{standalone:true}">
                     <label class="form-check-label" for="checkParking">
                       Parqueadero
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="checkTransport">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkTransport" [(ngModel)]="transportePublico" [ngModelOptions]="{standalone:true}">
                     <label class="form-check-label" for="checkTransport">
                       Transporte publico
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="checkRecreative">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkRecreative" [(ngModel)]="zonasRecreativas" [ngModelOptions]="{standalone:true}">
                     <label class="form-check-label" for="checkRecreative">
                       Zonas recreativas
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="checkKitchen">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkKitchen" [(ngModel)]="cocinaIntegral" [ngModelOptions]="{standalone:true}">
                     <label class="form-check-label" for="checkKitchen">
                       Cocina integral
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="checkAdmin">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkAdmin" [(ngModel)]="pagoAdmin" [ngModelOptions]="{standalone:true}">
                     <label class="form-check-label" for="checkAdmin">
                       Pago administracion
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="checkShopping">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkShopping" [(ngModel)]="cc" [ngModelOptions]="{standalone:true}">
                     <label class="form-check-label" for="checkShopping">
                       Centros Comerciales
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="checkPrivacy">
+                    <input class="form-check-input" type="checkbox" value="false" id="checkPrivacy" [(ngModel)]="privacidad" [ngModelOptions]="{standalone:true}">
                     <label class="form-check-label" for="checkPrivacy">
                       Privacidad
                     </label>
@@ -67,27 +67,27 @@
                 <input type="number" name="habitaciones" id="habitaciones" class="form-control" required
                  [(ngModel)]="inmueble.NHabitaciones" #txtTitulo="ngModel">
                  <label for="zonas">Zona</label>
-                 <select name="zonas" id="zonas" class="form-control">
+                 <select [(ngModel)]="inmueble.Zona" name="zonas" id="zonas" class="form-control">
                     <option *ngFor="let zona of zonas">
                         {{zona}}
                     </option>
-                 </select> 
+                 </select>
                  <label for="estrato">Estrato</label>
                  <input type="number" name="estrato" id="estrato" class="form-control" required
                  [(ngModel)]="inmueble.Estrato" #numEstrato="ngModel">
                  <label for="localidad">Localidad</label>
-                 <select name="localidades" id="localidades" class="form-control">
+                 <select [(ngModel)]="inmueble.Localidad" name="localidades" id="localidades" class="form-control">
                     <option *ngFor="let localidad of localidades">
                         {{localidad}}
                     </option>
                  </select>
                  <label for="barrio">Barrio</label>
                  <input type="text" name="barrio" id="barrio" class="form-control" required
-                 [(ngModel)]="inmueble.Barrio" #txtBarrio="ngModel"> 
+                 [(ngModel)]="inmueble.Barrio" #txtBarrio="ngModel">
             </div>
             <div class="col">
                 <label for="tipos">Tipo de inmueble</label>
-                 <select name="tipos" id="tipos" class="form-control">
+                 <select [(ngModel)]="inmueble.TipoInmueble" name="tipos" id="tipos" class="form-control">
                     <option *ngFor="let tipo of tiposDeInmueble">
                         {{tipo}}
                     </option>
@@ -109,7 +109,7 @@
             </div>
             <div class="col">
                 <label for="Imagenes">Agregar Imagenes</label>
-                <input type="file" multiple accept="image/*"> 
+                <input type="file" multiple accept="image/*" (change)="onUpload($event)">
             </div>
             <div class="col">
                

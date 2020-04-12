@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 export class SearchResultsComponent implements OnInit {
   inmuebles: Inmueble[] = [
     new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined
-    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', undefined, '', ''),
+    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', []),
     new Inmueble('Esta es una propiedad', '', 200, undefined, 0, 2000000, undefined
-    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', undefined, '', '')
+    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [])
   ];
   constructor(private router: Router) { }
 
