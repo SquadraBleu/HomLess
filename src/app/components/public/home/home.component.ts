@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.urlImagenes = ['assets/images/H-Gold.png', 'assets/images/H-Black.png', 'assets/images/Homless-Sad.png'];
+    this.urlImagenes = ['assets/images/Hom1-100.jpg', 'assets/images/Hom2-100.jpg', 'assets/images/Hom3-100.jpg'];
   }
 
 
