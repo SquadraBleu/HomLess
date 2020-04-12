@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   public email = '';
   public password = '';
   public isInmo: any = null;
+  public isCli: any = null;
+  public isRepre: any = null;
   public userUid: string = null;
 
   loginForm = new FormGroup ({
@@ -32,19 +34,18 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(): void {
-    /*
     this.authSvc.loginByEmail(this.email, this.password)
     .then((res) => {
       console.log('resUser', res);
     }).catch(err => console.log('err', err.message));
-*/
+
+    /*
     this.authSvc.registerUser('laurito@hom.com', '12345634', true, false)
     .then((res) => {
       console.log('resUser', res);
     }).catch(err => console.log('err', err.message));
-
+    */
     this.getCurrentUser();
-
   }
 
   onLogout(): void {
@@ -54,14 +55,20 @@ export class LoginComponent implements OnInit {
   getCurrentUser() {
     this.authSvc.isAuth().subscribe(auth => {
       if (auth) {
+        // console.log(auth);
         this.userUid = auth.uid;
-        this.authSvc.isUserInmo(this.userUid).subscribe(userRole => {
-          console.log('gonorrea', userRole);
+        this.authSvc.isUserInmo(this.userUid).subscribe(userRole => { //se si es una inmo
+          if (userRole !== undefined){
+            console.log(userRole.UID);
+            this.route.navigate(['inmobiliaria/crear-inmueble']);
+          }
+          /*
           if (userRole.roles.inmobiliaria){
             this.route.navigate(['inmobiliaria/crear-inmueble']);
           } else if (userRole.roles.clinte) {
             this.route.navigate(['inmobiliaria/ver-inmueble']);
           }
+          */
         });
       }
     });

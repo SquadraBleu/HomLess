@@ -14,8 +14,8 @@ export class Inmueble {
         public TipoInmueble: string,
         public DirFotos: string[],
         public IDInmobiliaria: string,
-        public IDInmueble: number,
         public Localidad: string,
-        public Zona: string
+        public Zona: string,
+        public TagsIDs: string[]
     ){}
 }
