@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
       if (auth) {
         // console.log(auth);
         this.userUid = auth.uid;
-        this.authSvc.isUserInmo(this.userUid).subscribe(userRole => { //se si es una inmo
+        this.authSvc.isUserInmo(this.userUid).subscribe(userRole => { // se si es una inmo
           if (userRole !== undefined){
             console.log(userRole.UID);
             this.route.navigate(['inmobiliaria/crear-inmueble']);

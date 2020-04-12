@@ -106,8 +106,8 @@ export class CrearInmuebleComponent implements OnInit {
   }
 
   onUpload(e) {
-    let num: any = this.fotos.length;
-    let name = '' + num + '_' + e.target.files[0].name;
+    const num: any = this.fotos.length;
+    const name = '' + num + '_' + e.target.files[0].name;
     const file = e.target.files[0];
     console.log(name);
     const filePath = 'imagenes/inmuebles/' + name;
@@ -133,7 +133,7 @@ export class CrearInmuebleComponent implements OnInit {
         }
       });
       if (!exist){
-        const n: Tag = new Tag('',[], '');
+        const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Parqueadero';
         n.IDInmuebles.push(this.IDinmueble);
         this.inmuService.createEtiquetas(n);
