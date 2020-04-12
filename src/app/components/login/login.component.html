@@ -8,7 +8,7 @@
              <div class="card">
                <img class="logo" src="assets/images/Homless-Gold.png"/>
                <div class="card-body text-center">
-                 <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
+                 <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                    <h1 class="h2 mb-3">Login</h1>
                    <div class="form-group">
                      <input type="email" id="email" name="email" class="form-control" placeholder="Email" formControlName="email" />
