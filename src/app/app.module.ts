@@ -23,6 +23,7 @@ import { SearchResultsComponent } from './components/public/search-results/searc
 import { HomeComponent } from './components/public/home/home.component';
 import { NotFoundComponent } from './components/public/not-found/not-found.component';
 import { EditarInmuebleComponent } from './components/inmobiliaria/editar-inmueble/editar-inmueble.component';
+import { ListaInmueblesComponent } from './components/inmobiliaria/lista-inmuebles/lista-inmuebles.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { EditarInmuebleComponent } from './components/inmobiliaria/editar-inmueb
     SearchResultsComponent,
     HomeComponent,
     NotFoundComponent,
-    EditarInmuebleComponent
+    EditarInmuebleComponent,
+    ListaInmueblesComponent
   ],
   imports: [
     BrowserModule,
