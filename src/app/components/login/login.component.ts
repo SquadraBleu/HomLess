@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
         this.authSvc.isUserInmo(this.userUid).subscribe(userRole => { // se si es una inmo
           if (userRole !== undefined){
             console.log(userRole.UID);
-            this.route.navigate(['inmobiliaria/crear-inmueble']);
+            this.route.navigate(['inmobiliaria/lista-inmuebles/' + this.userUid]);
           }
           /*
           if (userRole.roles.inmobiliaria){

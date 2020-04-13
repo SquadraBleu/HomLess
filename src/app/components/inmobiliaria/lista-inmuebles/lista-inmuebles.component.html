@@ -3,7 +3,7 @@
     <div class="row" style="margin-bottom: 10px;">
         <div class="col-7">
             <input type="text" name="busqueda" id="busqueda" style="width: inherit; height: inherit;"
-            [(ngModel)]="busqueda" placeholder="Busca aqui un inmueble">    
+            [(ngModel)]="busqueda" placeholder="Busca aqui un inmueble">
         </div>
         <div class="col-2">
             <button class="btn btn-primary btn-sm" (click)="buscarInmueble()">
@@ -21,11 +21,11 @@
             </button>
         </div>
     </div>
-    <div class="row alert alert-warning seleccion" *ngFor="let inmueble of inmuebles" (click)="verInmueble()">
+    <div class="row alert alert-warning seleccion" *ngFor="let inmueble of inmuebles" (click)="verInmueble(inmueble.IDI)">
         <div class="col-2">
             <h5>Cómo se ve:</h5>
-            <img [src]="getImageUrl()" class="logo">
-            
+            <img [src]="getImageUrl(inmueble.IDI)" class="logo">
+
         </div>
         <div class="col-3">
             <h5>Título: </h5>

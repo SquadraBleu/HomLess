@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Inmueble } from 'src/app/models/inmueble';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 import { Tag } from 'src/app/models/tag';
@@ -14,6 +14,7 @@ export class VerInmuebleComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private inmuService: InmuebleServiceService
   ) {}
 
@@ -22,8 +23,8 @@ export class VerInmuebleComponent implements OnInit {
   tagsExistentes: Tag[] = [];
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
-    , '', '', undefined, undefined, '', [], '', '', '', []);
-  public urlImagenes: string[] = [];
+    , '', '', undefined, undefined, '', [], '', '', '', [], '');
+  public urlImagenes: string[];
 
   ngOnInit(): void{
     // this.urlImagenes = ['assets/images/H-Gold.png', 'assets/images/H-Black.png', 'assets/images/Homless-Sad.png'];
@@ -53,7 +54,11 @@ export class VerInmuebleComponent implements OnInit {
 
   onEdit(): void
   {
-    console.log('Navigate To Edit');
+    this.router.navigate(['inmobiliaria/editar-inmueble/' + this.inmueble.IDI]);
+  }
+
+  onRegresar(): void {
+    this.router.navigate(['inmobiliaria/lista-inmuebles/' + this.inmueble.IDInmobiliaria]);
   }
 
   onErase(): void

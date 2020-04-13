@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Inmueble } from 'src/app/models/inmueble';
 import { Inmobiliaria } from '../../../models/inmobiliaria';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { InmuebleServiceService } from '../../../services/inmueble-service.service';
@@ -17,7 +17,7 @@ import { Tag } from 'src/app/models/tag';
 export class CrearInmuebleComponent implements OnInit {
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
-    , '', '', undefined, undefined, '', [], '', '', '', []);
+    , '', '', undefined, undefined, '', [], '', '', '', [], '');
 
   inmobiliariaLoged: any = null;
   userUid: string = null;
@@ -255,12 +255,18 @@ export class CrearInmuebleComponent implements OnInit {
     this.tagsExistentes.forEach(ele => {
       this.inmuService.updateTags(ele);
     });
-    // console.log('despues', this.tagsN);
+    console.log('despues', this.tagsN);
     this.inmueble.TagsIDS = this.tagsN;
     this.inmueble.DirFotos = this.fotos;
     this.inmueble.IDInmobiliaria = this.userUid;
+    this.inmueble.IDI = this.IDinmueble;
     console.log(this.inmueble);
     this.inmuService.updateInmueble(this.inmueble, this.IDinmueble);
-    // window.location.reload();
+
+    this.tagsN = [];
+    this.fotos = [];
+    this.IDinmueble = null;
+
+    this.router.navigate(['inmobiliaria/lista-inmuebles/' + this.userUid]);
   }
 }

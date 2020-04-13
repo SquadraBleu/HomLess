@@ -14,8 +14,8 @@ export class VerInmueblePublicComponent implements OnInit {
   }
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
-  , '', '', undefined, undefined, '', [], '', '', '', []);
-  public urlImagenes: string[] =[];
+  , '', '', undefined, undefined, '', [], '', '', '', [], '');
+  public urlImagenes: string[];
 
   ngOnInit(): void{
     //this.urlImagenes = ['https://firebasestorage.googleapis.com/v0/b/homlessp.appspot.com/o/imagenes%2Finmuebles%2F0_Tinel_final-16.jpg?alt=media&token=38f9e27d-aa49-4b1c-b930-000679b6c115', 'assets/images/H-Black.png', 'assets/images/Homless-Sad.png'];
