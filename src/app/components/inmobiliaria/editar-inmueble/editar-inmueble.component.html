@@ -99,11 +99,11 @@
                 <input type="number" name="numArriendo" id="numArriendo" class="form-control" required
                 [(ngModel)]="inmueble.MontoArriendo" #numBanos="ngModel">
                 <label for="descripcion">Descripción</label>
-                <textarea name="" id="" cols="36" rows="5" class="form-control"
-                [(ngModel)]="inmueble.Descripcion" #txtDescripcion="ngModel"></textarea>
+                <textarea ngModel="inmueble.Descripcion" name="descripcion" id="descripcion" cols="36" rows="5" class="form-control"
+               [(ngModel)]="inmueble.Descripcion" #txtDescripcion="ngModel"></textarea>
             </div>
         </div>
-        <div class="row alert alert-warning">
+        <!--<div class="row alert alert-warning">
             <div class="col">
 
             </div>
@@ -114,7 +114,7 @@
             <div class="col">
                
             </div>
-        </div>
+        </div> -->
         <div class="row">
             <div class="col">
                 <button type="submit" class="btn btn-info btn-lg btn-block">
@@ -125,8 +125,8 @@
 
             </div>
             <div class="col">
-                <button type="submit" class="btn btn-success btn-lg btn-block">
-                    Agregar inmueble
+                <button type="submit"  class="btn btn-success btn-lg btn-block">
+                    Guardar cambios
                 </button>
             </div>
         </div>

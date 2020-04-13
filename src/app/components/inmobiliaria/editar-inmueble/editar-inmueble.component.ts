@@ -27,6 +27,8 @@ export class EditarInmuebleComponent implements OnInit {
   fotos: string[] = [];
   IDinmueble: any = null;
 
+  descripcion: string;
+
   parqueadero: boolean;
   transportePublico: boolean;
   zonasRecreativas: boolean;
@@ -93,6 +95,12 @@ export class EditarInmuebleComponent implements OnInit {
         });
       }
     });
+  }
+
+  editarInmueble(): void
+  {
+    console.log(this.inmueble.Descripcion);
+    console.log('Se editó');
   }
 
 }
