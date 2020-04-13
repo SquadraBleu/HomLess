@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Inmueble } from 'src/app/models/inmueble';
 import { Inmobiliaria } from '../../../models/inmobiliaria';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { InmuebleServiceService } from '../../../services/inmueble-service.service';
@@ -80,7 +80,8 @@ export class CrearInmuebleComponent implements OnInit {
     private authSvc: AuthService,
     private inmuService: InmuebleServiceService,
     private route: ActivatedRoute,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -93,6 +94,10 @@ export class CrearInmuebleComponent implements OnInit {
       }
     });
     this.obtenerTags();
+  }
+
+  cancelar(){
+    this.router.navigate(['inmobiliaria/lista-inmuebles']);
   }
 
   crearInmueble(){
