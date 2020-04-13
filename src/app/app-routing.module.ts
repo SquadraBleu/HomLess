@@ -8,6 +8,7 @@ import { HomeComponent } from './components/public/home/home.component';
 import { NotFoundComponent } from './components/public/not-found/not-found.component';
 import { SearchComponent } from './components/public/search/search.component';
 import { VerInmueblePublicComponent } from './components/public/ver-inmueble-public/ver-inmueble-public.component';
+import { EditarInmuebleComponent } from './components/inmobiliaria/editar-inmueble/editar-inmueble.component';
 import { ListaInmueblesComponent } from './components/inmobiliaria/lista-inmuebles/lista-inmuebles.component';
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'public/login', component: LoginComponent},
   {path: 'inmobiliaria/ver-inmueble/:id', component: VerInmuebleComponent},
   {path: 'inmobiliaria/crear-inmueble', component: CrearInmuebleComponent},
+  {path: 'inmobiliaria/editar-inmueble/:id', component: EditarInmuebleComponent},
   {path: 'inmobiliaria/lista-inmuebles', component: ListaInmueblesComponent},
   {path: 'public/search', component: SearchComponent},
   {path: 'public/search/ver-inmueble/:id', component: VerInmueblePublicComponent},

@@ -22,6 +22,7 @@ import { VerInmueblePublicComponent } from './components/public/ver-inmueble-pub
 import { SearchResultsComponent } from './components/public/search-results/search-results.component';
 import { HomeComponent } from './components/public/home/home.component';
 import { NotFoundComponent } from './components/public/not-found/not-found.component';
+import { EditarInmuebleComponent } from './components/inmobiliaria/editar-inmueble/editar-inmueble.component';
 import { ListaInmueblesComponent } from './components/inmobiliaria/lista-inmuebles/lista-inmuebles.component';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { ListaInmueblesComponent } from './components/inmobiliaria/lista-inmuebl
     SearchResultsComponent,
     HomeComponent,
     NotFoundComponent,
+    EditarInmuebleComponent,
     ListaInmueblesComponent
   ],
   imports: [
