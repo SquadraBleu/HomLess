@@ -20,8 +20,6 @@ const routes: Routes = [
   {path: 'inmobiliaria/lista-inmuebles', component: ListaInmueblesComponent},
   {path: 'public/search', component: SearchComponent},
   {path: 'public/search/ver-inmueble/:id', component: VerInmueblePublicComponent},
-  {path: 'public/search-results', component: SearchResultsComponent},
-  {path: 'logged/search-results', component: SearchResultsComponent},
   {path: 'public/home', component: HomeComponent},
   {path: 'error404', component: NotFoundComponent},
   {path: '**', redirectTo: '/error404'}

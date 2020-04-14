@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class ListaInmueblesComponent implements OnInit {
 
   public inmuebles: Inmueble[] = [
-    new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined
+    new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 50000, undefined
     , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', []),
     new Inmueble('Esta es una propiedad', '', 200, undefined, 0, 2000000, undefined
     , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [])
@@ -43,5 +43,10 @@ export class ListaInmueblesComponent implements OnInit {
     // userStorageRef.getDownloadURL().then(url => {
     //   this.userProfileImg = url
     // });
+  }
+
+  limpiarBusqueda(){
+    this.busqueda = '';
+    console.log('Limpiar paises, no se como :(');
   }
 }

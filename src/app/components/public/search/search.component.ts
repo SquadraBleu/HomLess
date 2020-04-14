@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Inmueble } from 'src/app/models/inmueble';
 
 @Component({
   selector: 'app-search',
@@ -36,6 +37,15 @@ export class SearchComponent implements OnInit {
   zona: string;
   localidad: string;
   tipoInmueble: string;
+
+  madeSearch = false;
+
+  inmuebles: Inmueble[] = [
+    new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined
+    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', []),
+    new Inmueble('Esta es una propiedad', '', 200, undefined, 500000, 2000000, undefined
+    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [])
+  ];
 
   tiposDeInmueble: string[] = [
     '',
@@ -87,8 +97,8 @@ export class SearchComponent implements OnInit {
 
   submitSearch(): void
   {
+    this.madeSearch = true;
     console.log('Make search');
-    this.router.navigate(['public/search-results']);
   }
 
   getMinVentaSliderValue(event: any)
@@ -119,6 +129,27 @@ export class SearchComponent implements OnInit {
   getMaxAreaSliderValue(event: any)
   {
     this.maxArea = event.target.value;
+  }
+
+  getImageUrl(/*userId: string*/) {
+    return 'assets/images/H-Gold.png';
+    // const userStorageRef = firebase.storage().ref().child('images/users/' + userId + "_users.jpg");
+    // userStorageRef.getDownloadURL().then(url => {
+    //   this.userProfileImg = url
+    // });
+  }
+
+  verInmueble(){
+    console.log('Entre a la Funcion');
+    const id = 10;
+    this.router.navigate(['public/search/ver-inmueble/' + id]);
+
+  }
+
+  clean()
+  {
+    this.madeSearch = false;
+    window.location.reload();
   }
 
 }
