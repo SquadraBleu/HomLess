@@ -10,7 +10,7 @@
                 Buscar Inmueble
             </button>
         </div>
-         <div class="col-1">
+         <div class="col-1" *ngIf="(busqueda!=='')">
             <button class="btn btn-primary btn-sm" (click)="limpiarBusqueda()">
                 Limpiar
             </button>
@@ -44,12 +44,12 @@
             {{inmueble.AreaConstruida}}
         </div>
         <div class="col-2">
-            
+
             <div *ngIf="inmueble.MontoVenta">
                 <h6>Monto de venta $$: </h6>
                 {{inmueble.MontoVenta}}
             </div>
-            
+
             <div *ngIf="inmueble.MontoArriendo">
                 <h6>Monto de arriendo $$: </h6>
                 {{inmueble.MontoArriendo}}

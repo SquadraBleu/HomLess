@@ -16,6 +16,9 @@ export class InmuebleServiceService {
   inmueblesCollection: AngularFirestoreCollection<any>;
   inmuebles: Observable<any[]>;
 
+  inmobiliariasCollection: AngularFirestoreCollection<any>;
+  inmobiliarias: Observable<any[]>;
+
   constructor(
     private afsAut: AngularFireAuth,
     private afs: AngularFirestore
@@ -30,6 +33,15 @@ export class InmuebleServiceService {
 
       this.inmueblesCollection = afs.collection<any>('Inmuebles');
       this.inmuebles = this.inmueblesCollection.snapshotChanges().pipe(map(
+      actions => actions.map ( a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return{id, ...data};
+      })
+    ));
+
+      this.inmobiliariasCollection = afs.collection<any>('Inmobiliarias');
+      this.inmobiliarias = this.inmobiliariasCollection.snapshotChanges().pipe(map(
       actions => actions.map ( a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
@@ -73,6 +85,10 @@ export class InmuebleServiceService {
     return this.inmuebles;
   }
 
+  getInmobiliarias(){
+    return this.inmobiliarias;
+  }
+
   deleteInmueble(id: string){
     return this.inmueblesCollection.doc(id).delete();
   }
@@ -83,5 +99,9 @@ export class InmuebleServiceService {
 
   updateInmueble(value: any, id: string){
     return this.afs.collection('Inmuebles').doc(id).set(Object.assign({}, value));
+  }
+
+  updateInmobiliaria(value: any, id: string){
+    return this.afs.collection('Inmobiliarias').doc(id).set(Object.assign({}, value));
   }
 }

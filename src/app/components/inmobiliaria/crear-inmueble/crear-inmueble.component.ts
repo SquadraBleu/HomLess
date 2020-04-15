@@ -123,6 +123,7 @@ export class CrearInmuebleComponent implements OnInit {
       const task = this.storage.upload(filePath, file).snapshotChanges().pipe(
         finalize(() => {
           ref.getDownloadURL().subscribe((url) => {
+            // console.log('urlF', url);
             this.fotos.push(url);
             // console.log('rrrrrr', url);
           });
@@ -262,6 +263,8 @@ export class CrearInmuebleComponent implements OnInit {
     this.inmueble.IDI = this.IDinmueble;
     console.log(this.inmueble);
     this.inmuService.updateInmueble(this.inmueble, this.IDinmueble);
+    this.inmobiliariaLoged.Inmuebles.push(this.IDinmueble);
+    this.inmuService.updateInmobiliaria(this.inmobiliariaLoged, this.userUid);
 
     this.tagsN = [];
     this.fotos = [];

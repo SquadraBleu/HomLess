@@ -42,9 +42,9 @@ export class SearchComponent implements OnInit {
 
   inmuebles: Inmueble[] = [
     new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined
-    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', []),
+    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [], ''),
     new Inmueble('Esta es una propiedad', '', 200, undefined, 500000, 2000000, undefined
-    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [])
+    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [], '')
   ];
 
   tiposDeInmueble: string[] = [

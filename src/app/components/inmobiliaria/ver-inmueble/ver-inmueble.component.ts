@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 import { Tag } from 'src/app/models/tag';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-ver-inmueble',
@@ -15,12 +16,15 @@ export class VerInmuebleComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private authSvc: AuthService,
     private inmuService: InmuebleServiceService
   ) {}
 
   id: any = undefined;
   inmuebles: any[] = [];
   tagsExistentes: Tag[] = [];
+  inmobiliariaLoged: any = null;
+  userUid: string = null;
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
     , '', '', undefined, undefined, '', [], '', '', '', [], '');
@@ -30,6 +34,14 @@ export class VerInmuebleComponent implements OnInit {
     // this.urlImagenes = ['assets/images/H-Gold.png', 'assets/images/H-Black.png', 'assets/images/Homless-Sad.png'];
     this.id = this.route.snapshot.paramMap.get('id');
     console.log(this.route.snapshot.paramMap.get('id'));
+    this.authSvc.isAuth().subscribe(auth => {
+      if (auth) {
+        this.userUid = auth.uid;
+        this.authSvc.isUserInmo(this.userUid).subscribe(userRole => { // se si es una inmo
+            this.inmobiliariaLoged = userRole;
+        });
+      }
+    });
     this.darInmueble();
     this.obtenerTags();
   }
@@ -73,7 +85,14 @@ export class VerInmuebleComponent implements OnInit {
         }
       });
     });
-    // window.location.reload();
+
+    this.inmobiliariaLoged.Inmuebles.forEach( element => {
+      if (element === this.id){
+        this.inmobiliariaLoged.Inmuebles.splice( this.inmobiliariaLoged.Inmuebles.indexOf(element), 1);
+      }
+    });
+    this.inmuService.updateInmobiliaria(this.inmobiliariaLoged, this.userUid);
+    this.router.navigate(['inmobiliaria/lista-inmuebles/' + this.userUid]);
   }
 
   darInmueble(){

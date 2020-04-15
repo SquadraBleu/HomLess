@@ -60,15 +60,16 @@ export class ListaInmueblesComponent implements OnInit {
   darInmuebles(){
     this.inmuService.getInmuebles().subscribe( res => {
       // this.inmuebles = res;
-      console.log(this.inmuebles);
+      // console.log(res);
       // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < res.length; index++) {
         if (res[index].IDInmobiliaria === this.id ){
           this.inmuebles.push(res[index]);
-          //  console.log('VEEEERRR', this.inmueble);
+          // console.log('VEEEERRR', this.inmuebles);
         }
       }
     });
+    console.log('VEEEERRR', this.inmuebles);
   }
 
   getImageUrl(idInmueble: string) {
