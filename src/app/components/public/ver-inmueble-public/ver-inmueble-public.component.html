@@ -5,7 +5,7 @@
             </div>
             <div class="col-6">
                 <p class="title"> {{inmueble.Titulo}} </p>
-                <p class="description"> {{inmueble.Descripcion}} </p>                    
+                <p class="description"> {{inmueble.Descripcion}} </p>
                 <div class="row">
                     <div class="col-5">
                         <p class="atributo"> <strong>Área (m&#178;):</strong> {{inmueble.AreaConstruida}} </p>
@@ -23,7 +23,7 @@
                         <p class="atributo" *ngIf="isVenta()"> <strong>Precio Venta:</strong> ${{inmueble.MontoVenta}}</p>
                         <p class="atributo"> <strong>Barrio:</strong> {{inmueble.Barrio}} </p>
                     </div>
-                </div>  
+                </div>
                 <div class="row">
                     <div class="col">
                     <button class="btn btn-estilo" (click)="onWriteMessage()">Escribir Mensaje
@@ -33,9 +33,13 @@
                     <button class="btn btn-estilo" (click)="onScheduleAppointment()">Agendar Cita
                     </button>
                     </div>
-                </div>                     
+                    <div class="col">
+                      <button class="btn btn-info" (click)="onRegresar()">Regresar a la Busqueda
+                      </button>
+                      </div>
+                </div>
             </div>
-    </div> 
+    </div>
     <div class="row" *ngFor="let foto of urlImagenes ; let i = index" style="margin-top: 2%;">
         <div class="col alert alert-warning" *ngIf="i%2 == 0">
             <img [src]="urlImagenes[i]"  class="rounded" style="min-width: 20vw;height: 20vw;margin: auto;">
@@ -43,6 +47,6 @@
         <div class="col alert alert-warning" *ngIf="i%2 == 0">
             <img [src]="urlImagenes[i+1]" class="rounded" style="min-width: 20vw;height: 20vw;margin: auto;">
         </div>
-    </div> 
-</div> 
+    </div>
+</div>
 

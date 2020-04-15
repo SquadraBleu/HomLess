@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 import { Tag } from 'src/app/models/tag';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class VerInmuebleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authSvc: AuthService,
+    private storage: AngularFireStorage,
     private inmuService: InmuebleServiceService
   ) {}
 
@@ -75,6 +77,21 @@ export class VerInmuebleComponent implements OnInit {
 
   onErase(): void
   {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.inmueble.DirFotos.length; i++){
+      const desertRef = this.storage.storage.refFromURL(this.inmueble.DirFotos[i]);
+      // console.log(desertRef);
+      // Delete the file
+      // tslint:disable-next-line: only-arrow-functions
+      desertRef.delete().then( function() {
+      // File deleted successfully
+      console.log('Borrado bein');
+      // tslint:disable-next-line: only-arrow-functions
+      }).catch( function(error) {
+      // Uh-oh, an error occurred!
+      });
+    }
+
     this.inmuService.deleteInmueble(this.id);
 
     this.tagsExistentes.forEach(element => {

@@ -73,11 +73,12 @@ export class ListaInmueblesComponent implements OnInit {
   }
 
   getImageUrl(idInmueble: string) {
-    //return 'assets/images/H-Gold.png';
+    // return 'assets/images/H-Gold.png';
     // const userStorageRef = firebase.storage().ref().child('images/users/' + userId + "_users.jpg");
     // userStorageRef.getDownloadURL().then(url => {
     //   this.userProfileImg = url
     // });
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.inmuebles.length; i++) {
       if (this.inmuebles[i].IDI === idInmueble){
         return this.inmuebles[i].DirFotos[0];
@@ -87,6 +88,8 @@ export class ListaInmueblesComponent implements OnInit {
 
   limpiarBusqueda(){
     this.busqueda = '';
-    console.log('Limpiar paises, no se como :(');
+    // this.darInmuebles();
+    window.location.reload();
+    // console.log('Limpiar paises, no se como :(');
   }
 }

@@ -98,6 +98,7 @@ export class InmuebleServiceService {
   }
 
   updateInmueble(value: any, id: string){
+    console.log('actualice', id);
     return this.afs.collection('Inmuebles').doc(id).set(Object.assign({}, value));
   }
 

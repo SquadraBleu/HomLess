@@ -24,6 +24,7 @@ export class CrearInmuebleComponent implements OnInit {
   tagsN: string[] = [];
   tagsExistentes: Tag[] = [];
   fotos: string[] = [];
+  ubicacionFotos: string[] = [];
   IDinmueble: any = null;
 
   parqueadero: boolean;
@@ -114,11 +115,12 @@ export class CrearInmuebleComponent implements OnInit {
     // console.log(e.target.files.length);
     // tslint:disable-next-line: prefer-for-of
     for (let index = 0; index < e.target.files.length; index++) {
-      const num: any = this.fotos.length;
+      const num: any = Math.random();
       const name = '' + num + '_' + e.target.files[index].name;
       const file = e.target.files[index];
       console.log(name);
       const filePath = 'imagenes/inmuebles/' + name;
+      this.ubicacionFotos.push(filePath);
       const ref = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, file).snapshotChanges().pipe(
         finalize(() => {

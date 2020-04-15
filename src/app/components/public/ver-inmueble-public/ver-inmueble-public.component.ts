@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Inmueble } from 'src/app/models/inmueble';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 
 @Component({
   selector: 'app-ver-inmueble-public',
@@ -9,17 +10,19 @@ import { Router } from '@angular/router';
 })
 export class VerInmueblePublicComponent implements OnInit {
 
-  constructor(private router: Router)
+  constructor(private route: ActivatedRoute, private router: Router, private inmuService: InmuebleServiceService)
   {
   }
+  id: any = undefined;
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
   , '', '', undefined, undefined, '', [], '', '', '', [], '');
   public urlImagenes: string[];
 
   ngOnInit(): void{
-    //this.urlImagenes = ['https://firebasestorage.googleapis.com/v0/b/homlessp.appspot.com/o/imagenes%2Finmuebles%2F0_Tinel_final-16.jpg?alt=media&token=38f9e27d-aa49-4b1c-b930-000679b6c115', 'assets/images/H-Black.png', 'assets/images/Homless-Sad.png'];
-    this.urlImagenes.push('https://firebasestorage.googleapis.com/v0/b/homlessp.appspot.com/o/imagenes%2Finmuebles%2F0_Tinel_final-16.jpg?alt=media&token=38f9e27d-aa49-4b1c-b930-000679b6c115');
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log(this.route.snapshot.paramMap.get('id'));
+    this.darInmueble();
   }
 
   isVenta(): boolean
@@ -46,6 +49,23 @@ export class VerInmueblePublicComponent implements OnInit {
 
   onWriteMessage(): void{
     console.log('Navigate to send message');
+  }
+
+  onRegresar(): void {
+    this.router.navigate(['public/search']);
+  }
+
+  darInmueble(){
+    this.inmuService.getInmuebles().subscribe( res => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < res.length; index++) {
+        if (res[index].id === this.id ){
+          this.inmueble = res[index];
+          this.urlImagenes = this.inmueble.DirFotos;
+          //  console.log('VEEEERRR', this.inmueble);
+        }
+      }
+    });
   }
 
 }

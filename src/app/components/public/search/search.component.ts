@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Inmueble } from 'src/app/models/inmueble';
+import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 
 @Component({
   selector: 'app-search',
@@ -10,7 +11,7 @@ import { Inmueble } from 'src/app/models/inmueble';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private inmuService: InmuebleServiceService) {
     // this.searchGroup = new FormGroup({search: new FormControl() });
   }
 
@@ -27,24 +28,25 @@ export class SearchComponent implements OnInit {
   isVenta = false;
   isArriendo = false;
 
-  searchTerm: string;
+  searchTerm = '';
   minArea = 0; // de 0 a 500, de 1 en 1
   maxArea = 0; // de 0 a 500, de 1 en 1
   isMinArea = false;
   isMaxArea = false;
-  nhabitaciones: number;
-  nbanos: number;
-  zona: string;
-  localidad: string;
-  tipoInmueble: string;
+  nhabitaciones = 0;
+  nbanos = 0;
+  zona = '';
+  localidad = '';
+  tipoInmueble = '';
 
   madeSearch = false;
+  auxb: Inmueble[] = [];
 
-  inmuebles: Inmueble[] = [
+  inmuebles: Inmueble[] = [/*
     new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined
     , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [], ''),
     new Inmueble('Esta es una propiedad', '', 200, undefined, 500000, 2000000, undefined
-    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [], '')
+    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [], '')*/
   ];
 
   tiposDeInmueble: string[] = [
@@ -92,13 +94,218 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void
   {
+    this.darInmuebles();
+  }
 
+  darInmuebles(){
+    this.inmuService.getInmuebles().subscribe( res => {
+      this.inmuebles = res;
+      // console.log(res);
+      console.log('VEEEERRR', this.inmuebles);
+      /*
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < res.length; index++) {
+        if (res[index].MontoArriendo === undefined ){
+          res[index].MontoArriendo = 0;
+          // this.inmuebles.push(res[index]);
+          // console.log('VEEEERRR', this.inmuebles);
+        }
+        if (res[index].MontoVenta === undefined ){
+          res[index].MontoVenta = 0;
+          // this.inmuebles.push(res[index]);
+          // console.log('VEEEERRR', this.inmuebles);
+        }
+        this.inmuebles.push(res[index]);
+      }
+      */
+    });
   }
 
   submitSearch(): void
   {
-    this.madeSearch = true;
-    console.log('Make search');
+    if (this.searchTerm !== ''){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        if (this.inmuebles[index].Titulo.includes(this.searchTerm) || this.inmuebles[index].Descripcion.includes(this.searchTerm)){
+          this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+      console.log('primer filtro', this.inmuebles);
+    }
+
+    if (this.tipoInmueble !== ''){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        if (this.inmuebles[index].TipoInmueble === this.tipoInmueble){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.nhabitaciones !== 0){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        // console.log('fsdfsdfsdfsdfds' , this.inmuebles[index].NHabitaciones);
+        // console.log('fsdfsdfsdfsdfds2' , this.nhabitaciones);
+        // tslint:disable-next-line: triple-equals
+        if (this.inmuebles[index].NHabitaciones == this.nhabitaciones){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.nbanos !== 0){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        // tslint:disable-next-line: triple-equals
+        if (this.inmuebles[index].NBanos == this.nbanos){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.zona !== ''){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        if (this.inmuebles[index].Zona === this.zona){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.localidad !== ''){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        if (this.inmuebles[index].Localidad === this.localidad){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.isMinArea === true){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        if (this.inmuebles[index].AreaConstruida >= this.minArea && this.existe(this.inmuebles[index].IDI) === false ){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.isMaxArea === true){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        if (this.inmuebles[index].AreaConstruida <= this.maxArea && this.existe(this.inmuebles[index].IDI) === false){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.isArriendo === true){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        if (this.inmuebles[index].MontoArriendo !== undefined && this.isMinPriceArriendo === true){
+          if ( this.inmuebles[index].MontoArriendo !== undefined
+            && this.inmuebles[index].MontoArriendo >= this.minPriceArriendo
+            && this.existe(this.inmuebles[index].IDI) === false){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+          }
+        }
+        if (this.inmuebles[index].MontoArriendo !== undefined && this.isMaxPriceArriendo === true){
+          if ( this.inmuebles[index].MontoArriendo !== undefined
+            && this.inmuebles[index].MontoArriendo <= this.maxPriceArriendo
+            && this.existe(this.inmuebles[index].IDI) === false){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+          }
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.isVenta === true){
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.inmuebles.length; index++) {
+        if (this.inmuebles[index].MontoVenta !== undefined && this.isMinPriceVenta === true){
+          if ( this.inmuebles[index].MontoVenta !== undefined
+            && this.inmuebles[index].MontoVenta >= (this.minPriceVenta * 1000000)
+            && this.existe(this.inmuebles[index].IDI) === false ){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+          }
+        }
+        if (this.inmuebles[index].MontoVenta !== undefined && this.isMaxPriceVenta === true){
+          if ( this.inmuebles[index].MontoVenta !== undefined
+            && this.inmuebles[index].MontoVenta <= (this.maxPriceVenta * 1000000)
+            && this.existe(this.inmuebles[index].IDI) === false ){
+            this.auxb.push(this.inmuebles[index]);
+          // console.log('VEEEERRR', index);
+          // auxb.splice(index, 1);
+          }
+        }
+      }
+      this.inmuebles = this.auxb;
+      this.auxb = [];
+    }
+
+    if (this.inmuebles.length === 0){
+      alert('No hay resultados de busqueda');
+      this.searchTerm = '';
+      this.inmuebles = [];
+    }else{
+      // this.inmuebles = this.auxb;
+      console.log(this.inmuebles);
+      this.madeSearch = true;
+      console.log('Make search');
+    }
+  }
+
+  existe(idn: string): boolean{
+    let a = false;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.auxb.length; i++){
+      if (this.auxb[i].IDI === idn){
+        a = true;
+        break;
+      }
+    }
+    return a;
   }
 
   getMinVentaSliderValue(event: any)
@@ -131,18 +338,26 @@ export class SearchComponent implements OnInit {
     this.maxArea = event.target.value;
   }
 
-  getImageUrl(/*userId: string*/) {
-    return 'assets/images/H-Gold.png';
+  getImageUrl(idInmueble: string) {
+    // return 'assets/images/H-Gold.png';
     // const userStorageRef = firebase.storage().ref().child('images/users/' + userId + "_users.jpg");
     // userStorageRef.getDownloadURL().then(url => {
     //   this.userProfileImg = url
     // });
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.inmuebles.length; i++) {
+      if (this.inmuebles[i].IDI === idInmueble){
+        if (this.inmuebles[i].DirFotos.length > 0){
+          return this.inmuebles[i].DirFotos[0];
+        }
+      }
+    }
   }
 
-  verInmueble(){
+  verInmueble(idInm: string){
     console.log('Entre a la Funcion');
     const id = 10;
-    this.router.navigate(['public/search/ver-inmueble/' + id]);
+    this.router.navigate(['public/search/ver-inmueble/' + idInm]);
 
   }
 
