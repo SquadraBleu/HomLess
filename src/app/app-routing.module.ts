@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { VerInmuebleComponent } from './components/inmobiliaria/ver-inmueble/ver-inmueble.component';
 import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble/crear-inmueble.component';
-import { SearchResultsComponent } from './components/public/search-results/search-results.component';
 import { HomeComponent } from './components/public/home/home.component';
 import { NotFoundComponent } from './components/public/not-found/not-found.component';
 import { SearchComponent } from './components/public/search/search.component';

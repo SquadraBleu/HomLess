@@ -35,12 +35,14 @@
                     </div>
                 </div>                     
             </div>
-            <div class="col-5 align-items-center text-center">
-                <angular-image-slider  [autoRotate]="true"
-                [autoRotateAfter]="2000"
-                [autoRotateRight]="true" [images]="urlImagenes"></angular-image-slider>                        
-                <p class="pie-de-foto">Imágenes del inmueble</p>
-            </div> 
-    </div>
+    </div> 
+    <div class="row" *ngFor="let foto of urlImagenes ; let i = index" style="margin-top: 2%;">
+        <div class="col alert alert-warning" *ngIf="i%2 == 0">
+            <img [src]="urlImagenes[i]"  class="rounded" style="min-width: 20vw;height: 20vw;margin: auto;">
+        </div>
+        <div class="col alert alert-warning" *ngIf="i%2 == 0">
+            <img [src]="urlImagenes[i+1]" class="rounded" style="min-width: 20vw;height: 20vw;margin: auto;">
+        </div>
+    </div> 
 </div> 
 
