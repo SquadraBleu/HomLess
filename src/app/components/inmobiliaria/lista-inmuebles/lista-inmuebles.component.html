@@ -1,0 +1,65 @@
+<div class="container-fluid" [hidden]="!(inmuebles.length > 0)">
+    <h1 align="center">Aquí están todos tus inmuebles</h1>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-7">
+            <input type="text" name="busqueda" id="busqueda" style="width: inherit; height: inherit;"
+            [(ngModel)]="busqueda" placeholder="Busca aqui un inmueble">
+        </div>
+        <div class="col-2">
+            <button class="btn btn-primary btn-sm" (click)="buscarInmueble()">
+                Buscar Inmueble
+            </button>
+        </div>
+         <div class="col-1" *ngIf="(busqueda!=='')">
+            <button class="btn btn-primary btn-sm" (click)="limpiarBusqueda()">
+                Limpiar
+            </button>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-success btn-sm" (click)="agregarInmueble()">
+                Agregar Inmueble
+            </button>
+        </div>
+    </div>
+    <div class="row alert alert-warning seleccion" *ngFor="let inmueble of inmuebles" (click)="verInmueble(inmueble.IDI)">
+        <div class="col-2">
+            <h5>Cómo se ve:</h5>
+            <img [src]="getImageUrl(inmueble.IDI)" class="logo">
+
+        </div>
+        <div class="col-3">
+            <h5>Título: </h5>
+            <p>
+                {{inmueble.Titulo}}
+            </p>
+        </div>
+        <div class="col-3">
+            <h5>Descripción: </h5>
+            <p>
+                {{inmueble.Descripcion}}
+            </p>
+        </div>
+        <div class="col-2">
+            <h5>Área(m&#178;): </h5>
+            {{inmueble.AreaConstruida}}
+        </div>
+        <div class="col-2">
+
+            <div *ngIf="inmueble.MontoVenta">
+                <h6>Monto de venta $$: </h6>
+                {{inmueble.MontoVenta}}
+            </div>
+
+            <div *ngIf="inmueble.MontoArriendo">
+                <h6>Monto de arriendo $$: </h6>
+                {{inmueble.MontoArriendo}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid alert alert-info" [hidden]="inmuebles.length > 0" align="center">
+    <h1 class="alert-heading">Holy Guacamole!</h1>
+    <p>Parece que no tienes inmuebles en tu inmobiliaria</p>
+    <hr>
+    <p><a href="inmobiliaria/crear-inmueble">Haz click aquí para crear un inmueble!</a></p>
+</div>

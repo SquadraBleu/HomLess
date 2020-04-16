@@ -90,3 +90,19 @@
 {
   margin-top: -10%;
 }
+
+.logo
+{
+  width: 50%;
+  height: auto;
+  margin: auto;
+}
+
+.seleccion{
+  cursor: pointer;
+}
+
+.slide
+{
+  margin: 8px;
+}

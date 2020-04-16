@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
     this.authSvc.loginByEmail(this.email, this.password)
     .then((res) => {
       console.log('resUser', res);
+      this.getCurrentUser();
     }).catch(err => {
         console.log('err', err.message);
         this.isError = true;
@@ -52,7 +53,6 @@ export class LoginComponent implements OnInit {
       console.log('resUser', res);
     }).catch(err => console.log('err', err.message));
     */
-    this.getCurrentUser();
   }
 
   onLogout(): void {
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
         this.authSvc.isUserInmo(this.userUid).subscribe(userRole => { // se si es una inmo
           if (userRole !== undefined){
             console.log(userRole.UID);
-            this.route.navigate(['inmobiliaria/crear-inmueble']);
+            this.route.navigate(['inmobiliaria/lista-inmuebles/' + this.userUid]);
           }
           /*
           if (userRole.roles.inmobiliaria){

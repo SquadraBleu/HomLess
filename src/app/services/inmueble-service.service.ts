@@ -13,11 +13,35 @@ export class InmuebleServiceService {
   tagsCollection: AngularFirestoreCollection<any>;
   tags: Observable<any[]>;
 
+  inmueblesCollection: AngularFirestoreCollection<any>;
+  inmuebles: Observable<any[]>;
+
+  inmobiliariasCollection: AngularFirestoreCollection<any>;
+  inmobiliarias: Observable<any[]>;
+
   constructor(
     private afsAut: AngularFireAuth,
     private afs: AngularFirestore
   ) { this.tagsCollection = afs.collection<any>('Tags');
       this.tags = this.tagsCollection.snapshotChanges().pipe(map(
+      actions => actions.map ( a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return{id, ...data};
+      })
+    ));
+
+      this.inmueblesCollection = afs.collection<any>('Inmuebles');
+      this.inmuebles = this.inmueblesCollection.snapshotChanges().pipe(map(
+      actions => actions.map ( a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return{id, ...data};
+      })
+    ));
+
+      this.inmobiliariasCollection = afs.collection<any>('Inmobiliarias');
+      this.inmobiliarias = this.inmobiliariasCollection.snapshotChanges().pipe(map(
       actions => actions.map ( a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
@@ -57,11 +81,28 @@ export class InmuebleServiceService {
     return this.tags;
   }
 
+  getInmuebles(){
+    return this.inmuebles;
+  }
+
+  getInmobiliarias(){
+    return this.inmobiliarias;
+  }
+
+  deleteInmueble(id: string){
+    return this.inmueblesCollection.doc(id).delete();
+  }
+
   updateTags(value: any){
     return this.afs.collection('Tags').doc(value.id).set(value);
   }
 
   updateInmueble(value: any, id: string){
+    console.log('actualice', id);
     return this.afs.collection('Inmuebles').doc(id).set(Object.assign({}, value));
+  }
+
+  updateInmobiliaria(value: any, id: string){
+    return this.afs.collection('Inmobiliarias').doc(id).set(Object.assign({}, value));
   }
 }

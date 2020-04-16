@@ -1,15 +1,16 @@
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 <div class="container-fluid">
     <div class="row mt-5">
         <h2 class="ml-auto mr-auto">¿Qué estás buscando?</h2>
     </div>
-    <form (ngSubmit)="submitSearch()" #createForm="ngForm">  
+    <form (ngSubmit)="submitSearch();" #createForm="ngForm">
     <div class="row">
         <div class="col-8 mx-auto">
-            <div class="card-body text-center">    
+            <div class="card-body text-center">
                     <div class="form-group">
-                        <input type="text" id="search" name="search" class="form-control" 
+                        <input type="text" id="search" name="search" class="form-control"
                         placeholder="Escribe aquí tu búsqueda" [(ngModel)]="searchTerm"/>
-                    </div>   
+                    </div>
             </div>
         </div>
     </div>
@@ -46,7 +47,7 @@
                                 <input [disabled]="!isMaxArea" type="range" min="0" max="500" value="0" class="slider-s slider" id="myRange"
                                 (change)="getMaxAreaSliderValue($event)" (oninput)="getMaxAreaSliderValue($event)">
                             </div>
-                        </div>        
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,7 +65,7 @@
                     <option *ngFor="let zona of zonas">
                         {{zona}}
                     </option>
-                 </select> 
+                 </select>
             </div>
             <div class="col-2">
                 <label class="small" for="localidad">Localidad: </label>
@@ -91,7 +92,7 @@
                             <input [disabled]="!isVenta" type="checkbox" class="form-check-input" name="isMinPriceVenta" [(ngModel)]="isMinPriceVenta">
                         </div>
                         <div class="col-11">
-                            <input [disabled]="!isVenta || !isMinPriceVenta" type="range" min="0" max="1000" value="0" class="slider-m slider" id="myRange"
+                            <input [disabled]="!isVenta || !isMinPriceVenta" type="range" min="0" max="2000" value="0" class="slider-m slider" id="myRange"
                             (change)="getMinVentaSliderValue($event)" (oninput)="getMinVentaSliderValue($event)">
                         </div>
                     </div>
@@ -102,11 +103,11 @@
                         </div>
                         <div class="col-11">
                             <div class="slidecontainer">
-                            <input [disabled]="!isVenta || !isMaxPriceVenta"  type="range" min="0" max="1000" value="0" class="slider-m slider" id="myRange"
+                            <input [disabled]="!isVenta || !isMaxPriceVenta"  type="range" min="0" max="2000" value="0" class="slider-m slider" id="myRange"
                             (change)="getMaxVentaSliderValue($event)" (oninput)="getMaxVentaSliderValue($event)">
                             </div>
                         </div>
-                    </div>          
+                    </div>
                 </div>
                 <div class="col">
                     <div class="form-check">
@@ -120,7 +121,7 @@
                         </div>
                         <div class="col-11">
                             <div class="slidecontainer">
-                                <input [disabled]="!isArriendo || !isMinPriceArriendo" type="range" min="0" max="5000000" step="50000" class="slider-m slider" id="myRange"
+                                <input [disabled]="!isArriendo || !isMinPriceArriendo" type="range" min="0" max="20000000" step="50000" class="slider-m slider" id="myRange"
                                 (change)="getMinArriendoSliderValue($event)" (oninput)="getMinArriendoSliderValue($event)">
                             </div>
                         </div>
@@ -132,15 +133,53 @@
                         </div>
                         <div class="col-11">
                             <div class="slidecontainer">
-                                <input [disabled]="!isArriendo || !isMaxPriceArriendo" type="range" min="0" max="5000000" step="50000" class="slider-m slider" id="myRange"
+                                <input [disabled]="!isArriendo || !isMaxPriceArriendo" type="range" min="0" max="20000000" step="50000" class="slider-m slider" id="myRange"
                                 (change)="getMaxArriendoSliderValue($event)" (oninput)="getMaxArriendoSliderValue($event)">
                             </div>
                         </div>
-                    </div>     
+                    </div>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-lg btn-primary btn-block mt-3 mb-3">Buscar</button>
+        <button type="submit" class="btn btn-lg btn-primary btn-block mt-3 mb-3" [disabled] = "!createForm.valid">Buscar</button>
     </div>
     </form>
+</div>
+<button [hidden]="!madeSearch" class="btn btn-lg btn-primary btn-block mt-3 mb-3" (click)="clean()">Limpiar</button>
+<h1 [hidden]="!madeSearch" align="center">Aquí está el resultado de tu búsqueda</h1>
+<div [hidden]="!madeSearch" class="container-fluid">
+    <div class="row alert alert-warning seleccion" *ngFor="let inmueble of inmuebles" (click)="verInmueble(inmueble.IDI)">
+        <div class="col-2">
+            <h5>Cómo se ve:</h5>
+            <img [src]="getImageUrl(inmueble.IDI)" class="logo">
+
+        </div>
+        <div class="col-3">
+            <h5>Título: </h5>
+            <p>
+                {{inmueble.Titulo}}
+            </p>
+        </div>
+        <div class="col-3">
+            <h5>Descripción: </h5>
+            <p>
+                {{inmueble.Descripcion}}
+            </p>
+        </div>
+        <div class="col-2">
+            <h5>Área (m&#178;): </h5>
+            {{inmueble.AreaConstruida}}
+        </div>
+        <div class="col-2">
+            <div *ngIf="inmueble.MontoVenta">
+                <h6>Monto de venta: </h6>
+                $ {{inmueble.MontoVenta}}
+            </div>
+
+            <div *ngIf="inmueble.MontoArriendo">
+                <h6>Monto de arriendo: </h6>
+                $ {{inmueble.MontoArriendo}}
+            </div>
+        </div>
+    </div>
 </div>

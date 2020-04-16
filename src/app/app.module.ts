@@ -8,7 +8,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SliderModule } from 'angular-image-slider';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -19,9 +18,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CrearInmuebleComponent } from './components/inmobiliaria/crear-inmueble/crear-inmueble.component';
 import { SearchComponent } from './components/public/search/search.component';
 import { VerInmueblePublicComponent } from './components/public/ver-inmueble-public/ver-inmueble-public.component';
-import { SearchResultsComponent } from './components/public/search-results/search-results.component';
 import { HomeComponent } from './components/public/home/home.component';
 import { NotFoundComponent } from './components/public/not-found/not-found.component';
+import { EditarInmuebleComponent } from './components/inmobiliaria/editar-inmueble/editar-inmueble.component';
+import { ListaInmueblesComponent } from './components/inmobiliaria/lista-inmuebles/lista-inmuebles.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +33,10 @@ import { NotFoundComponent } from './components/public/not-found/not-found.compo
     CrearInmuebleComponent,
     SearchComponent,
     VerInmueblePublicComponent,
-    SearchResultsComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EditarInmuebleComponent,
+    ListaInmueblesComponent
   ],
   imports: [
     BrowserModule,

@@ -1,46 +1,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-       <div class="container-fluid mt-5 mb-5">
-            <div class="row principal">
-                    <div class="col-1 align-self-center justify-content-start">
-                    </div>
-                    <div class="col-6">
-                        <p class="title"> {{inmueble.Titulo}} </p>
-                        <p class="description"> {{inmueble.Descripcion}} </p>                    
-                        <div class="row">
-                            <div class="col-5">
-                                <p class="atributo"> <strong>Área (m&#178;):</strong> {{inmueble.AreaConstruida}} </p>
-                                <p class="atributo"> <strong>N° Habitaciones:</strong> {{inmueble.NHabitaciones}} </p>
-                                <p class="atributo"> <strong>Zona:</strong> {{inmueble.Zona}} </p>
-                            </div>
-                            <div class="col-4">
-                                <p class="atributo"> <strong>Estrato:</strong> {{inmueble.Estrato}} </p>
-                                <p class="atributo"> <strong>N° Baños:</strong> {{inmueble.NBanos}} </p>
-                                <p class="atributo"> <strong>Localidad:</strong> {{inmueble.Localidad}} </p>
-                            </div>
-                            <div class="col-3">
-                                <p class="atributo"> <strong>Área Depósito (m&#178;):</strong> {{inmueble.AreaDeposito}}</p>
-                                <p class="atributo" *ngIf="isArriendo()"> <strong>Precio Arriendo:</strong> ${{inmueble.MontoArriendo}}</p>
-                                <p class="atributo" *ngIf="isVenta()"> <strong>Precio Venta:</strong> ${{inmueble.MontoVenta}}</p>
-                                <p class="atributo"> <strong>Barrio:</strong> {{inmueble.Barrio}} </p>
-                            </div>
-                        </div>  
-                        <div class="row">
-                            <div class="col">
-                            <button class="btn btn-estilo" (click)="onWriteMessage()">Escribir Mensaje
-                            </button>
-                            </div>
-                            <div class="col">
-                            <button class="btn btn-estilo" (click)="onScheduleAppointment()">Agendar Cita
-                            </button>
-                            </div>
-                        </div>                     
-                    </div>
-                    <div class="col-5 align-items-center text-center">
-                        <angular-image-slider  [autoRotate]="true"
-                        [autoRotateAfter]="2000"
-                        [autoRotateRight]="true" [images]="urlImagenes"></angular-image-slider>                        
-                        <p class="pie-de-foto">Imágenes del inmueble</p>
-                    </div> 
+<div class="container-fluid mt-5 mb-5">
+    <div class="row principal">
+            <div class="col-1 align-self-center justify-content-start">
             </div>
-        </div> 
+            <div class="col-6">
+                <p class="title"> {{inmueble.Titulo}} </p>
+                <p class="description"> {{inmueble.Descripcion}} </p>
+                <div class="row">
+                    <div class="col-5">
+                        <p class="atributo"> <strong>Área (m&#178;):</strong> {{inmueble.AreaConstruida}} </p>
+                        <p class="atributo"> <strong>N° Habitaciones:</strong> {{inmueble.NHabitaciones}} </p>
+                        <p class="atributo"> <strong>Zona:</strong> {{inmueble.Zona}} </p>
+                    </div>
+                    <div class="col-4">
+                        <p class="atributo"> <strong>Estrato:</strong> {{inmueble.Estrato}} </p>
+                        <p class="atributo"> <strong>N° Baños:</strong> {{inmueble.NBanos}} </p>
+                        <p class="atributo"> <strong>Localidad:</strong> {{inmueble.Localidad}} </p>
+                    </div>
+                    <div class="col-3">
+                        <p class="atributo"> <strong>Área Depósito (m&#178;):</strong> {{inmueble.AreaDeposito}}</p>
+                        <p class="atributo" *ngIf="isArriendo()"> <strong>Precio Arriendo:</strong> ${{inmueble.MontoArriendo}}</p>
+                        <p class="atributo" *ngIf="isVenta()"> <strong>Precio Venta:</strong> ${{inmueble.MontoVenta}}</p>
+                        <p class="atributo"> <strong>Barrio:</strong> {{inmueble.Barrio}} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                    <button class="btn btn-estilo" (click)="onWriteMessage()">Escribir Mensaje
+                    </button>
+                    </div>
+                    <div class="col">
+                    <button class="btn btn-estilo" (click)="onScheduleAppointment()">Agendar Cita
+                    </button>
+                    </div>
+                    <div class="col">
+                      <button class="btn btn-info" (click)="onRegresar()">Regresar a la Busqueda
+                      </button>
+                      </div>
+                </div>
+            </div>
+    </div>
+    <div class="row" *ngFor="let foto of urlImagenes ; let i = index" style="margin-top: 2%;">
+        <div class="col alert alert-warning" *ngIf="i%2 == 0">
+            <img [src]="urlImagenes[i]"  class="rounded" style="min-width: 20vw;height: 20vw;margin: auto;">
+        </div>
+        <div class="col alert alert-warning" *ngIf="i%2 == 0">
+            <img [src]="urlImagenes[i+1]" class="rounded" style="min-width: 20vw;height: 20vw;margin: auto;">
+        </div>
+    </div>
+</div>
 
