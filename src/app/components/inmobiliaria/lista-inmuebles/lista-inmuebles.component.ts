@@ -40,7 +40,8 @@ export class ListaInmueblesComponent implements OnInit {
     const auxb: Inmueble[] = [];
     // tslint:disable-next-line: prefer-for-of
     for (let index = 0; index < this.inmuebles.length; index++) {
-      if (this.inmuebles[index].Titulo.includes(this.busqueda)){
+      if (this.inmuebles[index].Titulo.toUpperCase().includes(this.busqueda.toUpperCase())
+      || this.inmuebles[index].Descripcion.toUpperCase().includes(this.busqueda.toUpperCase())){
         auxb.push(this.inmuebles[index]);
         //  console.log('VEEEERRR', this.inmueble);
       }

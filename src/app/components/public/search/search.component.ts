@@ -126,7 +126,8 @@ export class SearchComponent implements OnInit {
     if (this.searchTerm !== ''){
       // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].Titulo.includes(this.searchTerm) || this.inmuebles[index].Descripcion.includes(this.searchTerm)){
+        if (this.inmuebles[index].Titulo.toUpperCase().includes(this.searchTerm.toUpperCase())
+        || this.inmuebles[index].Descripcion.toUpperCase().includes(this.searchTerm.toUpperCase())){
           this.auxb.push(this.inmuebles[index]);
           // console.log('VEEEERRR', index);
           // auxb.splice(index, 1);
@@ -347,7 +348,7 @@ export class SearchComponent implements OnInit {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.inmuebles.length; i++) {
       if (this.inmuebles[i].IDI === idInmueble){
-        if (this.inmuebles[i].DirFotos.length > 0){
+        if (this.inmuebles[i].DirFotos !== undefined && this.inmuebles[i].DirFotos.length > 0){
           return this.inmuebles[i].DirFotos[0];
         }
       }
@@ -364,6 +365,7 @@ export class SearchComponent implements OnInit {
   clean()
   {
     this.madeSearch = false;
+    this.darInmuebles();
     window.location.reload();
   }
 
