@@ -98,7 +98,7 @@ export class CrearInmuebleComponent implements OnInit {
   }
 
   cancelar(){
-    this.router.navigate(['inmobiliaria/lista-inmuebles']);
+    this.router.navigate(['inmobiliaria/lista-inmuebles/' + this.userUid]);
   }
 
   crearInmueble(){

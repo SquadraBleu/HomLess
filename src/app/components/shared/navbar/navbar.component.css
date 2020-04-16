@@ -18,3 +18,6 @@ button{
 h4{
     color: white;
 }
+.seleccion{
+  cursor: pointer;
+}
