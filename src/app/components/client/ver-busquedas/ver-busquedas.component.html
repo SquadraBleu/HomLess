@@ -1,0 +1,24 @@
+<div class="container-fluid" [hidden]="!(busquedas.length > 0)">
+    <h2>Aquí están las búsquedas que has realizado</h2>
+    <div class="row alert alert-warning seleccion" *ngFor="let busqueda of busquedas; let i = index" [attr.data-index]="i">
+        <div class="col-9">
+        {{busqueda}}
+        </div>
+        <div class="col-2">
+            <button class="btn btn-success btn-sm" (click)="activarBusqueda(i)">
+                Activar alerta para la búsqueda
+            </button>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-danger btn-sm" (click)="eliminarBusqueda(i)">
+                Eliminar
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid alert alert-info" [hidden]="busquedas.length > 0" align="center">
+    <h1 class="alert-heading">Holy Guacamole!</h1>
+    <p>Parece que no has realizado ninguna búsqueda</p>
+    <hr>
+    <p><a href="public/search">¡Haz click aquí para buscar algo!</a></p>
+</div>
