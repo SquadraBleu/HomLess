@@ -40,7 +40,8 @@ export class NavbarComponent implements OnInit {
   }
 
   iconClick(){
-    this.router.navigate(['public/home']);
+    console.log('Holis');
+    this.router.navigate(['public/search']);
   }
 
   buscar(){
@@ -48,7 +49,7 @@ export class NavbarComponent implements OnInit {
   }
 
   registrarse(){
-    console.log('Navigate To Register');
+    this.router.navigate(['public/registro']);
   }
 
   iniciarSesion(){

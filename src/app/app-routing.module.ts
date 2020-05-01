@@ -9,6 +9,7 @@ import { SearchComponent } from './components/public/search/search.component';
 import { VerInmueblePublicComponent } from './components/public/ver-inmueble-public/ver-inmueble-public.component';
 import { EditarInmuebleComponent } from './components/inmobiliaria/editar-inmueble/editar-inmueble.component';
 import { ListaInmueblesComponent } from './components/inmobiliaria/lista-inmuebles/lista-inmuebles.component';
+import { RegistroComponent } from './components/public/registro/registro.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/public/home'},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'public/search/ver-inmueble/:id', component: VerInmueblePublicComponent},
   {path: 'public/home', component: HomeComponent},
   {path: 'error404', component: NotFoundComponent},
+  {path: 'public/registro', component: RegistroComponent},
   {path: '**', redirectTo: '/error404'}
 ];
 
