@@ -14,6 +14,7 @@ export class RegistroComponent implements OnInit {
   inmobiliaria = new Inmobiliaria('','','','','','',[],'');
   cliente = new Cliente('','','','','');
   public contrasena: string;
+  
   constructor(
     private router: Router
   ) { }

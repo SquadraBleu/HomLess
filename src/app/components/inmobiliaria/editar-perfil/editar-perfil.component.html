@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <h1 align="center">Edita aqui tu perfil</h1>
+    <form (ngSubmit)="guardarPerfil()">
+        <div class="row">
+            <div class="col">
+                <label for="nombre"><h6>Edita aqui el nombre de tu inmobiliaria</h6></label>
+                <input type="text" name="nombre" id="nombre" class="form-control" required
+                [(ngModel)]="inmobiliaria.nombre" #txtNombre="ngModel">
+
+                <label for="correo"><h6>No puedes cambiar tu correo </h6></label>
+                <input type="text" name="correo" id="correo" class="form-control" required
+                [(ngModel)]="inmobiliaria.correo" #txtcorreo="ngModel" readonly>
+
+                <label for="contrasena"><h6>Edita aqui tu contraseña, no miraremos</h6></label>
+                <input type="password" name="contrasena" id="contrasena" class="form-control" required
+                [(ngModel)]="contrasena" #txtcontrasena="ngModel">
+            </div>
+            <div class="col">
+                <label for="NIT"><h6> Edita aqui el NIT de tu inmobiliaria</h6></label>
+                <input type="text" name="NIT" id="NIT" class="form-control" required
+                [(ngModel)]="inmobiliaria.NIT" #txtNIT="ngModel">
+
+                <label for="telefono"><h6>Edita aqui el Teléfono de tu inmobiliaria</h6></label>
+                <input type="text" name="telefono" id="telefono" class="form-control" required
+                [(ngModel)]="inmobiliaria.telefono" #txtNIT="ngModel">
+
+                <label for="Imagenes"><h6>Edita aqui el logo de tu inmobiliaria</h6></label>
+                <input type="file"  accept="image/*" (change)="onUpload($event)" class="form-control">
+            </div> 
+       </div> 
+       <div class="row" style="margin-top: 10px;">
+            <div class="col">
+                <button class="btn btn-info btn-lg btn-block" (click)="cancelar()">
+                    Cancelar
+                </button> 
+        </div>
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-success btn-lg btn-block">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

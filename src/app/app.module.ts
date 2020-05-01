@@ -23,6 +23,10 @@ import { NotFoundComponent } from './components/public/not-found/not-found.compo
 import { EditarInmuebleComponent } from './components/inmobiliaria/editar-inmueble/editar-inmueble.component';
 import { ListaInmueblesComponent } from './components/inmobiliaria/lista-inmuebles/lista-inmuebles.component';
 import { RegistroComponent } from './components/public/registro/registro.component';
+import { VerPerfilComponent } from './components/inmobiliaria/ver-perfil/ver-perfil.component';
+import { EditarPerfilComponent } from './components/inmobiliaria/editar-perfil/editar-perfil.component';
+import { ClientVerPerfilComponent } from './components/client/client-ver-perfil/client-ver-perfil.component';
+import { ClientEditarPerfilComponent } from './components/client/client-editar-perfil/client-editar-perfil.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { RegistroComponent } from './components/public/registro/registro.compone
     NotFoundComponent,
     EditarInmuebleComponent,
     ListaInmueblesComponent,
-    RegistroComponent
+    RegistroComponent,
+    VerPerfilComponent,
+    EditarPerfilComponent,
+    ClientVerPerfilComponent,
+    ClientEditarPerfilComponent
   ],
   imports: [
     BrowserModule,

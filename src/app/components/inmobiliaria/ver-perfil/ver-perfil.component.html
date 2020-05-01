@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <h1 align="center">Este es tu perfil</h1>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col">
+            <img src="assets/images/Homless-Sad.png"
+             class="rounded" style="min-width: 20vw;height: 20vw;margin: auto;">
+        </div>
+        <div class="col">
+            <div class="row">
+                <p><strong>Nombre: </strong> {{inmobiliaria.nombre}}</p>
+            </div>
+            <div class="row">
+                <p><strong>Correo: </strong> {{inmobiliaria.correo}}</p>
+            </div>
+            <div class="row">
+                <p><strong>Teléfono: </strong> {{inmobiliaria.telefono}}</p>
+            </div>
+            <div class="row">
+                <p><strong>NIT: </strong> {{inmobiliaria.NIT}}</p>
+            </div>       
+        </div>
+        <div class="col-3">
+            <div>
+                <button class="btn btn-warning" (click)="editarPerfil()">
+                    Editar tu perfil  
+                <img src="assets/images/edit-tool.png" style="position: relative; float: right; width: 25px; height: inherit; margin-left: 5px;"></button>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-danger" (click)="borrarPerfil()">
+                    Borrar tu cuenta
+                    <img src="assets/images/trash.png" style="position: relative; float: right; width: 25px; height: inherit; margin-left: 5px;"></button>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="seleccion" (click)="verInmuebles()">
+                <img src="assets/images/verInmueble.png"
+                class="rounded" style="min-width: 10vw;height: 10vw;margin: auto;" alt="Ver tus Inmuebles">
+                <p><strong>Click en la casita para ver tus Inmuebles</strong></p>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-3">
+            <button class="btn btn-info" (click)="volver()">
+                Volver
+            </button>
+        </div>
+    </div>
+    
+</div>

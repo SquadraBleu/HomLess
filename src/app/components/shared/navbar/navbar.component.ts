@@ -40,7 +40,6 @@ export class NavbarComponent implements OnInit {
   }
 
   iconClick(){
-    console.log('Holis');
     this.router.navigate(['public/search']);
   }
 
@@ -54,5 +53,9 @@ export class NavbarComponent implements OnInit {
 
   iniciarSesion(){
     this.router.navigate(['public/login']);
+  }
+
+  verPerfil(){
+    this.router.navigate(['cliente/ver-perfil']);
   }
 }
