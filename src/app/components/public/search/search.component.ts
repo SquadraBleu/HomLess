@@ -41,6 +41,8 @@ export class SearchComponent implements OnInit {
   tipoInmueble = '';
 
   madeSearch = false;
+  isLogged = false;
+  activarAlerta = false;
   auxb: Inmueble[] = [];
 
   inmuebles: Inmueble[] = [/*
