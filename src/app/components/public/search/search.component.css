@@ -86,9 +86,14 @@
   cursor: pointer;
 }
 
+.card
+{
+  margin-top: -2%;
+}
+
 .area
 {
-  margin-top: -10%;
+  margin-top: -15%;
 }
 
 .logo

@@ -1,9 +1,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 <div class="container-fluid">
-    <div class="row mt-1">
+    <div class="card">
+    <div class="card-body">
+    <div class="row">
         <h2 class="ml-auto mr-auto">¿Qué estás buscando?</h2>
     </div>
-    <form (ngSubmit)="submitSearch();" #createForm="ngForm">
+    <form (ngSubmit)="submitSearch();" #createForm="ngForm"> 
     <div class="row">
         <div class="col-8 mx-auto">
             <div class="card-body text-center">
@@ -14,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="container form-group">
+    <div class="container form-group ">
         <div class="row">
             <div class="col-2">
                 <label class="small" for="tipos">Tipo de inmueble: </label>
@@ -28,7 +30,7 @@
                 <div class="row">
                     <div class="col">
                         <label class="small" for="titulo">Área (m&#178;): </label>
-                        <p class="small">Área mínima: ${{minArea}}m&#178;</p>
+                        <p class="small">Área mínima: {{minArea}}m&#178;</p>
                         <div class="row area">
                             <div class="col-2 text-right">
                                 <input type="checkbox" class="form-check-input" name="isMinArea" [(ngModel)]="isMinArea">
@@ -38,7 +40,7 @@
                                 (change)="getMinAreaSliderValue($event)" (oninput)="getMinAreaSliderValue($event)">
                             </div>
                         </div>
-                        <p class="small">Área máxima: ${{maxArea}}m&#178;</p>
+                        <p class="small">Área máxima: {{maxArea}}m&#178;</p>
                         <div class="row area">
                             <div class="col-2">
                                 <input type="checkbox" class="form-check-input" name="isMaxArea" [(ngModel)]="isMaxArea">
@@ -53,11 +55,11 @@
             </div>
             <div class="col-2">
                 <label class="small" for="titulo">Número de habitaciones </label>
-                <input type="text" name="nhabitaciones" id="nhabitaciones" class="form-control" [(ngModel)]="nhabitaciones">
+                <input type="number" min="0" max="10" name="nhabitaciones" id="nhabitaciones" class="form-control" [(ngModel)]="nhabitaciones">
             </div>
             <div class="col-2">
                 <label class="small" for="titulo">Número de baños: </label>
-                <input type="text" name="nbanos" id="nbanos" class="form-control" [(ngModel)]="nbanos">
+                <input type="text" min="0" max="10" name="nbanos" id="nbanos" class="form-control" [(ngModel)]="nbanos">
             </div>
             <div class="col-2">
                 <label class="small" for="zonas">Zona: </label>
@@ -140,10 +142,18 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <input type="text" id="search" name="search" class="form-control"
+                        placeholder="Escribe aquí palabras clave separadas por coma" [(ngModel)]="tags"/>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-lg btn-primary btn-block mt-3 mb-3" [disabled] = "!createForm.valid">Buscar</button>
+        <button type="submit" class="btn btn-lg btn-primary btn-block mt-3" [disabled] = "!createForm.valid">Buscar</button>
     </div>
     </form>
+    </div>
+    </div>
 </div>
 <button [hidden]="!madeSearch" class="btn btn-lg btn-primary btn-block mt-3 mb-3" (click)="clean()">Limpiar</button>
 <h1 [hidden]="!madeSearch" align="center">Aquí está el resultado de tu búsqueda</h1>
