@@ -27,8 +27,8 @@ const routes: Routes = [
   {path: 'public/home', component: HomeComponent},
   {path: 'error404', component: NotFoundComponent},
   {path: 'public/registro', component: RegistroComponent},
-  {path: 'inmobiliaria/ver-perfil',component: VerPerfilComponent},
-  {path: 'inmobiliaria/editar-perfil',component:EditarPerfilComponent},
+  {path: 'inmobiliaria/ver-perfil', component: VerPerfilComponent},
+  {path: 'inmobiliaria/editar-perfil', component: EditarPerfilComponent},
   {path: 'cliente/ver-perfil', component:ClientVerPerfilComponent},
   {path: 'cliente/editar-perfil', component: ClientEditarPerfilComponent},
   {path: '**', redirectTo: '/error404'}

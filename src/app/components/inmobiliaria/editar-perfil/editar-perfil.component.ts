@@ -14,10 +14,10 @@ export class EditarPerfilComponent implements OnInit {
     'inmobiliaria@jaja.com',
     '30123323',
     'Tachas Tachas',
-    '','',[],'');
-    
+    '', '', [], '');
+
   contrasena: string;
-    
+
   constructor(
     public router: Router
   ) { }
@@ -26,7 +26,7 @@ export class EditarPerfilComponent implements OnInit {
   }
 
   guardarPerfil(){
-    //TODO INTEGRACION
+    // TODO INTEGRACION
   }
 
   cancelar(){
@@ -34,7 +34,7 @@ export class EditarPerfilComponent implements OnInit {
   }
 
   onUpload(e) {
-    //TODO INTEGRACION
+    // TODO INTEGRACION
   }
 
 }
