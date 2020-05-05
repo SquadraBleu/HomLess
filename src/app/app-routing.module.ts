@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: 'public/registro', component: RegistroComponent},
   {path: 'inmobiliaria/ver-perfil', component: VerPerfilComponent},
   {path: 'inmobiliaria/editar-perfil', component: EditarPerfilComponent},
-  {path: 'cliente/ver-perfil', component:ClientVerPerfilComponent},
+  {path: 'cliente/ver-perfil', component: ClientVerPerfilComponent},
   {path: 'cliente/editar-perfil', component: ClientEditarPerfilComponent},
   {path: '**', redirectTo: '/error404'}
 ];
