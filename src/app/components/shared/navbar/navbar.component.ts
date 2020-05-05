@@ -40,7 +40,9 @@ export class NavbarComponent implements OnInit {
   }
 
   iconClick(){
-    this.router.navigate(['public/search']);
+    this.afsAuth.auth.signOut();
+    this.isLogged = false;
+    this.router.navigate(['public/home']);
   }
 
   buscar(){
