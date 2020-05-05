@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <h1 align="center">Este es tu perfil</h1>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col">
+            <div class="row">
+                <p><strong>Nombre: </strong> {{cliente.nombre}}</p>
+            </div>
+            <div class="row">
+                <p><strong>Correo: </strong> {{cliente.correo}}</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <p><strong>Cedula: </strong> {{cliente.cedula}}</p>
+            </div>
+            <div class="row">
+                <p><strong>Teléfono: </strong> {{cliente.telefono}}</p>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <button class="btn btn-warning" (click)="editarPerfil()">
+                    Editar tu perfil  
+                <img src="assets/images/edit-tool.png" style="position: relative; float: right; width: 25px; height: inherit; margin-left: 5px;"></button>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-danger" (click)="borrarPerfil()">
+                    Borrar tu cuenta
+                    <img src="assets/images/trash.png" style="position: relative; float: right; width: 25px; height: inherit; margin-left: 5px;"></button>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="seleccion" (click)="verBusquedas()">
+                <img src="assets/images/historial.png"
+                class="rounded" style="min-width: 10vw;height: 10vw;margin: auto;" alt="Ver tus Inmuebles">
+                <p><strong>Click en la lista para ver tus Busquedas</strong></p>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-3">
+            <button class="btn btn-info" (click)="volver()">
+                Volver
+            </button>
+        </div>
+    </div>
+</div>

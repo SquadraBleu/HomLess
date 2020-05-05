@@ -50,10 +50,14 @@ export class NavbarComponent implements OnInit {
   }
 
   registrarse(){
-    console.log('Navigate To Register');
+    this.router.navigate(['public/registro']);
   }
 
   iniciarSesion(){
     this.router.navigate(['public/login']);
+  }
+
+  verPerfil(){
+    this.router.navigate(['cliente/ver-perfil']);
   }
 }
