@@ -32,7 +32,7 @@ exports.unindexInmuebles = functions.firestore
 exports.updateindexInmuebles = functions.firestore
   .document('Inmuebles/{UID}')
   .onUpdate((snap, context) => {
-    const data = snap.after;
+    const data = snap?.after?.data() ?? snap.after;
     const objectId = data.id;
     return index.addObject({
       objectId,
