@@ -3,6 +3,8 @@ import { FormGroup, FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Inmueble } from 'src/app/models/inmueble';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
+import { environment } from 'src/environments/environment';
+import * as algoliasearch from 'algoliasearch/lite';
 
 @Component({
   selector: 'app-search',
@@ -10,6 +12,12 @@ import { InmuebleServiceService } from 'src/app/services/inmueble-service.servic
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+
+  searchConfig = {
+    ...environment.algolia,
+    indexName: 'inmuebles_search'
+  };
+
 
   constructor(private router: Router, private inmuService: InmuebleServiceService) {
     // this.searchGroup = new FormGroup({search: new FormControl() });
