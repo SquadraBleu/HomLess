@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~9.1.0",
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
+    "@types/algoliasearch": "^3.34.10",
+    "algoliasearch": "^4.2.0",
     "angular-image-slider": "0.0.9",
     "angularfire2": "^5.4.2",
     "bootstrap": "^4.4.1",
