@@ -12,7 +12,7 @@ export class RegistroComponent implements OnInit {
 
   public rolRegistro = '';
   inmobiliaria = new Inmobiliaria('', '', '', '', '', '', [], '');
-  cliente = new Cliente('', '', '', '', '');
+  cliente = new Cliente('', '', '', '', '', [], [], [], []);
   public contrasena: string;
 
   constructor(
