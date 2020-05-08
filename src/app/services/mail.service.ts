@@ -41,5 +41,4 @@ export class MailService {
   getMails(){
     return this.mails;
   }
-   
 }

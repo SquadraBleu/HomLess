@@ -8,6 +8,6 @@ export class Cliente {
         public Chats: string[],
         public CitasSolicitadas: string[],
         public CitasAceptadas: string[],
-        public InteresadoEn : string[]
+        public InteresadoEn: string[]
     ){}
 }

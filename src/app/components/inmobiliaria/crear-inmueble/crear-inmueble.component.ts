@@ -115,7 +115,7 @@ export class CrearInmuebleComponent implements OnInit {
   }
 
   notificarInteresados(){
-    //TODO
+    // TODO
   }
 
   onUpload(e) {

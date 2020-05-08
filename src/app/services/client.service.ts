@@ -32,7 +32,7 @@ export class ClientService {
       UID: value.UID,
       Chats: value.Chats,
       CitasSolicitadas: value.CitasSolicitadas,
-      CitasAceptadas: value.CitasAceptadas, 
+      CitasAceptadas: value.CitasAceptadas,
       InteresadoEn: value.InteresadoEn
     });
   }
@@ -48,5 +48,5 @@ export class ClientService {
   getClientes(){
     return this.clientes;
   }
-   
+
 }
