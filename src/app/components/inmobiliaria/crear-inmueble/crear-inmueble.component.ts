@@ -8,6 +8,7 @@ import { InmuebleServiceService } from '../../../services/inmueble-service.servi
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Tag } from 'src/app/models/tag';
+import { MailService } from 'src/app/services/mail.service';
 
 @Component({
   selector: 'app-crear-inmueble',
@@ -80,6 +81,7 @@ export class CrearInmuebleComponent implements OnInit {
   constructor(
     private authSvc: AuthService,
     private inmuService: InmuebleServiceService,
+    private mailService: MailService,
     private route: ActivatedRoute,
     private storage: AngularFireStorage,
     private router: Router
@@ -107,8 +109,13 @@ export class CrearInmuebleComponent implements OnInit {
       this.IDinmueble = res.id;
       console.log(this.IDinmueble);
       this.actualizarTags();
+      this.notificarInteresados();
     }).catch ( err => console.log('err', err.message));
     // this.actualizarTags();
+  }
+
+  notificarInteresados(){
+    //TODO
   }
 
   onUpload(e) {

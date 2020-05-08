@@ -5,11 +5,11 @@
             <div class="col">
                 <label for="nombre"><h6>Edita aqui tu nombre</h6></label>
                 <input type="text" name="nombre" id="nombre" class="form-control" required
-                [(ngModel)]="cliente.nombre" #txtNombre="ngModel">
+                [(ngModel)]="cliente.Nombre" #txtNombre="ngModel">
 
                 <label for="correo"><h6>No puedes cambiar tu correo </h6></label>
                 <input type="text" name="correo" id="correo" class="form-control" required
-                [(ngModel)]="cliente.correo" #txtcorreo="ngModel" readonly>
+                [(ngModel)]="cliente.Correo" #txtcorreo="ngModel" readonly>
 
                 <label for="contrasena"><h6>Edita aqui tu contraseña, no miraremos</h6></label>
                 <input type="password" name="contrasena" id="contrasena" class="form-control" required
@@ -17,11 +17,11 @@
 
                 <label for="NIT"><h6> Edita aqui tu cedula</h6></label>
                 <input type="text" name="NIT" id="NIT" class="form-control" required
-                [(ngModel)]="cliente.cedula" #txtNIT="ngModel">
+                [(ngModel)]="cliente.Cedula" #txtNIT="ngModel">
 
                 <label for="telefono"><h6>Edita tu Teléfono </h6></label>
                 <input type="text" name="telefono" id="telefono" class="form-control" required
-                [(ngModel)]="cliente.telefono" #txtTelefono="ngModel">
+                [(ngModel)]="cliente.Telefono" #txtTelefono="ngModel">
             </div>
         </div>
         <div class="row" style="margin-top: 10px;">
