@@ -8,12 +8,19 @@
   font-weight: 700;
 }
 
+.alerta
+{
+  color: red;
+  font-size: small;
+  margin-top: -3%;
+}
+
 .btn-lg
 {
   background-color: #ffb000;
   border: 0;
   border-radius: 0.6ch;
-  width: 50%;
+  width: 100%;
   margin: auto;
 }
 .btn:focus, .btn:active, .btn:not(:disabled):not(.disabled):focus
@@ -86,9 +93,14 @@
   cursor: pointer;
 }
 
+.card
+{
+  margin-top: -2%;
+}
+
 .area
 {
-  margin-top: -10%;
+  margin-top: -15%;
 }
 
 .logo

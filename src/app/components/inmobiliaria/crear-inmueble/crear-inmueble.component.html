@@ -103,6 +103,12 @@
                 [(ngModel)]="inmueble.Descripcion" #txtDescripcion="ngModel"></textarea>
             </div>
         </div>
+        <div class="row">
+            <div class="col mt-2 mb-2">
+                <input type="text" id="search" name="search" class="form-control"
+                placeholder="Escribe aquí palabras clave (etiquetas) separadas por coma" [(ngModel)]="tags"/>
+            </div>
+        </div>
         <div class="row alert alert-warning">
             <div class="col">
 

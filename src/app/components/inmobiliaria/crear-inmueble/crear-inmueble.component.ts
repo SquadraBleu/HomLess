@@ -34,6 +34,7 @@ export class CrearInmuebleComponent implements OnInit {
   pagoAdmin: boolean;
   cc: boolean;
   privacidad: boolean;
+  tags = '';
 
   localidades: string[] = [
     '',
