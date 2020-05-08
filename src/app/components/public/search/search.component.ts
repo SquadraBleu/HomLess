@@ -4,7 +4,15 @@ import { Router } from '@angular/router';
 import { Inmueble } from 'src/app/models/inmueble';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 import { environment } from 'src/environments/environment';
-import * as algoliasearch from 'algoliasearch/lite';
+import algoliasearch from 'algoliasearch';
+
+const client = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
+const indexAlg = client.initIndex('inmuebles_search');
+// indexAlg.setSettings({
+//  attributesForFaceting: [
+//    'TipoInmueble'
+//    ]
+// }).then(() => { });
 
 @Component({
   selector: 'app-search',
@@ -12,13 +20,6 @@ import * as algoliasearch from 'algoliasearch/lite';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
-  searchConfig = {
-    ...environment.algolia,
-    indexName: 'inmuebles_search'
-  };
-
-
   constructor(private router: Router, private inmuService: InmuebleServiceService) {
     // this.searchGroup = new FormGroup({search: new FormControl() });
   }
@@ -132,18 +133,12 @@ export class SearchComponent implements OnInit {
   submitSearch(): void
   {
     if (this.searchTerm !== ''){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].Titulo.toUpperCase().includes(this.searchTerm.toUpperCase())
-        || this.inmuebles[index].Descripcion.toUpperCase().includes(this.searchTerm.toUpperCase())){
-          this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-      console.log('primer filtro', this.inmuebles);
+      indexAlg.search(this.searchTerm).then(({ hits }) => {
+      console.log(hits);
+      // @ts-ignore
+      this.inmuebles = hits;
+      console.log(this.inmuebles);
+      });
     }
 
     if (this.tipoInmueble !== ''){
@@ -249,8 +244,6 @@ export class SearchComponent implements OnInit {
             && this.inmuebles[index].MontoArriendo >= this.minPriceArriendo
             && this.existe(this.inmuebles[index].IDI) === false){
             this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
           }
         }
         if (this.inmuebles[index].MontoArriendo !== undefined && this.isMaxPriceArriendo === true){
@@ -258,8 +251,6 @@ export class SearchComponent implements OnInit {
             && this.inmuebles[index].MontoArriendo <= this.maxPriceArriendo
             && this.existe(this.inmuebles[index].IDI) === false){
             this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
           }
         }
       }
