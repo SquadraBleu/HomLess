@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ClientVerPerfilComponent implements OnInit {
 
-  cliente = new Cliente('Iwan TuFuq', '123456789', '3003478654', '420_OG_69@still.com', '');
+  cliente = new Cliente('Iwan TuFuq', '123456789', '3003478654', '420_OG_69@still.com', '', [], [], [], []);
   constructor(
     public router: Router
   ) { }

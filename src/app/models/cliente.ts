@@ -1,9 +1,13 @@
 export class Cliente {
     constructor(
-        public nombre: string,
-        public cedula: string,
-        public telefono: string,
-        public correo: string,
-        public UID: string
+        public Nombre: string,
+        public Cedula: string,
+        public Telefono: string,
+        public Correo: string,
+        public UID: string,
+        public Chats: string[],
+        public CitasSolicitadas: string[],
+        public CitasAceptadas: string[],
+        public InteresadoEn: string[]
     ){}
 }
