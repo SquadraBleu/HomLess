@@ -9,12 +9,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Tag } from 'src/app/models/tag';
 
-
 @Component({
   selector: 'app-editar-inmueble',
   templateUrl: './editar-inmueble.component.html',
   styleUrls: ['./editar-inmueble.component.css']
 })
+
 export class EditarInmuebleComponent implements OnInit {
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined

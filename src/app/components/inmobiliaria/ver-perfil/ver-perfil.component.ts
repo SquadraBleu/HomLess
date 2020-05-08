@@ -14,7 +14,7 @@ export class VerPerfilComponent implements OnInit {
     'inmobiliaria@jaja.com',
     '30123323',
     'Tachas Tachas',
-    '','',[],'');
+    '', '', [], '');
 
   default = 'assets/images/Homless-Sad.png';
 
@@ -32,7 +32,7 @@ export class VerPerfilComponent implements OnInit {
   borrarPerfil(){
 
   }
-  
+
   verInmuebles(){
 
   }

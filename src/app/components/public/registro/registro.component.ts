@@ -11,27 +11,27 @@ import { Router } from '@angular/router';
 export class RegistroComponent implements OnInit {
 
   public rolRegistro = '';
-  inmobiliaria = new Inmobiliaria('','','','','','',[],'');
-  cliente = new Cliente('','','','','');
+  inmobiliaria = new Inmobiliaria('', '', '', '', '', '', [], '');
+  cliente = new Cliente('', '', '', '', '');
   public contrasena: string;
-  
+
   constructor(
     private router: Router
   ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     console.log(this.rolRegistro);
   }
 
   registrarInmobiliaria(){
-    //TODO INTEGRACION
+    // TODO INTEGRACION
   }
-   
+
   registrarCliente(){
-      //TODO INTEGRACION
+    // TODO INTEGRACION
   }
   onUpload(e) {
-    //TODO INTEGRACION
+    // TODO INTEGRACION
   }
   cancelar(){
     this.router.navigate(['public/home']);
