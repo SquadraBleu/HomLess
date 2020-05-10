@@ -13,9 +13,10 @@ export class VerBusquedasComponent implements OnInit {
   constructor() { }
 
   public busquedas: Busqueda[] =
-    [new Busqueda(null, 'Casa bonita', null, 10, 150, 3, undefined, null, null, 0, 300, null, null, false, null, null),
+    [new Busqueda(null, 'Casa bonita', null, 10, 150, 3, undefined, null, null, 0, 300, null, null, false, null, null, null),
      new Busqueda(null, 'Apto bonito', 'Casa', undefined, undefined, 3, 2, 'Norte', null, undefined, undefined, 0, 1200000,
-                                  true, null, [new Tag('lindo', null, null), new Tag('grande', null, null)])];
+       // tslint:disable-next-line:max-line-length
+                                  true, null, ['lindo'/*new Tag('lindo', null, null)*/ , 'grande'/*new Tag('grande', null, null)], null)*/], null)];
 
   public headers: string[][] = [];
   public data: string[][] = [];
@@ -117,7 +118,7 @@ export class VerBusquedasComponent implements OnInit {
         let etiquetas = '';
         for (let k = 0; k < this.busquedas[i].Tags.length; k++)
         {
-          etiquetas = etiquetas + this.busquedas[i].Tags[k].Hashtag;
+          // etiquetas = etiquetas + this.busquedas[i].Tags[k].Hashtag;
           if (k !== this.busquedas[i].Tags.length - 1)
           {
             etiquetas = etiquetas + ', ';

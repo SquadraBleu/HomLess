@@ -17,6 +17,7 @@ export class Busqueda {
         public PrecioMaxArriendo: number,
         public SiNotificacion: boolean,
         public IDCliente: string,
-        public Tags: Tag[]
+        public Tags: string[],
+        public Correo: string
     ){}
 }
