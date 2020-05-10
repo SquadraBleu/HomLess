@@ -1,18 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Inmueble } from 'src/app/models/inmueble';
-import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
-import { environment } from 'src/environments/environment';
-import algoliasearch from 'algoliasearch';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormControl, NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Inmueble} from 'src/app/models/inmueble';
+import {InmuebleServiceService} from 'src/app/services/inmueble-service.service';
+import {environment} from 'src/environments/environment';
+import * as algoliasearch from 'algoliasearch';
 
 const client = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
 const indexAlg = client.initIndex('inmuebles_search');
-// indexAlg.setSettings({
-//  attributesForFaceting: [
-//    'TipoInmueble'
-//    ]
-// }).then(() => { });
 
 @Component({
   selector: 'app-search',
@@ -53,6 +48,9 @@ export class SearchComponent implements OnInit {
   isLogged = false;
   activarAlerta = false;
   auxb: Inmueble[] = [];
+  filters = '';
+  multipleFilters = false;
+  rangeArea = false;
 
   inmuebles: Inmueble[] = [/*
     new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined
@@ -104,13 +102,12 @@ export class SearchComponent implements OnInit {
     'Suroriente'
   ];
 
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
     this.darInmuebles();
   }
 
-  darInmuebles(){
-    this.inmuService.getInmuebles().subscribe( res => {
+  darInmuebles() {
+    this.inmuService.getInmuebles().subscribe(res => {
       this.inmuebles = res;
       // console.log(res);
       console.log('VEEEERRR', this.inmuebles);
@@ -133,181 +130,146 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  submitSearch(): void
-  {
+  submitSearch(): void {
+    console.log('Init Submit to Algolia');
+    this.filters = '';
     console.log(this.tags); // String separado por comas, es necesario hacer trim al string completo
                             // y luego a cada string parseado, por si el usuario puso espacios antes o
                             // después de la palabra. Ojo que podrían haber espacios entre el tag y eso sí es válido
 
-    if (this.searchTerm !== ''){
-      indexAlg.search(this.searchTerm).then(({ hits }) => {
-      console.log(hits);
+    if (this.tipoInmueble !== '') {
+      this.multipleFilters = true;
+      this.filters += 'TipoInmueble:' + this.tipoInmueble;
+      console.log(this.filters);
+    }
+
+    if (this.nhabitaciones !== 0) {
+      if (this.multipleFilters) {
+        this.filters += ' AND ';
+      } else {
+        this.multipleFilters = true;
+      }
+      this.filters += 'NHabitaciones = ' + this.nhabitaciones;
+      console.log(this.filters);
+    }
+
+    if (this.nbanos !== 0) {
+      if (this.multipleFilters) {
+        this.filters += ' AND ';
+      } else {
+        this.multipleFilters = true;
+      }
+      this.filters += 'NBanos = ' + this.nbanos;
+    }
+
+    if (this.zona !== '') {
+      if (this.multipleFilters) {
+        this.filters += ' AND ';
+      } else {
+        this.multipleFilters = true;
+      }
+      this.filters += 'Zona:' + this.zona;
+    }
+
+    if (this.localidad !== '') {
+      if (this.multipleFilters) {
+        this.filters += ' AND ';
+      } else {
+        this.multipleFilters = true;
+      }
+      this.filters += 'Localidad:"' + this.localidad + '"';
+    }
+
+    if (this.isMinArea === true) {
+      if (this.multipleFilters) {
+        this.filters += ' AND ';
+      } else {
+        this.multipleFilters = true;
+      }
+      this.filters += 'AreaConstruida';
+      this.rangeArea = true;
+    }
+
+    if (this.isMaxArea === true) {
+      if (this.rangeArea) {
+        this.filters += ':' + this.minArea + ' TO ' + this.maxArea;
+      } else if (this.multipleFilters) {
+        this.filters += ' AND ';
+        this.filters += 'AreaConstruida < ' + this.maxArea;
+      } else {
+        this.multipleFilters = true;
+      }
+    } else if (this.rangeArea) {
+      this.filters += ' > ' + this.minArea;
+    }
+
+    if (this.isArriendo === true) {
+      if (this.multipleFilters) {
+        this.filters += ' AND ';
+      } else {
+        this.multipleFilters = true;
+      }
+      if (this.isMinPriceArriendo) {
+        if (this.isMaxPriceArriendo) {
+          this.filters += 'MontoArriendo:' + (this.minPriceArriendo + 1) + ' TO ' + this.maxPriceArriendo;
+        } else {
+          this.filters += 'MontoArriendo > ' + (this.minPriceArriendo + 1);
+
+        }
+      } else if (this.isMaxPriceArriendo) {
+        this.filters += 'MontoArriendo < ' + this.maxPriceArriendo;
+      } else {
+        this.filters += 'MontoArriendo > 1';
+      }
+    }
+
+    if (this.isVenta === true) {
+      if (this.multipleFilters) {
+        this.filters += ' AND ';
+      } else {
+        this.multipleFilters = true;
+      }
+      if (this.isMinPriceVenta) {
+        if (this.isMaxPriceVenta) {
+          this.filters += 'MontoVenta:' + (this.minPriceVenta * 1000000 + 1) + ' TO ' + (this.maxPriceVenta * 1000000);
+        } else {
+          this.filters += 'MontoVenta > ' + (this.minPriceVenta * 1000000 + 1);
+
+        }
+      } else if (this.isMaxPriceVenta) {
+        this.filters += 'MontoVenta < ' + (this.maxPriceVenta * 1000000);
+      } else {
+        this.filters += 'MontoVenta > 1';
+      }
+    }
+
+    indexAlg.search(this.searchTerm, {
+      // @ts-ignore
+      filters: this.filters
+    }).then(({hits}) => {
       // @ts-ignore
       this.inmuebles = hits;
-      console.log(this.inmuebles);
-      });
-    }
+    });
+    console.log(this.filters);
+    this.multipleFilters = false;
+    this.rangeArea = false;
 
-    if (this.tipoInmueble !== ''){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].TipoInmueble === this.tipoInmueble){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.nhabitaciones !== 0){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        // console.log('fsdfsdfsdfsdfds' , this.inmuebles[index].NHabitaciones);
-        // console.log('fsdfsdfsdfsdfds2' , this.nhabitaciones);
-        // tslint:disable-next-line: triple-equals
-        if (this.inmuebles[index].NHabitaciones == this.nhabitaciones){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.nbanos !== 0){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        // tslint:disable-next-line: triple-equals
-        if (this.inmuebles[index].NBanos == this.nbanos){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.zona !== ''){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].Zona === this.zona){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.localidad !== ''){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].Localidad === this.localidad){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.isMinArea === true){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].AreaConstruida >= this.minArea && this.existe(this.inmuebles[index].IDI) === false ){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.isMaxArea === true){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].AreaConstruida <= this.maxArea && this.existe(this.inmuebles[index].IDI) === false){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.isArriendo === true){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].MontoArriendo !== undefined && this.isMinPriceArriendo === true){
-          if ( this.inmuebles[index].MontoArriendo !== undefined
-            && this.inmuebles[index].MontoArriendo >= this.minPriceArriendo
-            && this.existe(this.inmuebles[index].IDI) === false){
-            this.auxb.push(this.inmuebles[index]);
-          }
-        }
-        if (this.inmuebles[index].MontoArriendo !== undefined && this.isMaxPriceArriendo === true){
-          if ( this.inmuebles[index].MontoArriendo !== undefined
-            && this.inmuebles[index].MontoArriendo <= this.maxPriceArriendo
-            && this.existe(this.inmuebles[index].IDI) === false){
-            this.auxb.push(this.inmuebles[index]);
-          }
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.isVenta === true){
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.inmuebles.length; index++) {
-        if (this.inmuebles[index].MontoVenta !== undefined && this.isMinPriceVenta === true){
-          if ( this.inmuebles[index].MontoVenta !== undefined
-            && this.inmuebles[index].MontoVenta >= (this.minPriceVenta * 1000000)
-            && this.existe(this.inmuebles[index].IDI) === false ){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-          }
-        }
-        if (this.inmuebles[index].MontoVenta !== undefined && this.isMaxPriceVenta === true){
-          if ( this.inmuebles[index].MontoVenta !== undefined
-            && this.inmuebles[index].MontoVenta <= (this.maxPriceVenta * 1000000)
-            && this.existe(this.inmuebles[index].IDI) === false ){
-            this.auxb.push(this.inmuebles[index]);
-          // console.log('VEEEERRR', index);
-          // auxb.splice(index, 1);
-          }
-        }
-      }
-      this.inmuebles = this.auxb;
-      this.auxb = [];
-    }
-
-    if (this.inmuebles.length === 0){
-      alert('No hay resultados de busqueda');
+    if (this.inmuebles.length === 0) {
+      alert('No hay resultados de búsqueda');
       this.searchTerm = '';
       this.inmuebles = [];
-    }else{
-      // this.inmuebles = this.auxb;
+    } else {
       console.log(this.inmuebles);
       this.madeSearch = true;
-      console.log('Make search');
+      console.log('End Search');
     }
   }
 
-  existe(idn: string): boolean{
+  existe(idn: string): boolean {
     let a = false;
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < this.auxb.length; i++){
-      if (this.auxb[i].IDI === idn){
+    for (let i = 0; i < this.auxb.length; i++) {
+      if (this.auxb[i].IDI === idn) {
         a = true;
         break;
       }
@@ -315,33 +277,27 @@ export class SearchComponent implements OnInit {
     return a;
   }
 
-  getMinVentaSliderValue(event: any)
-  {
+  getMinVentaSliderValue(event: any) {
     this.minPriceVenta = event.target.value;
   }
 
-  getMaxVentaSliderValue(event: any)
-  {
+  getMaxVentaSliderValue(event: any) {
     this.maxPriceVenta = event.target.value;
   }
 
-  getMinArriendoSliderValue(event: any)
-  {
+  getMinArriendoSliderValue(event: any) {
     this.minPriceArriendo = event.target.value;
   }
 
-  getMaxArriendoSliderValue(event: any)
-  {
+  getMaxArriendoSliderValue(event: any) {
     this.maxPriceArriendo = event.target.value;
   }
 
-  getMinAreaSliderValue(event: any)
-  {
+  getMinAreaSliderValue(event: any) {
     this.minArea = event.target.value;
   }
 
-  getMaxAreaSliderValue(event: any)
-  {
+  getMaxAreaSliderValue(event: any) {
     this.maxArea = event.target.value;
   }
 
@@ -353,23 +309,22 @@ export class SearchComponent implements OnInit {
     // });
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.inmuebles.length; i++) {
-      if (this.inmuebles[i].IDI === idInmueble){
-        if (this.inmuebles[i].DirFotos !== undefined && this.inmuebles[i].DirFotos.length > 0){
+      if (this.inmuebles[i].IDI === idInmueble) {
+        if (this.inmuebles[i].DirFotos !== undefined && this.inmuebles[i].DirFotos.length > 0) {
           return this.inmuebles[i].DirFotos[0];
         }
       }
     }
   }
 
-  verInmueble(idInm: string){
+  verInmueble(idInm: string) {
     console.log('Entre a la Funcion');
     const id = 10;
     this.router.navigate(['public/search/ver-inmueble/' + idInm]);
 
   }
 
-  clean()
-  {
+  clean() {
     this.madeSearch = false;
     this.darInmuebles();
     window.location.reload();
