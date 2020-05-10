@@ -168,7 +168,7 @@ export class SearchComponent implements OnInit {
       } else {
         this.multipleFilters = true;
       }
-      this.filters += 'Zona:' + this.zona;
+      this.filters += 'Zona:"' + this.zona + '"';
     }
 
     if (this.localidad !== '') {
@@ -263,18 +263,6 @@ export class SearchComponent implements OnInit {
       this.madeSearch = true;
       console.log('End Search');
     }
-  }
-
-  existe(idn: string): boolean {
-    let a = false;
-    // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < this.auxb.length; i++) {
-      if (this.auxb[i].IDI === idn) {
-        a = true;
-        break;
-      }
-    }
-    return a;
   }
 
   getMinVentaSliderValue(event: any) {
