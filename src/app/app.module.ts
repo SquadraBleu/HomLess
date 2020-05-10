@@ -22,6 +22,7 @@ import { HomeComponent } from './components/public/home/home.component';
 import { NotFoundComponent } from './components/public/not-found/not-found.component';
 import { EditarInmuebleComponent } from './components/inmobiliaria/editar-inmueble/editar-inmueble.component';
 import { ListaInmueblesComponent } from './components/inmobiliaria/lista-inmuebles/lista-inmuebles.component';
+import { VerBusquedasComponent } from './components/client/ver-busquedas/ver-busquedas.component';
 import { RegistroComponent } from './components/public/registro/registro.component';
 import { VerPerfilComponent } from './components/inmobiliaria/ver-perfil/ver-perfil.component';
 import { EditarPerfilComponent } from './components/inmobiliaria/editar-perfil/editar-perfil.component';
@@ -42,6 +43,7 @@ import { ClientEditarPerfilComponent } from './components/client/client-editar-p
     NotFoundComponent,
     EditarInmuebleComponent,
     ListaInmueblesComponent,
+    VerBusquedasComponent,
     RegistroComponent,
     VerPerfilComponent,
     EditarPerfilComponent,

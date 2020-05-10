@@ -38,6 +38,7 @@ export class SearchComponent implements OnInit {
   isArriendo = false;
 
   searchTerm = '';
+  tags = '';
   minArea = 0; // de 0 a 500, de 1 en 1
   maxArea = 0; // de 0 a 500, de 1 en 1
   isMinArea = false;
@@ -49,6 +50,8 @@ export class SearchComponent implements OnInit {
   tipoInmueble = '';
 
   madeSearch = false;
+  isLogged = false;
+  activarAlerta = false;
   auxb: Inmueble[] = [];
 
   inmuebles: Inmueble[] = [/*
@@ -132,6 +135,10 @@ export class SearchComponent implements OnInit {
 
   submitSearch(): void
   {
+    console.log(this.tags); // String separado por comas, es necesario hacer trim al string completo
+                            // y luego a cada string parseado, por si el usuario puso espacios antes o
+                            // después de la palabra. Ojo que podrían haber espacios entre el tag y eso sí es válido
+
     if (this.searchTerm !== ''){
       indexAlg.search(this.searchTerm).then(({ hits }) => {
       console.log(hits);

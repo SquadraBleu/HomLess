@@ -24,6 +24,7 @@ export class MailService {
     }
 
   createMail(value){
+    console.log('Está en el servicio');
     return this.afs.collection('Mails').add({
       to: value.to,
       message: value.message
