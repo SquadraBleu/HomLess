@@ -15,10 +15,12 @@ exports.indexInmuebles = functions.firestore
   .onCreate((snap, context) => {
     const data = snap.data();
     const objectID = context.params.UID;
+    const _tags: string[] = [];
     console.log('This is objectID ' + objectID);
     //Push data to Algolia Index
     return index.saveObject({
       ...data,
+      _tags,
       objectID
     });
   });
