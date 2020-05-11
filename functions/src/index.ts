@@ -52,31 +52,22 @@ exports.gatherTags = functions.firestore
       const updateInfo = InmueblesID.pop();
       console.log('Updated Prop: ' + updateInfo + ' with Tag: ' + TagName);
 
-      let _tags: any;
-      let response: any;
       return index.getObject(updateInfo).then(object => {
-        response = object;
-        console.log('Response Gathered ' + response);
-        console.log('This is my response: ' + response);
-        _tags = [...response['_tags']];
+        console.log(object);
+        // @ts-ignore
+        const _tags: any = [...object['_tags']];
         console.log('This are my tags: ' + _tags);
+        _tags.push(TagName);
 
-        if (_tags) {
-          _tags.add(TagName);
-          console.log(_tags);
-        } else {
-          console.log('Empty field');
-          return null;
-        }
         const objectID = updateInfo;
-        console.log('Updating to ' + _tags);
-        return index.partialUpdateObject({
+        console.log('Updating to ' + _tags + ' with OID: ' + objectID);
+        index.partialUpdateObject({
           _tags,
           objectID
         }).then(({}) => {
           console.log('Success Update');
-        });
-      }).catch(() => console.log('Error'));
+        }).catch(reason => console.log(reason));
+      });
     } else {
       return null;
     }
