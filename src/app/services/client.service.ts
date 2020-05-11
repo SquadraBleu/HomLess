@@ -49,4 +49,8 @@ export class ClientService {
     return this.clientes;
   }
 
+  getCliente(id: string){
+    return this.afs.collection('Clientes').doc(id).get();
+  }
+
 }
