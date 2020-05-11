@@ -112,7 +112,7 @@ export class SearchComponent implements OnInit {
     console.log(this.tags); // String separado por comas, es necesario hacer trim al string completo
                             // y luego a cada string parseado, por si el usuario puso espacios antes o
                             // después de la palabra. Ojo que podrían haber espacios entre el tag y eso sí es válido
-
+    console.log(this.tags);
     if (this.tipoInmueble !== '') {
       this.multipleFilters = true;
       this.filters += 'TipoInmueble:' + this.tipoInmueble;
@@ -218,7 +218,12 @@ export class SearchComponent implements OnInit {
         this.filters += 'MontoVenta > 1';
       }
     }
-
+    if (this.tags !== '') {
+      if(this.multipleFilters){
+        this.filters += ' AND ';
+      }
+      this.filters += '_tags:"' + this.tags.replace(new RegExp(", ", "g"), '" AND _tags:"') + '"';
+    }
     indexAlg.search(this.searchTerm, {
       // @ts-ignore
       filters: this.filters
@@ -229,9 +234,11 @@ export class SearchComponent implements OnInit {
     console.log(this.filters);
     this.multipleFilters = false;
     this.rangeArea = false;
+    this.filters = '';
+    this.tags = '';
 
-    if (this.inmuebles.length === 0) {
-      // alert('No hay resultados de búsqueda');
+    if (this.inmuebles.length === 0 && this.madeSearch) {
+      alert('No hay resultados de búsqueda');
       this.searchTerm = '';
       this.inmuebles = [];
     } else {
