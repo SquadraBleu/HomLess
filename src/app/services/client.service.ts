@@ -50,7 +50,7 @@ export class ClientService {
   }
 
   getCliente(id: string){
-    return this.afs.collection('Clientes').doc(id).get();
+    return this.clientesCollection.doc(id).get();
   }
 
 }
