@@ -12,13 +12,11 @@ import { BusquedaService } from 'src/app/services/busqueda.service';
 })
 export class VerBusquedasComponent implements OnInit {
 
-  //constructor() { }
-
   public busquedas: Busqueda[] =
     [new Busqueda(null, 'Casa bonita', null, 10, 150, 3, undefined, null, null, 0, 300, null, null, false, null, null, null),
      new Busqueda(null, 'Apto bonito', 'Casa', undefined, undefined, 3, 2, 'Norte', null, undefined, undefined, 0, 1200000,
        // tslint:disable-next-line:max-line-length
-                                  true, null, ['lindo'/*new Tag('lindo', null, null)*/ , 'grande'/*new Tag('grande', null, null)], null)*/], null)];
+                                  true, null, ['lindo' , 'grande' ], null)];
 
   public headers: string[][] = [];
   public data: string[][] = [];
