@@ -56,6 +56,6 @@ export class NavbarComponent implements OnInit {
   }
 
   verPerfil(){
-    this.router.navigate(['cliente/ver-perfil']);
+    this.router.navigate(['inmobiliaria/lista-representantes']);
   }
 }

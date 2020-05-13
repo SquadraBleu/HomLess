@@ -1,0 +1,33 @@
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<div class="container-fluid" [hidden]="!(representantes.length > 0)">
+    <h1 align="center">Aquí están tus representantes</h1>
+    <td><button type="button" class="btn btn-success" [routerLink]="['/inmobiliaria/crear-representante']">Crear representante</button></td>
+    <table class="table table-light table-bordered table-hover" style="margin-top: 20px;">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Correo</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rep of this.representantes" class="border border-warning">
+                <td class="table-warning">{{rep.nombre}}</td>
+                <td class="table-warning">{{rep.cedula}}</td>
+                <td class="table-warning">{{rep.correo}}</td>
+                <td class="table-warning"><button class="btn btn-info btn-sm" (click)="verRepresentante(rep.UID)">Ver representante</button></td>
+                <td class="table-warning"><button class="btn btn-warning btn-sm" (click)="editarRepresentante(rep.UID)">Editar representante</button></td>
+                <td class="table-warning"><button class="btn btn-danger btn-sm" (click)="eliminarRepresentante(rep.UID)">Eliminar representante</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container-fluid alert alert-info" [hidden]="representantes.length > 0" align="center">
+    <h1 class="alert-heading">Y I K E S !</h1>
+    <p>Parece que no tienes representantes en tu inmobiliaria</p>
+    <hr>
+    <p><a href="inmobiliaria/crear-representante">Haz click aquí para crear un representante!</a></p>
+</div>

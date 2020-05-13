@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <h1 align="center">Aquí está tu representante</h1>
+    <div class="row"  style="margin-top: 20px;">
+        <div class="col">
+            <div class="row">
+                <p><strong>Nombre:</strong> {{representante.nombre}}</p>
+            </div>
+            <div class="row">
+                <p><strong>Cédula:</strong> {{representante.cedula}}</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <p><strong>Correo:</strong> {{representante.correo}}</p>
+            </div>
+            <div class="row">
+                <p><strong>Teléfono:</strong> {{representante.telefono}}</p>
+            </div>
+        </div>
+        <div class="col-3">
+            <div>
+                <button class="btn btn-warning" (click)="editarRepresentante()">
+                    Editar representante
+                <img src="assets/images/edit-tool.png" style="position: relative; float: right; width: 25px; height: inherit; margin-left: 5px;"></button>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-danger" (click)="eliminarRepresentante()">
+                    Eliminar representante
+                <img src="assets/images/trash.png" style="position: relative; float: right; width: 25px; height: inherit; margin-left: 5px;"></button>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-3">
+            <button class="btn btn-info" (click)="volver()">
+                Volver
+            </button>
+        </div>
+    </div>
+    
+</div>
