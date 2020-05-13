@@ -1,7 +1,50 @@
-import { Inmobiliaria } from './inmobiliaria';
+import {Inmobiliaria} from './inmobiliaria';
+import {Inmueble} from './inmueble';
 
 describe('Inmobiliaria', () => {
   it('should create an instance', () => {
-    expect(new Inmobiliaria()).toBeTruthy();
+    expect(new Inmobiliaria('900000000-1',
+      'test@domain.tld',
+      '3002000000',
+      'INMOBILARIA TEST',
+      'GSTORAGEURL',
+      'UNIQUEIDINM',
+      [new Inmueble('TITULO DE INMUEBLE',
+        'BARRIOSTR',
+        100,
+        20,
+        1200000,
+        120000000,
+        2,
+        'DESCRIPCION INMUEBLE',
+        'CALLE 123 # 45 - 67',
+        5,
+        3,
+        'Apartamento',
+        ['TESTIMG1', 'TESTIMG2'],
+        'INMOBUNIQUEID',
+        'Usaquen',
+        'Norte',
+        ['123', 'ABC'],
+        'UNIQUEIDTEST'),
+        new Inmueble('TITULO DE INMUEBLE',
+          'BARRIOSTR',
+          100,
+          20,
+          1200000,
+          120000000,
+          2,
+          'DESCRIPCION INMUEBLE',
+          'CALLE 123 # 45 - 67',
+          5,
+          3,
+          'Apartamento',
+          ['TESTIMG1', 'TESTIMG2'],
+          'INMOBUNIQUEID',
+          'Usaquen',
+          'Norte',
+          ['123', 'ABC'],
+          'UNIQUEIDTEST1')],
+      'INMOBUNIQUEID')).toBeTruthy();
   });
 });
