@@ -5,6 +5,8 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { map } from 'rxjs/operators';
 import { auth } from 'firebase/app';
 import { Inmobiliaria } from '../models/inmobiliaria';
+import { Cliente } from '../models/cliente';
+
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +61,9 @@ export class AuthService {
   isUserInmo(userUid){
     // console.log('BEEEEE', userUid);
     return this.afs.doc<Inmobiliaria>(`Inmobiliarias/${userUid}`).valueChanges();
+  }
+
+  isUserClient(userUid){
+    return this.afs.doc<Cliente>(`Clientes/${userUid}`).valueChanges();
   }
 }

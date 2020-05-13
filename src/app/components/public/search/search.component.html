@@ -168,10 +168,10 @@
             <button type="submit" class="btn btn-lg btn-primary mt-3" [disabled]="!createForm.valid">Buscar</button>
           </div>
           <div class="col-4 align-self-center">
-            <input [disabled]="!isLogged" type="checkbox" id="cbox" class="form-check-input" name="activarAlerta"
+            <input [disabled]="isLogged" type="checkbox" id="cbox" class="form-check-input" name="activarAlerta"
                    [(ngModel)]="activarAlerta">
             <label for="cbox">Activar alertas para esta búsqueda</label>
-            <div [hidden]="isLogged" class="alerta">Necesitas iniciar sesión para realizar esto</div>
+            <div [hidden]="!isLogged" class="alerta">Necesitas iniciar sesión para realizar esto</div>
           </div>
         </div>
       </form>

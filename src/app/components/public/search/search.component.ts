@@ -1,10 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import {Inmueble} from 'src/app/models/inmueble';
 import {InmuebleServiceService} from 'src/app/services/inmueble-service.service';
+import {Busqueda} from 'src/app/models/busqueda';
+import {BusquedaService} from 'src/app/services/busqueda.service';
+import {Cliente} from 'src/app/models/cliente';
+import {ClientService} from 'src/app/services/client.service';
+import {Tag} from 'src/app/models/tag';
 import {environment} from 'src/environments/environment';
 import algoliasearch from 'algoliasearch';
+import { Mail } from 'src/app/models/mail';
 
 const client = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
 const indexAlg = client.initIndex('inmuebles_search');
@@ -15,13 +22,22 @@ const indexAlg = client.initIndex('inmuebles_search');
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  constructor(private router: Router, private inmuService: InmuebleServiceService) {
+  constructor(
+    private router: Router, 
+    private inmuService: InmuebleServiceService,
+    private clienteService: ClientService,
+    private busquedaService: BusquedaService,
+    private authSvc: AuthService
+    ) 
+    {
     // this.searchGroup = new FormGroup({search: new FormControl() });
   }
 
   // searchGroup: FormGroup;
 
-  minPriceArriendo = 0; // de 0 a 5000000, de 50000
+  IDBusqueda: any = null;
+  busqueda: Busqueda;
+   minPriceArriendo = 0; // de 0 a 5000000, de 50000
   maxPriceArriendo = 0; // de 0 a 5000000, de 50000
   minPriceVenta = 0; // de 0 a 1000, de 1 en 1
   maxPriceVenta = 0; // de 0 a 1000, de 1 en 1
@@ -34,6 +50,7 @@ export class SearchComponent implements OnInit {
 
   searchTerm = '';
   tags = '';
+  newtags = '';
   minArea = 0; // de 0 a 500, de 1 en 1
   maxArea = 0; // de 0 a 500, de 1 en 1
   isMinArea = false;
@@ -51,7 +68,6 @@ export class SearchComponent implements OnInit {
   filters = '';
   multipleFilters = false;
   rangeArea = false;
-
   inmuebles: Inmueble[] = [/*
     new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined
     , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [], ''),
@@ -102,6 +118,13 @@ export class SearchComponent implements OnInit {
     'Suroriente'
   ];
 
+  ClientLoged: any = null;
+  userUid: string = null;
+  clientMail: string = 'DADdy';
+  arraytags: string[];
+  arrayIDstags: string []=[];
+  activate: boolean= false;
+  
   ngOnInit(): void {
     this.submitSearch();
   }
@@ -219,10 +242,16 @@ export class SearchComponent implements OnInit {
       }
     }
     if (this.tags !== '') {
+
+      console.log('tags before->');
+      console.log(this.tags);
       if(this.multipleFilters){
         this.filters += ' AND ';
       }
       this.filters += '_tags:"' + this.tags.replace(new RegExp(", ", "g"), '" AND _tags:"') + '"';
+      this.newtags = this.tags;
+      this.getTags();
+     
     }
     indexAlg.search(this.searchTerm, {
       // @ts-ignore
@@ -232,6 +261,27 @@ export class SearchComponent implements OnInit {
       this.inmuebles = hits;
     });
     console.log(this.filters);
+    
+    this.authSvc.isAuth().subscribe(auth => {
+      if (auth) {
+        this.userUid = auth.uid;           
+        this.authSvc.isUserClient(this.userUid).subscribe(userRole => { 
+            
+        });
+        if(this.activarAlerta)
+        {
+          this.activate = true;
+        }
+        this.getClientMail();
+        this.busqueda = new Busqueda('', this.searchTerm ,this.tipoInmueble,
+        this.maxArea,this.minArea,this.nhabitaciones,this.nbanos,this.zona,this.localidad,
+        this.minPriceVenta,this.maxPriceVenta,this.minPriceArriendo,this.maxPriceArriendo,
+        this.activate,this.userUid,this.arrayIDstags,this.clientMail);
+        this.createBusqueda();
+        console.log(this.busqueda);
+      }
+    });
+
     this.multipleFilters = false;
     this.rangeArea = false;
     this.filters = '';
@@ -239,6 +289,7 @@ export class SearchComponent implements OnInit {
 
     if (this.inmuebles.length === 0 && this.madeSearch) {
       alert('No hay resultados de búsqueda');
+    
       this.searchTerm = '';
       this.inmuebles = [];
     } else {
@@ -246,6 +297,46 @@ export class SearchComponent implements OnInit {
       this.madeSearch = true;
       console.log('End Search');
     }
+  }
+  getTags()
+  {
+    this.arraytags= this.newtags.split(', ');
+    this.inmuService.getTags().subscribe( res=> {
+      for (let index = 0; index < res.length; index++) {
+        for (let i = 0; i < this.arraytags.length; i++) { 
+          if (res[index].Hashtag.toLowerCase() === this.arraytags[i].toLowerCase() ){
+             this.arrayIDstags.push(res[index].id);
+          }
+        }    
+      }
+    }
+    );
+    
+    
+
+  }
+
+
+  getClientMail()
+  {
+    this.clienteService.getClientes().subscribe( res => {
+      for (let index = 0; index < res.length; index++) {
+        if (res[index].id === this.userUid ){
+          this.clientMail = res[index].Correo;
+        }
+
+      }
+    }
+    );
+  }
+
+  createBusqueda(){
+    this.busquedaService.createBusqueda(this.busqueda)
+    .then(res => {
+      this.IDBusqueda = res.id;
+      console.log(this.IDBusqueda);
+    }).catch ( err => console.log('err', err.message));
+
   }
 
   getMinVentaSliderValue(event: any) {
