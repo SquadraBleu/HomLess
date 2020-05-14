@@ -1,204 +1,219 @@
-<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap"
+  rel="stylesheet">
 <div class="container-fluid">
-    <div class="card">
+  <div class="card">
     <div class="card-body">
-    <div class="row">
+      <div class="row">
         <h2 class="ml-auto mr-auto">¿Qué estás buscando?</h2>
-    </div>
-    <form (ngSubmit)="submitSearch();" #createForm="ngForm"> 
-    <div class="row">
-        <div class="col-8 mx-auto">
-            <div class="card-body text-center">
-                    <div class="form-group">
-                        <input type="text" id="search" name="search" class="form-control"
-                        placeholder="Escribe aquí tu búsqueda" [(ngModel)]="searchTerm"/>
-                    </div>
-            </div>
-        </div>
-    </div>
-    <div class="container form-group ">
+      </div>
+      <form (ngSubmit)="submitSearch();" #createForm="ngForm">
         <div class="row">
-            <div class="col-2">
-                <label class="small" for="tipos">Tipo de inmueble: </label>
-                <select [(ngModel)]="tipoInmueble" name="tipos" id="tipos" class="form-control">
-                    <option *ngFor="let tipo of tiposDeInmueble">
-                        {{tipo}}
-                    </option>
-                </select>
+          <div class="col-8 mx-auto">
+            <div class="card-body text-center">
+              <div class="form-group">
+                <input type="text" id="search" name="search" class="form-control"
+                       placeholder="Escribe aquí tu búsqueda" [(ngModel)]="searchTerm"/>
+              </div>
             </div>
-            <div class="col-2">
-                <div class="row">
-                    <div class="col">
-                        <label class="small" for="titulo">Área (m&#178;): </label>
-                        <p class="small">Área mínima: {{minArea}}m&#178;</p>
-                        <div class="row area">
-                            <div class="col-2 text-right">
-                                <input type="checkbox" class="form-check-input" name="isMinArea" [(ngModel)]="isMinArea">
-                            </div>
-                            <div class="col-10">
-                                <input [disabled]="!isMinArea" type="range" min="0" max="500" value="0" class="slider-s slider" id="myRange"
-                                (change)="getMinAreaSliderValue($event)" (oninput)="getMinAreaSliderValue($event)">
-                            </div>
-                        </div>
-                        <p class="small">Área máxima: {{maxArea}}m&#178;</p>
-                        <div class="row area">
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input" name="isMaxArea" [(ngModel)]="isMaxArea">
-                            </div>
-                            <div class="col-10">
-                                <input [disabled]="!isMaxArea" type="range" min="0" max="500" value="0" class="slider-s slider" id="myRange"
-                                (change)="getMaxAreaSliderValue($event)" (oninput)="getMaxAreaSliderValue($event)">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <label class="small" for="titulo">Número de habitaciones </label>
-                <input type="number" min="0" max="10" name="nhabitaciones" id="nhabitaciones" class="form-control" [(ngModel)]="nhabitaciones">
-            </div>
-            <div class="col-2">
-                <label class="small" for="titulo">Número de baños: </label>
-                <input type="text" min="0" max="10" name="nbanos" id="nbanos" class="form-control" [(ngModel)]="nbanos">
-            </div>
-            <div class="col-2">
-                <label class="small" for="zonas">Zona: </label>
-                 <select [(ngModel)]="zona" name="zonas" id="zonas" class="form-control">
-                    <option *ngFor="let zona of zonas">
-                        {{zona}}
-                    </option>
-                 </select>
-            </div>
-            <div class="col-2">
-                <label class="small" for="localidad">Localidad: </label>
-                 <select [(ngModel)]="localidad" name="localidades" id="localidades" class="form-control">
-                    <option *ngFor="let localidad of localidades">
-                        {{localidad}}
-                    </option>
-                 </select>
-            </div>
+          </div>
         </div>
+        <div class="container form-group ">
+          <div class="row">
+            <div class="col-2">
+              <label class="small" for="tipos">Tipo de inmueble: </label>
+              <select [(ngModel)]="tipoInmueble" name="tipos" id="tipos" class="form-control">
+                <option *ngFor="let tipo of tiposDeInmueble">
+                  {{tipo}}
+                </option>
+              </select>
+            </div>
+            <div class="col-2">
+              <div class="row">
+                <div class="col">
+                  <label class="small" for="titulo">Área (m&#178;): </label>
+                  <p class="small">Área mínima: {{minArea}}m&#178;</p>
+                  <div class="row area">
+                    <div class="col-2 text-right">
+                      <input type="checkbox" class="form-check-input" name="isMinArea" [(ngModel)]="isMinArea">
+                    </div>
+                    <div class="col-10">
+                      <input [disabled]="!isMinArea" type="range" min="0" max="500" value="0" class="slider-s slider"
+                             id="myRange"
+                             (change)="getMinAreaSliderValue($event)" (oninput)="getMinAreaSliderValue($event)">
+                    </div>
+                  </div>
+                  <p class="small">Área máxima: {{maxArea}}m&#178;</p>
+                  <div class="row area">
+                    <div class="col-2">
+                      <input type="checkbox" class="form-check-input" name="isMaxArea" [(ngModel)]="isMaxArea">
+                    </div>
+                    <div class="col-10">
+                      <input [disabled]="!isMaxArea" type="range" min="0" max="500" value="0" class="slider-s slider"
+                             id="myRange"
+                             (change)="getMaxAreaSliderValue($event)" (oninput)="getMaxAreaSliderValue($event)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <label class="small" for="titulo">Número de habitaciones </label>
+              <input type="number" min="0" max="10" name="nhabitaciones" id="nhabitaciones" class="form-control"
+                     [(ngModel)]="nhabitaciones">
+            </div>
+            <div class="col-2">
+              <label class="small" for="titulo">Número de baños: </label>
+              <input type="text" min="0" max="10" name="nbanos" id="nbanos" class="form-control" [(ngModel)]="nbanos">
+            </div>
+            <div class="col-2">
+              <label class="small" for="zonas">Zona: </label>
+              <select [(ngModel)]="zona" name="zonas" id="zonas" class="form-control">
+                <option *ngFor="let zona of zonas">
+                  {{zona}}
+                </option>
+              </select>
+            </div>
+            <div class="col-2">
+              <label class="small" for="localidad">Localidad: </label>
+              <select [(ngModel)]="localidad" name="localidades" id="localidades" class="form-control">
+                <option *ngFor="let localidad of localidades">
+                  {{localidad}}
+                </option>
+              </select>
+            </div>
+          </div>
 
-    </div>
-    <div class="row form-group">
-        <div class="col-10 mx-auto">
+        </div>
+        <div class="row form-group">
+          <div class="col-10 mx-auto">
             <div class="row">
-                <div class="col">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="isVenta" [(ngModel)]="isVenta">
-                        <label class="form-check-label"> <strong>Venta</strong> </label>
-                    </div>
-                    <h6>Precio mínimo: ${{minPriceVenta}} millones</h6>
-                    <div class="row">
-                        <div class="col-xs-1">
-                            <input [disabled]="!isVenta" type="checkbox" class="form-check-input" name="isMinPriceVenta" [(ngModel)]="isMinPriceVenta">
-                        </div>
-                        <div class="col-11">
-                            <input [disabled]="!isVenta || !isMinPriceVenta" type="range" min="0" max="2000" value="0" class="slider-m slider" id="myRange"
-                            (change)="getMinVentaSliderValue($event)" (oninput)="getMinVentaSliderValue($event)">
-                        </div>
-                    </div>
-                    <h6>Precio máximo: ${{maxPriceVenta}} millones</h6>
-                    <div class="row">
-                        <div class="col-xs-1">
-                            <input [disabled]="!isVenta" type="checkbox" class="form-check-input" name="isMaxPriceVenta" [(ngModel)]="isMaxPriceVenta">
-                        </div>
-                        <div class="col-11">
-                            <div class="slidecontainer">
-                            <input [disabled]="!isVenta || !isMaxPriceVenta"  type="range" min="0" max="2000" value="0" class="slider-m slider" id="myRange"
-                            (change)="getMaxVentaSliderValue($event)" (oninput)="getMaxVentaSliderValue($event)">
-                            </div>
-                        </div>
-                    </div>
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" name="isVenta" [(ngModel)]="isVenta">
+                  <label class="form-check-label"> <strong>Venta</strong> </label>
                 </div>
-                <div class="col">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="isArriendo" [(ngModel)]="isArriendo">
-                        <label class="form-check-label"> <strong>Arriendo</strong> </label>
-                    </div>
-                    <h6>Precio mínimo: ${{minPriceArriendo}}</h6>
-                    <div class="row">
-                        <div class="col-xs-1">
-                            <input [disabled]="!isArriendo" type="checkbox" class="form-check-input" name="isMinPriceArriendo" [(ngModel)]="isMinPriceArriendo">
-                        </div>
-                        <div class="col-11">
-                            <div class="slidecontainer">
-                                <input [disabled]="!isArriendo || !isMinPriceArriendo" type="range" min="0" max="20000000" step="50000" class="slider-m slider" id="myRange"
-                                (change)="getMinArriendoSliderValue($event)" (oninput)="getMinArriendoSliderValue($event)">
-                            </div>
-                        </div>
-                    </div>
-                    <h6>Precio máximo: ${{maxPriceArriendo}}</h6>
-                    <div class="row">
-                        <div class="col-xs-1">
-                            <input [disabled]="!isArriendo" type="checkbox" class="form-check-input" name="isMaxPriceArriendo" [(ngModel)]="isMaxPriceArriendo">
-                        </div>
-                        <div class="col-11">
-                            <div class="slidecontainer">
-                                <input [disabled]="!isArriendo || !isMaxPriceArriendo" type="range" min="0" max="20000000" step="50000" class="slider-m slider" id="myRange"
-                                (change)="getMaxArriendoSliderValue($event)" (oninput)="getMaxArriendoSliderValue($event)">
-                            </div>
-                        </div>
-                    </div>
+                <h6>Precio mínimo: ${{minPriceVenta}} millones</h6>
+                <div class="row">
+                  <div class="col-xs-1">
+                    <input [disabled]="!isVenta" type="checkbox" class="form-check-input" name="isMinPriceVenta"
+                           [(ngModel)]="isMinPriceVenta">
+                  </div>
+                  <div class="col-11">
+                    <input [disabled]="!isVenta || !isMinPriceVenta" type="range" min="0" max="2000" value="0"
+                           class="slider-m slider" id="myRange"
+                           (change)="getMinVentaSliderValue($event)" (oninput)="getMinVentaSliderValue($event)">
+                  </div>
                 </div>
+                <h6>Precio máximo: ${{maxPriceVenta}} millones</h6>
+                <div class="row">
+                  <div class="col-xs-1">
+                    <input [disabled]="!isVenta" type="checkbox" class="form-check-input" name="isMaxPriceVenta"
+                           [(ngModel)]="isMaxPriceVenta">
+                  </div>
+                  <div class="col-11">
+                    <div class="slidecontainer">
+                      <input [disabled]="!isVenta || !isMaxPriceVenta" type="range" min="0" max="2000" value="0"
+                             class="slider-m slider" id="myRange"
+                             (change)="getMaxVentaSliderValue($event)" (oninput)="getMaxVentaSliderValue($event)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" name="isArriendo" [(ngModel)]="isArriendo">
+                  <label class="form-check-label"> <strong>Arriendo</strong> </label>
+                </div>
+                <h6>Precio mínimo: ${{minPriceArriendo}}</h6>
+                <div class="row">
+                  <div class="col-xs-1">
+                    <input [disabled]="!isArriendo" type="checkbox" class="form-check-input" name="isMinPriceArriendo"
+                           [(ngModel)]="isMinPriceArriendo">
+                  </div>
+                  <div class="col-11">
+                    <div class="slidecontainer">
+                      <input [disabled]="!isArriendo || !isMinPriceArriendo" type="range" min="0" max="20000000"
+                             step="50000" class="slider-m slider" id="myRange"
+                             (change)="getMinArriendoSliderValue($event)" (oninput)="getMinArriendoSliderValue($event)">
+                    </div>
+                  </div>
+                </div>
+                <h6>Precio máximo: ${{maxPriceArriendo}}</h6>
+                <div class="row">
+                  <div class="col-xs-1">
+                    <input [disabled]="!isArriendo" type="checkbox" class="form-check-input" name="isMaxPriceArriendo"
+                           [(ngModel)]="isMaxPriceArriendo">
+                  </div>
+                  <div class="col-11">
+                    <div class="slidecontainer">
+                      <input [disabled]="!isArriendo || !isMaxPriceArriendo" type="range" min="0" max="20000000"
+                             step="50000" class="slider-m slider" id="myRange"
+                             (change)="getMaxArriendoSliderValue($event)" (oninput)="getMaxArriendoSliderValue($event)">
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="row mt-2">
-                <div class="col">
-                    <input type="text" id="search" name="search" class="form-control"
-                        placeholder="Escribe aquí palabras clave separadas por coma" [(ngModel)]="tags"/>
-                </div>
+              <div class="col">
+                <input type="text" id="search" name="search" class="form-control"
+                       placeholder="Escribe aquí palabras clave separadas por coma" [(ngModel)]="tags"/>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-    </form>
-    </div>
-    </div>
-            <div class="row"> 
-            <div class="col-8">
-                <button type="submit" class="btn btn-lg btn-primary mt-3" [disabled] = "!createForm.valid">Buscar</button>
-            </div>
-            <div class="col-4 align-self-center">
-                <input [disabled]="!isLogged" type="checkbox" id="cbox" class="form-check-input" name="activarAlerta" [(ngModel)]="activarAlerta">      
-                <label for="cbox">Activar alertas para esta búsqueda</label>
-                <div [hidden]="isLogged" class="alerta">Necesitas iniciar sesión para realizar esto</div>
-            </div>
+        <div class="row">
+          <div class="col-8">
+            <button type="submit" class="btn btn-lg btn-primary mt-3" [disabled]="!createForm.valid">Buscar</button>
+          </div>
+          <div class="col-4 align-self-center">
+            <input [disabled]="isLogged" type="checkbox" id="cbox" class="form-check-input" name="activarAlerta"
+                   [(ngModel)]="activarAlerta">
+            <label for="cbox">Activar alertas para esta búsqueda</label>
+            <div [hidden]="!isLogged" class="alerta">Necesitas iniciar sesión para realizar esto</div>
+          </div>
         </div>
+      </form>
+    </div>
+  </div>
+
 </div>
 <button [hidden]="!madeSearch" class="btn btn-lg btn-primary btn-block mt-3 mb-3" (click)="clean()">Limpiar</button>
 <h1 [hidden]="!madeSearch" align="center">Aquí está el resultado de tu búsqueda</h1>
 <div [hidden]="!madeSearch" class="container-fluid">
-    <div class="row alert alert-warning seleccion" *ngFor="let inmueble of inmuebles" (click)="verInmueble(inmueble.IDI)">
-        <div class="col-2">
-            <h5>Cómo se ve:</h5>
-            <img [src]="getImageUrl(inmueble.IDI)" class="logo">
+  <div class="row alert alert-warning seleccion" *ngFor="let inmueble of inmuebles" (click)="verInmueble(inmueble.IDI)">
+    <div class="col-2">
+      <h5>Cómo se ve:</h5>
+      <img [src]="getImageUrl(inmueble.IDI)" class="logo">
 
-        </div>
-        <div class="col-3">
-            <h5>Título: </h5>
-            <p>
-                {{inmueble.Titulo}}
-            </p>
-        </div>
-        <div class="col-3">
-            <h5>Descripción: </h5>
-            <p>
-                {{inmueble.Descripcion}}
-            </p>
-        </div>
-        <div class="col-2">
-            <h5>Área (m&#178;): </h5>
-            {{inmueble.AreaConstruida}}
-        </div>
-        <div class="col-2">
-            <div *ngIf="inmueble.MontoVenta">
-                <h6>Monto de venta: </h6>
-                $ {{inmueble.MontoVenta}}
-            </div>
-
-            <div *ngIf="inmueble.MontoArriendo">
-                <h6>Monto de arriendo: </h6>
-                $ {{inmueble.MontoArriendo}}
-            </div>
-        </div>
     </div>
+    <div class="col-3">
+      <h5>Título: </h5>
+      <p>
+        {{inmueble.Titulo}}
+      </p>
+    </div>
+    <div class="col-3">
+      <h5>Descripción: </h5>
+      <p>
+        {{inmueble.Descripcion}}
+      </p>
+    </div>
+    <div class="col-2">
+      <h5>Área (m&#178;): </h5>
+      {{inmueble.AreaConstruida}}
+    </div>
+    <div class="col-2">
+      <div *ngIf="inmueble.MontoVenta">
+        <h6>Monto de venta: </h6>
+        $ {{inmueble.MontoVenta}}
+      </div>
+
+      <div *ngIf="inmueble.MontoArriendo">
+        <h6>Monto de arriendo: </h6>
+        $ {{inmueble.MontoArriendo}}
+      </div>
+    </div>
+  </div>
 </div>

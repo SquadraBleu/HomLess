@@ -49,4 +49,8 @@ export class ClientService {
     return this.clientes;
   }
 
+  getCliente(id: string){
+    return this.clientesCollection.doc(id).get();
+  }
+
 }
