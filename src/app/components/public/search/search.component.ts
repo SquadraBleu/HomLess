@@ -23,12 +23,12 @@ const indexAlg = client.initIndex('inmuebles_search');
 })
 export class SearchComponent implements OnInit {
   constructor(
-    private router: Router, 
+    private router: Router,
     private inmuService: InmuebleServiceService,
     private clienteService: ClientService,
     private busquedaService: BusquedaService,
     private authSvc: AuthService
-    ) 
+    )
     {
     // this.searchGroup = new FormGroup({search: new FormControl() });
   }
@@ -120,11 +120,10 @@ export class SearchComponent implements OnInit {
 
   ClientLoged: any = null;
   userUid: string = null;
-  clientMail: string = 'DADdy';
+  clientMail = 'DADdy';
   arraytags: string[];
-  arrayIDstags: string []=[];
-  activate: boolean= false;
-  
+  arrayIDstags: string [] = [];
+  activate = false;
   ngOnInit(): void {
     this.submitSearch();
   }
@@ -245,13 +244,13 @@ export class SearchComponent implements OnInit {
 
       console.log('tags before->');
       console.log(this.tags);
-      if(this.multipleFilters){
+      if (this.multipleFilters){
         this.filters += ' AND ';
       }
-      this.filters += '_tags:"' + this.tags.replace(new RegExp(", ", "g"), '" AND _tags:"') + '"';
+      this.filters += '_tags:"' + this.tags.replace(new RegExp(', ', 'g'), '" AND _tags:"') + '"';
       this.newtags = this.tags;
       this.getTags();
-     
+
     }
     indexAlg.search(this.searchTerm, {
       // @ts-ignore
@@ -261,22 +260,22 @@ export class SearchComponent implements OnInit {
       this.inmuebles = hits;
     });
     console.log(this.filters);
-    
+
     this.authSvc.isAuth().subscribe(auth => {
       if (auth) {
-        this.userUid = auth.uid;           
-        this.authSvc.isUserClient(this.userUid).subscribe(userRole => { 
-            
+        this.userUid = auth.uid;
+        this.authSvc.isUserClient(this.userUid).subscribe(userRole => {
+
         });
-        if(this.activarAlerta)
+        if (this.activarAlerta)
         {
           this.activate = true;
         }
         this.getClientMail();
-        this.busqueda = new Busqueda('', this.searchTerm ,this.tipoInmueble,
-        this.maxArea,this.minArea,this.nhabitaciones,this.nbanos,this.zona,this.localidad,
-        this.minPriceVenta,this.maxPriceVenta,this.minPriceArriendo,this.maxPriceArriendo,
-        this.activate,this.userUid,this.arrayIDstags,this.clientMail);
+        this.busqueda = new Busqueda('', this.searchTerm , this.tipoInmueble,
+        this.maxArea, this.minArea, this.nhabitaciones, this.nbanos, this.zona, this.localidad,
+        this.minPriceVenta, this.maxPriceVenta, this.minPriceArriendo, this.maxPriceArriendo,
+        this.activate, this.userUid, this.arrayIDstags, this.clientMail);
         this.createBusqueda();
         console.log(this.busqueda);
       }
@@ -289,7 +288,7 @@ export class SearchComponent implements OnInit {
 
     if (this.inmuebles.length === 0 && this.madeSearch) {
       alert('No hay resultados de búsqueda');
-    
+
       this.searchTerm = '';
       this.inmuebles = [];
     } else {
@@ -300,26 +299,26 @@ export class SearchComponent implements OnInit {
   }
   getTags()
   {
-    this.arraytags= this.newtags.split(', ');
-    this.inmuService.getTags().subscribe( res=> {
+    this.arraytags = this.newtags.split(', ');
+    this.inmuService.getTags().subscribe( res => {
+        // tslint:disable-next-line:prefer-for-of
       for (let index = 0; index < res.length; index++) {
-        for (let i = 0; i < this.arraytags.length; i++) { 
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.arraytags.length; i++) {
           if (res[index].Hashtag.toLowerCase() === this.arraytags[i].toLowerCase() ){
              this.arrayIDstags.push(res[index].id);
           }
-        }    
+        }
       }
     }
     );
-    
-    
-
   }
 
 
   getClientMail()
   {
     this.clienteService.getClientes().subscribe( res => {
+        // tslint:disable-next-line:prefer-for-of
       for (let index = 0; index < res.length; index++) {
         if (res[index].id === this.userUid ){
           this.clientMail = res[index].Correo;
@@ -383,7 +382,6 @@ export class SearchComponent implements OnInit {
     console.log('Entre a la Funcion');
     const id = 10;
     this.router.navigate(['public/search/ver-inmueble/' + idInm]);
-
   }
 
   clean() {
