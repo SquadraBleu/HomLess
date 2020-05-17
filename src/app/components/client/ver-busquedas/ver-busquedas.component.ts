@@ -24,7 +24,6 @@ export class VerBusquedasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.id = this.route.snapshot.paramMap.get('id');
     console.log(this.route.snapshot.paramMap.get('id'));
     this.mostrarBusquedas();
@@ -35,9 +34,8 @@ export class VerBusquedasComponent implements OnInit {
   activarBusqueda(i: number): void
   {
     console.log(this.busquedas[i]);
-    this.busquedas[i].SiNotificacion=true;
-    //new Busqueda = this.busquedas[i]
-    this.busquedaService.updateBusqueda(this.busquedas[i],this.busquedas[i].IDBusqueda);
+    this.busquedas[i].SiNotificacion = true;
+    this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
     this.router.navigate(['inmobiliaria/ver-inmueble/' + this.busquedas[i].IDBusqueda]);
     console.log('Se editó');
     console.log('Activar alerta de busqueda en la posicion ' + i + ' de busquedas');
@@ -46,18 +44,17 @@ export class VerBusquedasComponent implements OnInit {
   desactivarBusqueda(i: number): void
   {
     console.log(this.busquedas[i]);
-    this.busquedas[i].SiNotificacion=false;
-    //new Busqueda = this.busquedas[i]
-    this.busquedaService.updateBusqueda(this.busquedas[i],this.busquedas[i].IDBusqueda);
+    this.busquedas[i].SiNotificacion = false;
+    this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
     this.router.navigate(['inmobiliaria/ver-inmueble/' + this.busquedas[i].IDBusqueda]);
     console.log('Se editó');
     console.log('Desactivar alerta de busqueda en la posicion ' + i + ' de busquedas');
   }
 
   eliminarBusqueda(i: number): void
-  {console.log(this.busquedas[i]);
-    this.busquedas[i].SiNotificacion=false;
-    //new Busqueda = this.busquedas[i]
+  {
+    console.log(this.busquedas[i]);
+    this.busquedas[i].SiNotificacion = false;
     this.busquedaService.deleteBusqueda(this.busquedas[i].IDBusqueda);
     console.log('Eliminar busqueda en la posicion ' + i + ' de busquedas');
   }

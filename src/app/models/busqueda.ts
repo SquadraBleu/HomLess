@@ -20,6 +20,8 @@ export class Busqueda {
         public Tags: string[],
         public Correo: string,
         public Fecha: number
-        
-    ){}
+
+
+
+){}
 }

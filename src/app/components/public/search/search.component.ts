@@ -11,6 +11,8 @@ import {ClientService} from 'src/app/services/client.service';
 import {Tag} from 'src/app/models/tag';
 import {environment} from 'src/environments/environment';
 import algoliasearch from 'algoliasearch';
+import {firestore} from "firebase";
+
 import { Mail } from 'src/app/models/mail';
 
 const client = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
@@ -36,7 +38,10 @@ export class SearchComponent implements OnInit {
   // searchGroup: FormGroup;
 
   IDBusqueda: any = null;
-  busqueda: Busqueda;
+  busqueda = new Busqueda( '', '', '',
+    0, 0, 0, 0, '','',
+    0,0, 0, 0,
+    false, '', [], '', null);
    minPriceArriendo = 0; // de 0 a 5000000, de 50000
   maxPriceArriendo = 0; // de 0 a 5000000, de 50000
   minPriceVenta = 0; // de 0 a 1000, de 1 en 1
@@ -124,6 +129,7 @@ export class SearchComponent implements OnInit {
   arraytags: string[];
   arrayIDstags: string [] = [];
   activate: boolean = false;
+  date: any;
 
   ngOnInit(): void {
     this.authSvc.isAuth().subscribe(auth => {
@@ -261,6 +267,7 @@ export class SearchComponent implements OnInit {
       this.filters += '_tags:"' + this.tags.replace(new RegExp(", ", "g"), '" AND _tags:"') + '"';
       this.newtags = this.tags;
 
+      this.getTags();
     }
     indexAlg.search(this.searchTerm, {
       // @ts-ignore
@@ -274,18 +281,14 @@ export class SearchComponent implements OnInit {
     if ( this.userUid !== '' && this.clientMail !== '' ){
 
       console.log('GUARDAR');
-      if ( this.activarAlerta)
-        {
-          this.activate = true;
-        }
-      this.getTags();
-      this.busqueda = new Busqueda('', this.searchTerm , this.tipoInmueble,
+      
+      this.date = firestore.Timestamp.fromDate(new Date());
+      this.busqueda = new Busqueda( '', this.searchTerm , this.tipoInmueble,
         this.maxArea, this.minArea, this.nhabitaciones, this.nbanos, this.zona, this.localidad,
         this.minPriceVenta, this.maxPriceVenta, this.minPriceArriendo, this.maxPriceArriendo,
-        this.activate, this.userUid, this.arrayIDstags, this.clientMail, null);
-      this.createBusqueda();
-      console.log(this.busqueda);
+        this.activarAlerta, this.userUid, this.arrayIDstags, this.clientMail, this.date );
       this.arrayIDstags = [];
+      this.createBusqueda();
 
     }
 
@@ -340,12 +343,13 @@ export class SearchComponent implements OnInit {
 
   createBusqueda(){
     this.busquedaService.createBusqueda(this.busqueda)
-    .then(res => {
-      this.IDBusqueda = res.id;
-      console.log(this.IDBusqueda);
-    }).catch ( err => console.log('err', err.message));
-
+      .then(res => {
+        this.busqueda.IDBusqueda = res.id;
+        console.log('cccc', this.busqueda.IDBusqueda );
+        this.busquedaService.updateBusqueda(this.busqueda, this.busqueda.IDBusqueda);
+      }).catch ( err => console.log('err', err.message));
   }
+
 
   getMinVentaSliderValue(event: any) {
     this.minPriceVenta = event.target.value;
