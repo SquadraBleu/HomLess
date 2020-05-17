@@ -98,7 +98,7 @@ export class VerInmuebleComponent implements OnInit {
       element.IDInmuebles.forEach(ele => {
         if ( ele === this.id ){
           element.IDInmuebles.splice( element.IDInmuebles.indexOf(ele), 1);
-          this.inmuService.updateTags(element);
+          this.inmuService.updateTags(element, element.id);
         }
       });
     });

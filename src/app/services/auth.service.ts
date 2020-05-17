@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { auth } from 'firebase/app';
 import { Inmobiliaria } from '../models/inmobiliaria';
 import { Cliente } from '../models/cliente';
+import { FirebaseAuth } from 'angularfire2';
 
 
 @Injectable({
@@ -15,15 +16,15 @@ export class AuthService {
 
   constructor(
     private afsAut: AngularFireAuth,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
   ) {}
 
-  registerUser(email: string, pass: string, isInmo: boolean, isCli: boolean){
+  registerUser(email: string, pass: string, isInmo: boolean, isCli: boolean, cosa: any){
     return new Promise ((resolve, reject) => {
       this.afsAut.auth.createUserWithEmailAndPassword(email, pass)
       .then(userData => {
         resolve(userData),
-        this.updateUserData(userData.user, isInmo, isCli);
+        this.updateUserData(userData.user, isInmo, isCli, cosa);
       }).catch(err => console.log(reject(err)));
     });
   }
@@ -40,7 +41,26 @@ export class AuthService {
     return this.afsAut.auth.signOut();
   }
 
-  private updateUserData(user, inm: boolean, cli: boolean){
+  deleteUser(){
+    return new Promise((resolve, reject) => {
+      const user = this.afsAut.auth.currentUser;
+      user.delete()
+      .then ( userData => resolve(userData),
+      err => reject(err));
+    });
+  }
+
+  changePassword(nuevo: string){
+    return new Promise((resolve, reject) => {
+      const user = this.afsAut.auth.currentUser;
+      user.updatePassword(nuevo)
+      .then ( userData => resolve(userData),
+      err => reject(err));
+    });
+  }
+
+  private updateUserData(user, inm: boolean, cli: boolean, cosa: any){
+    /*
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       id: user.uid,
@@ -50,7 +70,46 @@ export class AuthService {
         clinte: cli
       }
     };
-    return userRef.set(data, { merge: true });
+    return userRef.set(data, { merge: true });*/
+
+    if (cli){
+      this.afs.collection('Clientes').doc(user.uid).set({
+        Nombre: cosa.Nombre,
+        Cedula: cosa.Cedula,
+        Telefono: cosa.Telefono,
+        Correo: cosa.Correo,
+        UID: user.uid,
+        Chats: cosa.Chats,
+        CitasSolicitadas: cosa.CitasSolicitadas,
+        CitasAceptadas: cosa.CitasAceptadas,
+        InteresadoEn: cosa.InteresadoEn
+      });
+      /*
+      return this.afs.collection('Clientes').add({
+        Nombre: cosa.Nombre,
+        Cedula: cosa.Cedula,
+        Telefono: cosa.Telefono,
+        Correo: cosa.Correo,
+        UID: user.uid,
+        Chats: cosa.Chats,
+        CitasSolicitadas: cosa.CitasSolicitadas,
+        CitasAceptadas: cosa.CitasAceptadas,
+        InteresadoEn: cosa.InteresadoEn
+      });*/
+    }
+    if (inm){
+      this.afs.collection('Inmobiliarias').doc(user.uid).set({
+        NIT: cosa.NIT,
+        Correo: cosa.Correo,
+        TelefonoContacto: cosa.TelefonoContacto,
+        Nombre: cosa.Nombre,
+        DireccionLogo: cosa.DireccionLogo,
+        IDInmobiliria: user.uid,
+        Inmuebles: cosa.Inmuebles,
+        UID: user.uid,
+      });
+    }
+
   }
 
   isAuth(){

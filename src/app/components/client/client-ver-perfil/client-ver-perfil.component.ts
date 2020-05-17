@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/models/cliente';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ClientService } from '../../../services/client.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-client-ver-perfil',
@@ -9,24 +11,48 @@ import { Router } from '@angular/router';
 })
 export class ClientVerPerfilComponent implements OnInit {
 
-  cliente = new Cliente('Iwan TuFuq', '123456789', '3003478654', '420_OG_69@still.com', '', [], [], [], []);
+  cliente = new Cliente('', '', '', '', '', [], [], [], []);
+  id: any = undefined;
+
   constructor(
-    public router: Router
+    private route: ActivatedRoute,
+    private clienteSvc: ClientService,
+    private authSvc: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.darCliente();
   }
 
   volver(){
     // TODO INTEGRACION
   }
 
+  darCliente(){
+    this.clienteSvc.getClientes().subscribe(res => {
+      // tslint:disable-next-line: prefer-for-of
+      for ( let i = 0; i < res.length; i++){
+        if (this.id === res[i].UID){
+          this.cliente = res[i];
+        }
+      }
+    });
+  }
+
   editarPerfil(){
-    this.router.navigate(['cliente/editar-perfil']);
+    console.log('cliente/editar-perfil/' + this.id);
+    this.router.navigate(['cliente/editar-perfil/' + this.id]);
   }
 
   borrarPerfil(){
-    // TODO INTEGRACION
+    this.clienteSvc.deleteCliente(this.id);
+    this.authSvc.deleteUser().then(
+      (res) => {
+        this.router.navigate(['/public/home']);
+      }
+    );
   }
 
   verBusquedas(){

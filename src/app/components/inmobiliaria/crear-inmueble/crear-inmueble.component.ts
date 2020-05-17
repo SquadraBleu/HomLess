@@ -284,7 +284,7 @@ export class CrearInmuebleComponent implements OnInit {
       const task = this.storage.upload(filePath, file).snapshotChanges().pipe(
         finalize(() => {
           ref.getDownloadURL().subscribe((url) => {
-            // console.log('urlF', url);
+            console.log('urlF', url);
             this.fotos.push(url);
             // console.log('rrrrrr', url);
           });
@@ -314,7 +314,13 @@ export class CrearInmuebleComponent implements OnInit {
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Parqueadero';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
+        this.inmuService.createEtiquetas(n).then(
+          res => {
+            this.tagsN.push(res.id);
+            n.id = res.id;
+            this.inmuService.updateTags(n, res.id);
+          }
+        );
       }
     }
     if (this.transportePublico){
@@ -330,7 +336,13 @@ export class CrearInmuebleComponent implements OnInit {
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Transporte publico';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
+        this.inmuService.createEtiquetas(n).then(
+          res => {
+            this.tagsN.push(res.id);
+            n.id = res.id;
+            this.inmuService.updateTags(n, res.id);
+          }
+        );
       }
     }
     if (this.zonasRecreativas){
@@ -346,7 +358,13 @@ export class CrearInmuebleComponent implements OnInit {
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Zonas recreativas';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
+        this.inmuService.createEtiquetas(n).then(
+          res => {
+            this.tagsN.push(res.id);
+            n.id = res.id;
+            this.inmuService.updateTags(n, res.id);
+          }
+        );
       }
     }
     if (this.cocinaIntegral){
@@ -362,7 +380,13 @@ export class CrearInmuebleComponent implements OnInit {
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Cocina integral';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
+        this.inmuService.createEtiquetas(n).then(
+          res => {
+            this.tagsN.push(res.id);
+            n.id = res.id;
+            this.inmuService.updateTags(n, res.id);
+          }
+        );
       }
     }
     if (this.pagoAdmin){
@@ -378,7 +402,13 @@ export class CrearInmuebleComponent implements OnInit {
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Pago administracion';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
+        this.inmuService.createEtiquetas(n).then(
+          res => {
+            this.tagsN.push(res.id);
+            n.id = res.id;
+            this.inmuService.updateTags(n, res.id);
+          }
+        );
       }
     }
     if (this.cc){
@@ -394,7 +424,13 @@ export class CrearInmuebleComponent implements OnInit {
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Centros Comerciales';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
+        this.inmuService.createEtiquetas(n).then(
+          res => {
+            this.tagsN.push(res.id);
+            n.id = res.id;
+            this.inmuService.updateTags(n, res.id);
+          }
+        );
       }
     }
     if (this.privacidad){
@@ -410,12 +446,47 @@ export class CrearInmuebleComponent implements OnInit {
         const n: Tag = new Tag('', [], '');
         n.Hashtag = 'Privacidad';
         n.IDInmuebles.push(this.IDinmueble);
-        this.inmuService.createEtiquetas(n).then(res => this.tagsN.push(res.id));
+        this.inmuService.createEtiquetas(n)
+        .then(
+          res => {
+            this.tagsN.push(res.id);
+            n.id = res.id;
+            this.inmuService.updateTags(n, res.id);
+          }
+        );
       }
     }
+
+    const personalzidos = this.tags.split(',');
+    console.log(personalzidos);
+
+    personalzidos.forEach(e => {
+      let esta = false;
+      this.tagsExistentes.forEach( el => {
+        if (e === el.Hashtag){
+          esta = true;
+          el.IDInmuebles.push(this.IDinmueble);
+          this.tagsN.push(el.id);
+        }
+      });
+      if (!esta){
+        const n: Tag = new Tag('', [], '');
+        n.Hashtag = e;
+        n.IDInmuebles.push(this.IDinmueble);
+        this.inmuService.createEtiquetas(n)
+        .then(
+          res => {
+            this.tagsN.push(res.id);
+            n.id = res.id;
+            this.inmuService.updateTags(n, res.id);
+          }
+        );
+      }
+    });
+
     // console.log(this.tagsN);
     this.tagsExistentes.forEach(ele => {
-      this.inmuService.updateTags(ele);
+      this.inmuService.updateTags(ele, ele.id);
     });
     console.log('despues', this.tagsN);
     this.inmueble.TagsIDS = this.tagsN;
