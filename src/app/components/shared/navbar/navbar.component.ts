@@ -40,8 +40,6 @@ export class NavbarComponent implements OnInit {
   }
 
   iconClick(){
-    this.afsAuth.auth.signOut();
-    this.isLogged = false;
     this.router.navigate(['public/home']);
   }
 
@@ -58,6 +56,6 @@ export class NavbarComponent implements OnInit {
   }
 
   verPerfil(){
-    this.router.navigate(['cliente/ver-perfil']);
+
   }
 }
