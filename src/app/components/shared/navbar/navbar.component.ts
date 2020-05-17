@@ -40,7 +40,7 @@ export class NavbarComponent implements OnInit {
   }
 
   iconClick(){
-    this.router.navigate(['public/search']);
+    this.router.navigate(['public/home']);
   }
 
   buscar(){
@@ -56,6 +56,6 @@ export class NavbarComponent implements OnInit {
   }
 
   verPerfil(){
-    this.router.navigate(['inmobiliaria/lista-representantes']);
+
   }
 }
