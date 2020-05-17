@@ -34,6 +34,7 @@ export class CrearInmuebleComponent implements OnInit {
   pagoAdmin: boolean;
   cc: boolean;
   privacidad: boolean;
+  tags = '';
 
   localidades: string[] = [
     '',
@@ -98,7 +99,7 @@ export class CrearInmuebleComponent implements OnInit {
   }
 
   cancelar(){
-    this.router.navigate(['inmobiliaria/lista-inmuebles']);
+    this.router.navigate(['inmobiliaria/lista-inmuebles/' + this.userUid]);
   }
 
   crearInmueble(){

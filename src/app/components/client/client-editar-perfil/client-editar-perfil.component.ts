@@ -9,7 +9,7 @@ import { Cliente } from 'src/app/models/cliente';
 })
 export class ClientEditarPerfilComponent implements OnInit {
 
-  cliente = new Cliente('Iwan TuFuq','123456789','3003478654','420_OG_69@still.com','');
+  cliente = new Cliente('Iwan TuFuq', '123456789', '3003478654', '420_OG_69@still.com', '');
 
   contrasena: string;
 
