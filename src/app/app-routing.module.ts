@@ -32,7 +32,7 @@ const routes: Routes = [
   {path: 'inmobiliaria/ver-perfil/:id', component: VerPerfilComponent},
   {path: 'inmobiliaria/editar-perfil/:id', component: EditarPerfilComponent},
   {path: 'cliente/ver-perfil/:id', component: ClientVerPerfilComponent},
-  {path: 'cliente/editar-perfil', component: ClientEditarPerfilComponent},
+  {path: 'cliente/editar-perfil/:id', component: ClientEditarPerfilComponent},
   {path: '**', redirectTo: '/error404'}
 ];
 

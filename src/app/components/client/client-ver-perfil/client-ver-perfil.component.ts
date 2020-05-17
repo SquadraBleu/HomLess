@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/models/cliente';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ClientService } from '../../../services/client.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-client-ver-perfil',
@@ -16,6 +17,7 @@ export class ClientVerPerfilComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private clienteSvc: ClientService,
+    private authSvc: AuthService,
     private router: Router
   ) { }
 
@@ -40,11 +42,17 @@ export class ClientVerPerfilComponent implements OnInit {
   }
 
   editarPerfil(){
-    this.router.navigate(['cliente/editar-perfil']);
+    console.log('cliente/editar-perfil/' + this.id);
+    this.router.navigate(['cliente/editar-perfil/' + this.id]);
   }
 
   borrarPerfil(){
-    // TODO INTEGRACION
+    this.clienteSvc.deleteCliente(this.id);
+    this.authSvc.deleteUser().then(
+      (res) => {
+        this.router.navigate(['/public/home']);
+      }
+    );
   }
 
   verBusquedas(){

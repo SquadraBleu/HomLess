@@ -56,6 +56,8 @@ export class EditarPerfilComponent implements OnInit {
           this.router.navigate(['inmobiliaria/ver-perfil/' + this.id]);
         }
       );
+    }else{
+      this.router.navigate(['inmobiliaria/ver-perfil/' + this.id]);
     }
   }
 
