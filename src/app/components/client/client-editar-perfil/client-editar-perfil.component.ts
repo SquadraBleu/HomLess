@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 
 @Component({
@@ -12,12 +12,15 @@ export class ClientEditarPerfilComponent implements OnInit {
   cliente = new Cliente('Iwan TuFuq', '123456789', '3003478654', '420_OG_69@still.com', '', [], [], [], []);
 
   contrasena: string;
+  id: any = undefined;
 
   constructor(
-    public router: Router
+    public router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
   }
 
   guardarPerfil(){

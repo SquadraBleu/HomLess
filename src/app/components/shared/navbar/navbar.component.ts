@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
     private router: Router) { }
   public isLogged = false;
   public tituloNavBar = 'Bienvenido';
+  public userUid: string = null;
 
   ngOnInit() {
     this.getCurrentUser();
@@ -58,6 +59,31 @@ export class NavbarComponent implements OnInit {
   }
 
   verPerfil(){
-    this.router.navigate(['cliente/ver-perfil']);
+    // this.router.navigate(['cliente/ver-perfil']);
+    this.authService.isAuth().subscribe(auth => {
+      if (auth) {
+        // console.log(auth);
+        this.userUid = auth.uid;
+        this.authService.isUserInmo(this.userUid).subscribe(userRole => { // se si es una inmo
+          if (userRole !== undefined){
+            console.log(userRole.UID);
+            this.router.navigate(['inmobiliaria/ver-perfil/' + this.userUid]);
+          }else{
+            this.authService.isUserClient(this.userUid).subscribe( user => {
+              if (user !== undefined){
+                this.router.navigate(['cliente/ver-perfil/' + this.userUid]);
+              }
+            });
+          }
+          /*
+          if (userRole.roles.inmobiliaria){
+            this.route.navigate(['inmobiliaria/crear-inmueble']);
+          } else if (userRole.roles.clinte) {
+            this.route.navigate(['inmobiliaria/ver-inmueble']);
+          }
+          */
+        });
+      }
+    });
   }
 }

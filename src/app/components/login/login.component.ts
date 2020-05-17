@@ -68,6 +68,12 @@ export class LoginComponent implements OnInit {
           if (userRole !== undefined){
             console.log(userRole.UID);
             this.route.navigate(['inmobiliaria/lista-inmuebles/' + this.userUid]);
+          }else{
+            this.authSvc.isUserClient(this.userUid).subscribe( user => {
+              if (user !== undefined){
+                this.route.navigate(['cliente/ver-perfil/' + this.userUid]);
+              }
+            });
           }
           /*
           if (userRole.roles.inmobiliaria){
