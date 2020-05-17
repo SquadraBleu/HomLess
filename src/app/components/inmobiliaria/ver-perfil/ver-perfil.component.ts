@@ -37,6 +37,10 @@ export class VerPerfilComponent implements OnInit {
 
   }
 
+  verRepresentantes(){
+
+  }
+
   volver(){
 
   }
