@@ -18,6 +18,8 @@ export class Busqueda {
         public SiNotificacion: boolean,
         public IDCliente: string,
         public Tags: string[],
-        public Correo: string
+        public Correo: string,
+        public Fecha: number
+        
     ){}
 }

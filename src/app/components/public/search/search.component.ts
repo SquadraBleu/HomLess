@@ -23,12 +23,12 @@ const indexAlg = client.initIndex('inmuebles_search');
 })
 export class SearchComponent implements OnInit {
   constructor(
-    private router: Router, 
+    private router: Router,
     private inmuService: InmuebleServiceService,
     private clienteService: ClientService,
     private busquedaService: BusquedaService,
     private authSvc: AuthService
-    ) 
+    )
     {
     // this.searchGroup = new FormGroup({search: new FormControl() });
   }
@@ -120,12 +120,22 @@ export class SearchComponent implements OnInit {
 
   ClientLoged: any = null;
   userUid: string = null;
-  clientMail: string = 'DADdy';
+  clientMail = '';
   arraytags: string[];
-  arrayIDstags: string []=[];
-  activate: boolean= false;
-  
+  arrayIDstags: string [] = [];
+  activate: boolean = false;
+
   ngOnInit(): void {
+    this.authSvc.isAuth().subscribe(auth => {
+      if (auth) {
+        this.userUid = auth.uid;
+        this.authSvc.isUserClient(this.userUid).subscribe(userRole => { // se si es una inmo
+          if (userRole !== undefined){
+            this.getClientMail();
+          }
+        });
+      }
+    });
     this.submitSearch();
   }
 
@@ -245,13 +255,12 @@ export class SearchComponent implements OnInit {
 
       console.log('tags before->');
       console.log(this.tags);
-      if(this.multipleFilters){
+      if ( this.multipleFilters){
         this.filters += ' AND ';
       }
       this.filters += '_tags:"' + this.tags.replace(new RegExp(", ", "g"), '" AND _tags:"') + '"';
       this.newtags = this.tags;
-      this.getTags();
-     
+
     }
     indexAlg.search(this.searchTerm, {
       // @ts-ignore
@@ -261,26 +270,24 @@ export class SearchComponent implements OnInit {
       this.inmuebles = hits;
     });
     console.log(this.filters);
-    
-    this.authSvc.isAuth().subscribe(auth => {
-      if (auth) {
-        this.userUid = auth.uid;           
-        this.authSvc.isUserClient(this.userUid).subscribe(userRole => { 
-            
-        });
-        if(this.activarAlerta)
+
+    if ( this.userUid !== '' && this.clientMail !== '' ){
+
+      console.log('GUARDAR');
+      if ( this.activarAlerta)
         {
           this.activate = true;
         }
-        this.getClientMail();
-        this.busqueda = new Busqueda('', this.searchTerm ,this.tipoInmueble,
-        this.maxArea,this.minArea,this.nhabitaciones,this.nbanos,this.zona,this.localidad,
-        this.minPriceVenta,this.maxPriceVenta,this.minPriceArriendo,this.maxPriceArriendo,
-        this.activate,this.userUid,this.arrayIDstags,this.clientMail);
-        this.createBusqueda();
-        console.log(this.busqueda);
-      }
-    });
+      this.getTags();
+      this.busqueda = new Busqueda('', this.searchTerm , this.tipoInmueble,
+        this.maxArea, this.minArea, this.nhabitaciones, this.nbanos, this.zona, this.localidad,
+        this.minPriceVenta, this.maxPriceVenta, this.minPriceArriendo, this.maxPriceArriendo,
+        this.activate, this.userUid, this.arrayIDstags, this.clientMail, null);
+      this.createBusqueda();
+      console.log(this.busqueda);
+      this.arrayIDstags = [];
+
+    }
 
     this.multipleFilters = false;
     this.rangeArea = false;
@@ -289,7 +296,7 @@ export class SearchComponent implements OnInit {
 
     if (this.inmuebles.length === 0 && this.madeSearch) {
       alert('No hay resultados de búsqueda');
-    
+
       this.searchTerm = '';
       this.inmuebles = [];
     } else {
@@ -303,16 +310,17 @@ export class SearchComponent implements OnInit {
     this.arraytags= this.newtags.split(', ');
     this.inmuService.getTags().subscribe( res=> {
       for (let index = 0; index < res.length; index++) {
-        for (let i = 0; i < this.arraytags.length; i++) { 
+        for (let i = 0; i < this.arraytags.length; i++) {
           if (res[index].Hashtag.toLowerCase() === this.arraytags[i].toLowerCase() ){
-             this.arrayIDstags.push(res[index].id);
+            console.log('array::', res[index].id);
+            this.arrayIDstags.push(res[index].id);
           }
-        }    
+        }
       }
     }
     );
-    
-    
+
+
 
   }
 

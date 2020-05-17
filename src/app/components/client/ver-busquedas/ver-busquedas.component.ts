@@ -4,7 +4,6 @@ import { Tag } from 'src/app/models/tag';
 import { database } from 'firebase';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BusquedaService } from 'src/app/services/busqueda.service';
-
 @Component({
   selector: 'app-ver-busquedas',
   templateUrl: './ver-busquedas.component.html',
@@ -12,13 +11,7 @@ import { BusquedaService } from 'src/app/services/busqueda.service';
 })
 export class VerBusquedasComponent implements OnInit {
 
-  //constructor() { }
-
-  public busquedas: Busqueda[] =
-    [new Busqueda(null, 'Casa bonita', null, 10, 150, 3, undefined, null, null, 0, 300, null, null, false, null, null, null),
-     new Busqueda(null, 'Apto bonito', 'Casa', undefined, undefined, 3, 2, 'Norte', null, undefined, undefined, 0, 1200000,
-       // tslint:disable-next-line:max-line-length
-                                  true, null, ['lindo'/*new Tag('lindo', null, null)*/ , 'grande'/*new Tag('grande', null, null)], null)*/], null)];
+  public busquedas: Busqueda[] = [];
 
   public headers: string[][] = [];
   public data: string[][] = [];
@@ -140,7 +133,7 @@ export class VerBusquedasComponent implements OnInit {
         j++;
       }
 
-    /* if (this.busquedas[i].Tags !== undefined && this.busquedas[i].Tags != null)
+     /*if (this.busquedas[i].Tags !== undefined && this.busquedas[i].Tags != null)
       {
         let etiquetas = '';
         for (let k = 0; k < this.busquedas[i].Tags.length; k++)
