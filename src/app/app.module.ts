@@ -32,6 +32,7 @@ import { ClientChatComponent } from './components/client/client-chat/client-chat
 import { ListaRepresentantesComponent } from './components/representante/lista-representantes/lista-representantes.component';
 import { EditarRepresentanteComponent } from './components/representante/editar-representante/editar-representante.component';
 import { CrearRepresentanteComponent } from './components/representante/crear-representante/crear-representante.component';
+import { RepresentanteChatComponent } from './components/representante/representante-chat/representante-chat.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CrearRepresentanteComponent } from './components/representante/crear-re
     ListaRepresentantesComponent,
     EditarRepresentanteComponent,
     CrearRepresentanteComponent,
-    ClientChatComponent
+    ClientChatComponent,
+    RepresentanteChatComponent
   ],
   imports: [
     BrowserModule,
