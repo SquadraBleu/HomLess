@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/models/cliente';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {InmuebleServiceService} from "../../../services/inmueble-service.service";
 
 @Component({
   selector: 'app-client-ver-perfil',
@@ -9,12 +10,18 @@ import { Router } from '@angular/router';
 })
 export class ClientVerPerfilComponent implements OnInit {
 
+  id: any = undefined;
   cliente = new Cliente('Iwan TuFuq', '123456789', '3003478654', '420_OG_69@still.com', '', [], [], [], []);
+
   constructor(
-    public router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    console.log( 'TOOOOOOOOOOOO:: ' );
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log( 'pass to client:: ' , this.id);
   }
 
   volver(){
@@ -22,6 +29,7 @@ export class ClientVerPerfilComponent implements OnInit {
   }
 
   editarPerfil(){
+    console.log('to PER');
     this.router.navigate(['cliente/editar-perfil']);
   }
 
@@ -30,6 +38,8 @@ export class ClientVerPerfilComponent implements OnInit {
   }
 
   verBusquedas(){
+    console.log('to busquedas');
+    this.router.navigate(['cliente/ver-busquedas']);
 
   }
 

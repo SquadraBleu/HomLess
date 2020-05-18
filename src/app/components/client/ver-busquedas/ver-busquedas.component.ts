@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Busqueda} from 'src/app/models/busqueda';
-import {Tag} from 'src/app/models/tag';
-import {database} from 'firebase';
-import {Router, ActivatedRoute} from '@angular/router';
-import {BusquedaService} from 'src/app/services/busqueda.service';
+
+import { Component, OnInit } from '@angular/core';
+import { Busqueda } from 'src/app/models/busqueda';
+import { Tag } from 'src/app/models/tag';
+import { database } from 'firebase';
+import { Router, ActivatedRoute } from '@angular/router';
+import { BusquedaService } from 'src/app/services/busqueda.service';
 
 @Component({
   selector: 'app-ver-busquedas',
@@ -18,6 +19,7 @@ export class VerBusquedasComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         true, null, ['lindo', 'grande'], null)];
 
+
   public headers: string[][] = [];
   public data: string[][] = [];
   id: any = undefined;
@@ -30,7 +32,6 @@ export class VerBusquedasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.id = this.route.snapshot.paramMap.get('id');
     console.log(this.route.snapshot.paramMap.get('id'));
     this.mostrarBusquedas();
@@ -41,7 +42,7 @@ export class VerBusquedasComponent implements OnInit {
   activarBusqueda(i: number): void {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = true;
-    // new Busqueda = this.busquedas[i]
+
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
     this.router.navigate(['inmobiliaria/ver-inmueble/' + this.busquedas[i].IDBusqueda]);
     console.log('Se editó');
@@ -51,17 +52,18 @@ export class VerBusquedasComponent implements OnInit {
   desactivarBusqueda(i: number): void {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = false;
-    // new Busqueda = this.busquedas[i]
+
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
     this.router.navigate(['inmobiliaria/ver-inmueble/' + this.busquedas[i].IDBusqueda]);
     console.log('Se editó');
     console.log('Desactivar alerta de busqueda en la posicion ' + i + ' de busquedas');
   }
 
-  eliminarBusqueda(i: number): void {
+
+  eliminarBusqueda(i: number): void
+  {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = false;
-    // new Busqueda = this.busquedas[i]
     this.busquedaService.deleteBusqueda(this.busquedas[i].IDBusqueda);
     console.log('Eliminar busqueda en la posicion ' + i + ' de busquedas');
   }
@@ -147,7 +149,13 @@ export class VerBusquedasComponent implements OnInit {
         j++;
       }
 
+     /*if (this.busquedas[i].Tags !== undefined && this.busquedas[i].Tags != null)
+      {
+        let etiquetas = '';
+        for (let k = 0; k < this.busquedas[i].Tags.length; k++)
+
       /* if (this.busquedas[i].Tags !== undefined && this.busquedas[i].Tags != null)
+
         {
           let etiquetas = '';
           for (let k = 0; k < this.busquedas[i].Tags.length; k++)
