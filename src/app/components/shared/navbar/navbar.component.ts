@@ -27,6 +27,30 @@ export class NavbarComponent implements OnInit {
     if (auth) {
       console.log('user logged');
       this.isLogged = true;
+
+      this.userUid = auth.uid;
+      this.authService.isUserInmo(this.userUid).subscribe(userRole => { // se si es una inmo
+        if (userRole !== undefined){
+          console.log(userRole.UID);
+          this.tituloNavBar = 'Bienvenido, ' + userRole.Nombre;
+          // this.router.navigate(['inmobiliaria/ver-perfil/' + this.userUid]);
+        }else{
+          this.authService.isUserClient(this.userUid).subscribe( user => {
+            if (user !== undefined){
+              this.tituloNavBar = 'Bienvenido, ' + user.Nombre;
+              // this.router.navigate(['cliente/ver-perfil/' + this.userUid]);
+            }
+          });
+        }
+        /*
+        if (userRole.roles.inmobiliaria){
+          this.route.navigate(['inmobiliaria/crear-inmueble']);
+        } else if (userRole.roles.clinte) {
+          this.route.navigate(['inmobiliaria/ver-inmueble']);
+        }
+        */
+      });
+
       } else {
       console.log('NOT user logged');
       this.isLogged = false;
@@ -37,6 +61,7 @@ export class NavbarComponent implements OnInit {
   onLogout() {
     this.afsAuth.auth.signOut();
     this.isLogged = false;
+    this.tituloNavBar = 'Bienvenido';
     this.router.navigate(['public/home']);
   }
 
