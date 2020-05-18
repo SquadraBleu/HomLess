@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {firestore} from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,8 @@ export class BusquedaService {
       SiNotificacion: value.SiNotificacion,
       IDCliente: value.IDCliente,
       Tags: value.Tags,
-      Correo: value.Correo
+      Correo: value.Correo,
+      Fecha: firestore.Timestamp.fromDate(new Date())
     });
   }
 
