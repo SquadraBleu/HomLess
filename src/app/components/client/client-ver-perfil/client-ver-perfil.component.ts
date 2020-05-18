@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Cliente } from 'src/app/models/cliente';
+import {Component, OnInit} from '@angular/core';
+import {Cliente} from 'src/app/models/cliente';
 import {ActivatedRoute, Router} from '@angular/router';
-import {InmuebleServiceService} from "../../../services/inmueble-service.service";
-import { Router, ActivatedRoute } from '@angular/router';
-import { ClientService } from '../../../services/client.service';
-import { AuthService } from 'src/app/services/auth.service';
+import {InmuebleServiceService} from '../../../services/inmueble-service.service';
+import {Router, ActivatedRoute} from '@angular/router';
+import {ClientService} from '../../../services/client.service';
+import {AuthService} from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-client-ver-perfil',
@@ -21,7 +21,8 @@ export class ClientVerPerfilComponent implements OnInit {
     private clienteSvc: ClientService,
     private authSvc: AuthService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -29,28 +30,28 @@ export class ClientVerPerfilComponent implements OnInit {
 
   }
 
-  volver(){
+  volver() {
     // TODO INTEGRACION
   }
 
-  darCliente(){
+  darCliente() {
     this.clienteSvc.getClientes().subscribe(res => {
       // tslint:disable-next-line: prefer-for-of
-      for ( let i = 0; i < res.length; i++){
-        if (this.id === res[i].UID){
+      for (let i = 0; i < res.length; i++) {
+        if (this.id === res[i].UID) {
           this.cliente = res[i];
         }
       }
     });
   }
 
-  editarPerfil(){
+  editarPerfil() {
     console.log('cliente/editar-perfil/' + this.id);
     this.router.navigate(['cliente/editar-perfil/' + this.id]);
 
   }
 
-  borrarPerfil(){
+  borrarPerfil() {
     this.clienteSvc.deleteCliente(this.id);
     this.authSvc.deleteUser().then(
       (res) => {
@@ -59,7 +60,7 @@ export class ClientVerPerfilComponent implements OnInit {
     );
   }
 
-  verBusquedas(){
+  verBusquedas() {
     console.log('to busquedas');
     this.router.navigate(['cliente/ver-busquedas']);
 

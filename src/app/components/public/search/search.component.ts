@@ -11,7 +11,7 @@ import {ClientService} from 'src/app/services/client.service';
 import {Tag} from 'src/app/models/tag';
 import {environment} from 'src/environments/environment';
 import algoliasearch from 'algoliasearch';
-import {firestore} from "firebase";
+import {firestore} from 'firebase';
 
 import { Mail } from 'src/app/models/mail';
 
@@ -39,8 +39,8 @@ export class SearchComponent implements OnInit {
 
   IDBusqueda: any = null;
   busqueda = new Busqueda( '', '', '',
-    0, 0, 0, 0, '','',
-    0,0, 0, 0,
+    0, 0, 0, 0, '', '',
+    0, 0, 0, 0,
     false, '', [], '', null);
    minPriceArriendo = 0; // de 0 a 5000000, de 50000
   maxPriceArriendo = 0; // de 0 a 5000000, de 50000
@@ -125,11 +125,10 @@ export class SearchComponent implements OnInit {
 
   ClientLoged: any = null;
   userUid: string = null;
-  
   clientMail = '';
   arraytags: string[];
   arrayIDstags: string [] = [];
-  activate: boolean = false;
+  activate = false;
   date: any;
 
   ngOnInit(): void {
@@ -284,7 +283,7 @@ export class SearchComponent implements OnInit {
     if ( this.userUid !== '' && this.clientMail !== '' ){
 
       console.log('GUARDAR');
-      
+
       this.date = firestore.Timestamp.fromDate(new Date());
       this.busqueda = new Busqueda( '', this.searchTerm , this.tipoInmueble,
         this.maxArea, this.minArea, this.nhabitaciones, this.nbanos, this.zona, this.localidad,
