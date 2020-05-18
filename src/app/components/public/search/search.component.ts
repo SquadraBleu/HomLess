@@ -125,6 +125,7 @@ export class SearchComponent implements OnInit {
 
   ClientLoged: any = null;
   userUid: string = null;
+  
   clientMail = '';
   arraytags: string[];
   arrayIDstags: string [] = [];
@@ -261,10 +262,12 @@ export class SearchComponent implements OnInit {
 
       console.log('tags before->');
       console.log(this.tags);
-      if ( this.multipleFilters){
+
+      if (this.multipleFilters){
+
         this.filters += ' AND ';
       }
-      this.filters += '_tags:"' + this.tags.replace(new RegExp(", ", "g"), '" AND _tags:"') + '"';
+      this.filters += '_tags:"' + this.tags.replace(new RegExp(', ', 'g'), '" AND _tags:"') + '"';
       this.newtags = this.tags;
 
       this.getTags();
@@ -310,9 +313,12 @@ export class SearchComponent implements OnInit {
   }
   getTags()
   {
-    this.arraytags= this.newtags.split(', ');
-    this.inmuService.getTags().subscribe( res=> {
+    this.arraytags = this.newtags.split(', ');
+    this.inmuService.getTags().subscribe( res => {
+        // tslint:disable-next-line:prefer-for-of
       for (let index = 0; index < res.length; index++) {
+
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.arraytags.length; i++) {
           if (res[index].Hashtag.toLowerCase() === this.arraytags[i].toLowerCase() ){
             console.log('array::', res[index].id);
@@ -322,15 +328,13 @@ export class SearchComponent implements OnInit {
       }
     }
     );
-
-
-
   }
 
 
   getClientMail()
   {
     this.clienteService.getClientes().subscribe( res => {
+        // tslint:disable-next-line:prefer-for-of
       for (let index = 0; index < res.length; index++) {
         if (res[index].id === this.userUid ){
           this.clientMail = res[index].Correo;
@@ -395,7 +399,6 @@ export class SearchComponent implements OnInit {
     console.log('Entre a la Funcion');
     const id = 10;
     this.router.navigate(['public/search/ver-inmueble/' + idInm]);
-
   }
 
   clean() {

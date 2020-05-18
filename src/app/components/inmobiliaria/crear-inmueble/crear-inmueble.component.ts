@@ -141,7 +141,7 @@ export class CrearInmuebleComponent implements OnInit {
               continue;
             }
           }
-          if (/*res[index].Localidad != null ||*/ res[index].Localidad.length !== 0){
+          if (res[index].Localidad.length !== 0){
             if (res[index].Localidad !== value.Localidad){
               console.log('Atributo de busqueda => ' + res[index].Localidad.length);
               console.log('Atributo de inmueble => ' + value.Localidad);
@@ -149,13 +149,13 @@ export class CrearInmuebleComponent implements OnInit {
               continue;
             }
           }
-          if (/*res[index].Zona != null ||*/ res[index].Zona.length !== 0){
+          if (res[index].Zona.length !== 0){
             if (res[index].Zona !== value.Zona){
               console.log('Falló la comparación de Zona');
               continue;
             }
           }
-          if (/*res[index].TipoInmueble != null ||*/ res[index].TipoInmueble.length !== 0){
+          if (res[index].TipoInmueble.length !== 0){
             if (res[index].TipoInmueble !== value.TipoInmueble){
               console.log('Falló la comparación de TipoInmueble');
               continue;
@@ -211,9 +211,9 @@ export class CrearInmuebleComponent implements OnInit {
   }
 
   private compararTags(tagsBusqueda: string[], tagsInmueble: string[]): boolean {
-    if (tagsBusqueda.length === tagsInmueble.length){
-      if (tagsBusqueda.length === 0){
-        return true;
+    if (tagsBusqueda === null || tagsBusqueda.length === 0){
+      if (tagsBusqueda.length !== tagsInmueble.length){
+        return false;
       } else{
         const superSet = {};
         // tslint:disable-next-line: prefer-for-of
@@ -239,7 +239,7 @@ export class CrearInmuebleComponent implements OnInit {
         return true;
       }
     } else{
-      return false;
+      return true;
     }
   }
 
