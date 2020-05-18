@@ -1,23 +1,28 @@
 <div class="container-fluid" [hidden]="!(inmuebles.length > 0)">
     <h1 align="center">Aquí están todos tus inmuebles</h1>
     <div class="row" style="margin-bottom: 10px;">
-        <div class="col-7">
+        <div class="col-6">
             <input type="text" name="busqueda" id="busqueda" style="width: inherit; height: inherit;"
             [(ngModel)]="busqueda" placeholder="Busca aqui un inmueble">
         </div>
-        <div class="col-2">
+        <div class="col">
             <button class="btn btn-primary btn-sm" (click)="buscarInmueble()">
                 Buscar Inmueble
             </button>
         </div>
-         <div class="col-1" *ngIf="(busqueda!=='')">
+         <div class="col" *ngIf="(busqueda!=='')">
             <button class="btn btn-primary btn-sm" (click)="limpiarBusqueda()">
                 Limpiar
             </button>
         </div>
-        <div class="col-1">
+        <div class="col">
             <button class="btn btn-success btn-sm" (click)="agregarInmueble()">
                 Agregar Inmueble
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-success btn-sm" (click)="ordenarInmuebles()">
+                Ordenar por fecha
             </button>
         </div>
     </div>
@@ -25,34 +30,43 @@
         <div class="col-2">
             <h5>Cómo se ve:</h5>
             <img [src]="getImageUrl(inmueble.IDI)" class="logo">
-
         </div>
-        <div class="col-3">
-            <h5>Título: </h5>
-            <p>
-                {{inmueble.Titulo}}
-            </p>
-        </div>
-        <div class="col-3">
-            <h5>Descripción: </h5>
-            <p>
-                {{inmueble.Descripcion}}
-            </p>
-        </div>
-        <div class="col-2">
-            <h5>Área(m&#178;): </h5>
-            {{inmueble.AreaConstruida}}
-        </div>
-        <div class="col-2">
-
-            <div *ngIf="inmueble.MontoVenta">
-                <h6>Monto de venta $$: </h6>
-                {{inmueble.MontoVenta}}
+        <div class="col-10">
+            <div class="row">
+                <div class="col-3">
+                    <h5>Título: </h5>
+                    <p>
+                        {{inmueble.Titulo}}
+                    </p>
+                </div>
+                <div class="col-3">
+                    <h5>Descripción: </h5>
+                    <p>
+                        {{inmueble.Descripcion}}
+                    </p>
+                </div>
+                <div class="col-2">
+                    <h5>Área(m&#178;): </h5>
+                    {{inmueble.AreaConstruida}}
+                </div>
+                <div class="col-2">
+        
+                    <div *ngIf="inmueble.MontoVenta">
+                        <h6>Monto de venta $$: </h6>
+                        {{inmueble.MontoVenta}}
+                    </div>
+        
+                    <div *ngIf="inmueble.MontoArriendo">
+                        <h6>Monto de arriendo $$: </h6>
+                        {{inmueble.MontoArriendo}}
+                    </div>
+                </div>
             </div>
-
-            <div *ngIf="inmueble.MontoArriendo">
-                <h6>Monto de arriendo $$: </h6>
-                {{inmueble.MontoArriendo}}
+            <div class="row">
+                <div class="col">
+                    <h6>Fecha de creación: </h6>
+                    ARREGLEN EL MODELO DE INMUEBLE Y PONGAN LA FECHA ACA JUAZ JUAZ
+                </div>
             </div>
         </div>
     </div>

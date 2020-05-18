@@ -93,4 +93,8 @@ export class ListaInmueblesComponent implements OnInit {
     window.location.reload();
     // console.log('Limpiar paises, no se como :(');
   }
+
+  ordenarInmuebles(){
+
+  }
 }
