@@ -11,6 +11,8 @@ import {ClientService} from 'src/app/services/client.service';
 import {Tag} from 'src/app/models/tag';
 import {environment} from 'src/environments/environment';
 import algoliasearch from 'algoliasearch';
+import {firestore} from 'firebase';
+
 import { Mail } from 'src/app/models/mail';
 
 const client = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
@@ -36,7 +38,10 @@ export class SearchComponent implements OnInit {
   // searchGroup: FormGroup;
 
   IDBusqueda: any = null;
-  busqueda: Busqueda;
+  busqueda = new Busqueda( '', '', '',
+    0, 0, 0, 0, '', '',
+    0, 0, 0, 0,
+    false, '', [], '', null);
    minPriceArriendo = 0; // de 0 a 5000000, de 50000
   maxPriceArriendo = 0; // de 0 a 5000000, de 50000
   minPriceVenta = 0; // de 0 a 1000, de 1 en 1
@@ -120,11 +125,23 @@ export class SearchComponent implements OnInit {
 
   ClientLoged: any = null;
   userUid: string = null;
-  clientMail = 'DADdy';
+  clientMail = '';
   arraytags: string[];
   arrayIDstags: string [] = [];
   activate = false;
+  date: any;
+
   ngOnInit(): void {
+    this.authSvc.isAuth().subscribe(auth => {
+      if (auth) {
+        this.userUid = auth.uid;
+        this.authSvc.isUserClient(this.userUid).subscribe(userRole => { // se si es una inmo
+          if (userRole !== undefined){
+            this.getClientMail();
+          }
+        });
+      }
+    });
     this.submitSearch();
   }
 
@@ -244,13 +261,15 @@ export class SearchComponent implements OnInit {
 
       console.log('tags before->');
       console.log(this.tags);
+
       if (this.multipleFilters){
+
         this.filters += ' AND ';
       }
       this.filters += '_tags:"' + this.tags.replace(new RegExp(', ', 'g'), '" AND _tags:"') + '"';
       this.newtags = this.tags;
-      this.getTags();
 
+      this.getTags();
     }
     indexAlg.search(this.searchTerm, {
       // @ts-ignore
@@ -261,25 +280,19 @@ export class SearchComponent implements OnInit {
     });
     console.log(this.filters);
 
-    this.authSvc.isAuth().subscribe(auth => {
-      if (auth) {
-        this.userUid = auth.uid;
-        this.authSvc.isUserClient(this.userUid).subscribe(userRole => {
+    if ( this.userUid !== '' && this.clientMail !== '' ){
 
-        });
-        if (this.activarAlerta)
-        {
-          this.activate = true;
-        }
-        this.getClientMail();
-        this.busqueda = new Busqueda('', this.searchTerm , this.tipoInmueble,
+      console.log('GUARDAR');
+
+      this.date = firestore.Timestamp.fromDate(new Date());
+      this.busqueda = new Busqueda( '', this.searchTerm , this.tipoInmueble,
         this.maxArea, this.minArea, this.nhabitaciones, this.nbanos, this.zona, this.localidad,
         this.minPriceVenta, this.maxPriceVenta, this.minPriceArriendo, this.maxPriceArriendo,
-        this.activate, this.userUid, this.arrayIDstags, this.clientMail);
-        this.createBusqueda();
-        console.log(this.busqueda);
-      }
-    });
+        this.activarAlerta, this.userUid, this.arrayIDstags, this.clientMail, this.date );
+      this.arrayIDstags = [];
+      this.createBusqueda();
+
+    }
 
     this.multipleFilters = false;
     this.rangeArea = false;
@@ -303,10 +316,12 @@ export class SearchComponent implements OnInit {
     this.inmuService.getTags().subscribe( res => {
         // tslint:disable-next-line:prefer-for-of
       for (let index = 0; index < res.length; index++) {
+
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.arraytags.length; i++) {
           if (res[index].Hashtag.toLowerCase() === this.arraytags[i].toLowerCase() ){
-             this.arrayIDstags.push(res[index].id);
+            console.log('array::', res[index].id);
+            this.arrayIDstags.push(res[index].id);
           }
         }
       }
@@ -331,12 +346,13 @@ export class SearchComponent implements OnInit {
 
   createBusqueda(){
     this.busquedaService.createBusqueda(this.busqueda)
-    .then(res => {
-      this.IDBusqueda = res.id;
-      console.log(this.IDBusqueda);
-    }).catch ( err => console.log('err', err.message));
-
+      .then(res => {
+        this.busqueda.IDBusqueda = res.id;
+        console.log('cccc', this.busqueda.IDBusqueda );
+        this.busquedaService.updateBusqueda(this.busqueda, this.busqueda.IDBusqueda);
+      }).catch ( err => console.log('err', err.message));
   }
+
 
   getMinVentaSliderValue(event: any) {
     this.minPriceVenta = event.target.value;
