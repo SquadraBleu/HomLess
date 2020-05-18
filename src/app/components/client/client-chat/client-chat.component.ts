@@ -17,7 +17,7 @@ export class ClientChatComponent implements OnInit {
                          new Mensaje('Sí, es un barrio muy seguro ;)', true, '7:12pm'),
                          new Mensaje('Todos viven en felicidad, cantando jiji', true, '7:13pm'),
                          new Mensaje('Todos viven en felicidad, cantando jiji', true, '7:13pm'),
-                         new Mensaje('Todos viven en felicidad, cantando jiji', true, '7:13pm'),];
+                         new Mensaje('Todos viven en felicidad, cantando jiji', true, '7:13pm')];
 
   mensaje: string;
 
