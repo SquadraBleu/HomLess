@@ -25,6 +25,34 @@
         </tbody>
     </table>
 </div>
+
+<div class="alert alert-warning" [hidden]="this.confirmacionDelete" style="margin-top: 1vw;">
+    <div class="row">
+
+        <div class="col-5">
+            <label for="clave" style="margin-right: 10px;"><h6>Contraseña del representante</h6></label>
+            <input type="password" name="contrasenaRepresentante" id="contrasenaRepresentante" 
+            [(ngModel)]="contrasenaRepresentante" #txtcontrasenaRepresentante="ngModel">
+            <div [hidden]="!txtcontrasenaRepresentante.touched" class="alert alert-danger">
+                El correo es obligatorio
+            </div>
+        </div>
+
+        <div class="col-5">
+            <label for="clave" style="margin-right: 10px;"><h6>Contraseña de tu Inmobiliaria </h6></label>
+            <input type="password" name="claveInmobiliaria" id="claveInmobiliaria" 
+            [(ngModel)]="contrasenaInmobiliaria" #txtClaveInmobiliaria="ngModel">
+            <div [hidden]="!txtClaveInmobiliaria.touched" class="alert alert-danger">
+                La contraseña es obligatoria
+            </div>
+        </div>
+    
+        <div class="col">   
+            <button class="btn btn-success" [disabled]="!contrasenaInmobiliaria.length || !contrasenaRepresentante.length">Confirmar</button>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid alert alert-info" [hidden]="representantes.length > 0" align="center">
     <h1 class="alert-heading">Y I K E S !</h1>
     <p>Parece que no tienes representantes en tu inmobiliaria</p>

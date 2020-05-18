@@ -13,6 +13,9 @@ export class ListaRepresentantesComponent implements OnInit {
 
   public representantes: Representante[] = [];
   public idInmobiliria: string;
+  public confirmacionDelete = true;
+  public contrasenaInmobiliaria = '';
+  public contrasenaRepresentante = '';
 
   constructor(
     private router: Router,
@@ -51,6 +54,7 @@ export class ListaRepresentantesComponent implements OnInit {
   }
 
   eliminarRepresentante(ID: string){
+    this.confirmacionDelete = false;
     this.repreService.deleteRepresentante(ID);
     /*
     this.authSvc.deleteUser().then(

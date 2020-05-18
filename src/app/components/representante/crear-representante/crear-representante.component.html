@@ -56,4 +56,22 @@
             </div>
         </div>
     </form>
+    
+
+    <div class="alert alert-warning" [hidden]="this.confirmacionCreacion" style="margin-top: 1vw;">
+        <div class="row">
+            <div class="col">
+                <label for="clave" style="margin-right: 10px;"><h6>Contraseña de tu Inmobiliaria </h6></label>
+                <input type="password" name="claveInmobiliaria" id="claveInmobiliaria" 
+                [(ngModel)]="contrasenaInmobiliaria" #txtClaveInmobiliaria="ngModel">
+                <div [hidden]="!txtClaveInmobiliaria.touched" class="alert alert-danger">
+                    La contraseña es obligatoria
+                </div>
+            </div>
+        
+            <div class="col">
+                <button class="btn btn-success" [disabled]="!contrasenaInmobiliaria.length ">Confirmar</button>
+            </div>
+        </div>
+    </div>
 </div>
