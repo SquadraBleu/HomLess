@@ -12,7 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
 export class EditarRepresentanteComponent implements OnInit {
   public representante = new Representante('', '', '', '', '', '');
   public contrasena = '';
+  public contrasenaRepresentante = '';
+  public contrasenaInmobiliaria = '';
   public idRepresentante: string;
+  public confirmacionEdit = true;
 
   constructor(
     private router: Router,
@@ -39,6 +42,7 @@ export class EditarRepresentanteComponent implements OnInit {
   }
 
   editarRepresentante(){
+    this.confirmacionEdit = false;
     this.repreService.updateRepresentante(this.representante, this.representante.UID);
     if (this.contrasena !== ''){
       /*

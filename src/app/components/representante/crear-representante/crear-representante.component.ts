@@ -15,6 +15,8 @@ export class CrearRepresentanteComponent implements OnInit {
   public representante = new Representante('', '', '' , '', '', '');
   public contrasena: string;
   public idInmobiliria: string;
+  public contrasenaInmobiliaria = '';
+  public confirmacionCreacion = true;
 
   constructor(
     private router: Router,
@@ -27,7 +29,12 @@ export class CrearRepresentanteComponent implements OnInit {
     this.idInmobiliria = this.route.snapshot.paramMap.get('id');
   }
 
+  confirmarRepresentante(){
+
+  }
+
   crearRepresentante(){
+    this.confirmacionCreacion = false;
     this.representante.IDInmobiliaria = this.idInmobiliria;
     this.authSvc.registerUser(this.representante.Correo, this.contrasena, false, false, this.representante)
     .then((res) => {
