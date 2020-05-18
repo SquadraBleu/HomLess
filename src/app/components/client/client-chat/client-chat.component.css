@@ -1,0 +1,152 @@
+body,html{
+	height: 100%;
+	margin: 0;
+	background: #7F7FD5;
+	background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+	background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
+
+.chat{
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.card{
+	height: 500px;
+	border-radius: 15px !important;
+	background-color: #ffb000 !important;
+}
+
+.msg_card_body{
+	overflow-y: auto;
+}
+.card-header{
+	border:1px !important;
+	border-color: #ffb000;
+	border-radius: 10%;
+}
+.card-footer{
+	border: 5px !important;
+	border-color: #ffb000;
+	border-radius: 10px;
+}
+.container{
+	align-content: center;
+}
+.type_msg{
+	background-color: rgba(255,255,255,1) !important;
+	border:5px !important;
+	border-color: #ffb000;
+	border-radius: 10px;
+	color:black !important;
+	height: 60px !important;
+	overflow-y: auto;
+}
+.type_msg:focus{
+	box-shadow:none !important;
+	outline:0px !important;
+}
+.attach_btn{
+	border:5px !important;
+	border-color: #ffb000;
+	border-radius: 10px;
+	color: white !important;
+	cursor: pointer;
+}
+.send_btn{
+	border:5px !important;
+	border-color: #ffb000;
+	border-radius: 10px;
+	color: black !important;
+	cursor: pointer;
+}
+
+.contacts li{
+	width: 100% !important;
+	padding: 5px 10px;
+	margin-bottom: 15px !important;
+}
+.active{
+		background-color: rgba(0,0,0,0.3);
+}
+.user_img{
+	height: 70px;
+	width: 70px;
+	border:1.5px solid #f5f6fa;
+
+}
+.user_img_msg{
+	height: 40px;
+	width: 40px;
+	border:1.5px solid #f5f6fa;
+
+}
+.img_cont{
+		position: relative;
+		height: 70px;
+		width: 70px;
+}
+.img_cont_msg{
+		height: 40px;
+		width: 40px;
+}
+.user_info{
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 15px;
+}
+.user_info span{
+	font-size: 20px;
+	color: white;
+}
+.user_info p{
+font-size: 10px;
+color: rgba(255,255,255,0.6);
+}
+.msg_cotainer{
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 10px;
+	border-radius: 25px;
+	background-color: #fac022;
+	padding: 10px;
+	position: relative;
+}
+.msg_cotainer_send{
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-right: 10px;
+	border-radius: 25px;
+	background-color: #64ceff;
+	padding: 10px;
+	position: relative;
+}
+.msg_time{
+	position: absolute;
+	left: 0;
+	bottom: -15px;
+	color: rgba(0,0,0,0.5);
+	font-size: 10px;
+}
+.msg_time_send{
+	position: absolute;
+	right:0;
+	bottom: -15px;
+	color: rgba(0,0,0,0.5);
+	font-size: 10px;
+}
+.msg_head{
+	position: relative;
+}
+
+@media(max-width: 576px){
+.contacts_card{
+	margin-bottom: 15px !important;
+}
+}
+
+.scroll-style
+{
+	max-height: 30vw;
+	overflow-y: scroll;
+	margin-top: -2%;
+}

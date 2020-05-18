@@ -15,6 +15,7 @@ import { VerPerfilComponent } from './components/inmobiliaria/ver-perfil/ver-per
 import { EditarPerfilComponent } from './components/inmobiliaria/editar-perfil/editar-perfil.component';
 import { ClientVerPerfilComponent } from './components/client/client-ver-perfil/client-ver-perfil.component';
 import { ClientEditarPerfilComponent } from './components/client/client-editar-perfil/client-editar-perfil.component';
+import { ClientChatComponent } from './components/client/client-chat/client-chat.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/public/home'},
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path: 'inmobiliaria/editar-perfil', component: EditarPerfilComponent},
   {path: 'cliente/ver-perfil', component: ClientVerPerfilComponent},
   {path: 'cliente/editar-perfil', component: ClientEditarPerfilComponent},
+  {path: 'cliente/chat', component: ClientChatComponent},
   {path: '**', redirectTo: '/error404'}
 ];
 
