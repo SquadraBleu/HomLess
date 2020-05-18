@@ -93,8 +93,12 @@ export class InmuebleServiceService {
     return this.inmueblesCollection.doc(id).delete();
   }
 
-  updateTags(value: any){
-    return this.afs.collection('Tags').doc(value.id).set(value);
+  deleteInmobiliaria(id: string){
+    return this.inmobiliariasCollection.doc(id).delete();
+  }
+
+  updateTags(value: any, id: string){
+    return this.afs.collection('Tags').doc(id).set(Object.assign({}, value));
   }
 
   updateInmueble(value: any, id: string){
@@ -103,6 +107,8 @@ export class InmuebleServiceService {
   }
 
   updateInmobiliaria(value: any, id: string){
+    console.log('actualice', id);
+    console.log('actualice2', value);
     return this.afs.collection('Inmobiliarias').doc(id).set(Object.assign({}, value));
   }
 }

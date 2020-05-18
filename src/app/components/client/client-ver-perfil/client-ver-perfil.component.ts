@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/models/cliente';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InmuebleServiceService} from "../../../services/inmueble-service.service";
+import { Router, ActivatedRoute } from '@angular/router';
+import { ClientService } from '../../../services/client.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-client-ver-perfil',
@@ -10,31 +13,50 @@ import {InmuebleServiceService} from "../../../services/inmueble-service.service
 })
 export class ClientVerPerfilComponent implements OnInit {
 
+  cliente = new Cliente('', '', '', '', '', [], [], [], []);
   id: any = undefined;
-  cliente = new Cliente('Iwan TuFuq', '123456789', '3003478654', '420_OG_69@still.com', '', [], [], [], []);
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
+    private clienteSvc: ClientService,
+    private authSvc: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    console.log( 'TOOOOOOOOOOOO:: ' );
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log( 'pass to client:: ' , this.id);
+    this.darCliente();
+
   }
 
   volver(){
     // TODO INTEGRACION
   }
 
+  darCliente(){
+    this.clienteSvc.getClientes().subscribe(res => {
+      // tslint:disable-next-line: prefer-for-of
+      for ( let i = 0; i < res.length; i++){
+        if (this.id === res[i].UID){
+          this.cliente = res[i];
+        }
+      }
+    });
+  }
+
   editarPerfil(){
-    console.log('to PER');
-    this.router.navigate(['cliente/editar-perfil']);
+    console.log('cliente/editar-perfil/' + this.id);
+    this.router.navigate(['cliente/editar-perfil/' + this.id]);
+
   }
 
   borrarPerfil(){
-    // TODO INTEGRACION
+    this.clienteSvc.deleteCliente(this.id);
+    this.authSvc.deleteUser().then(
+      (res) => {
+        this.router.navigate(['/public/home']);
+      }
+    );
   }
 
   verBusquedas(){
