@@ -28,6 +28,9 @@ import { VerPerfilComponent } from './components/inmobiliaria/ver-perfil/ver-per
 import { EditarPerfilComponent } from './components/inmobiliaria/editar-perfil/editar-perfil.component';
 import { ClientVerPerfilComponent } from './components/client/client-ver-perfil/client-ver-perfil.component';
 import { ClientEditarPerfilComponent } from './components/client/client-editar-perfil/client-editar-perfil.component';
+import { ListaRepresentantesComponent } from './components/representante/lista-representantes/lista-representantes.component';
+import { EditarRepresentanteComponent } from './components/representante/editar-representante/editar-representante.component';
+import { CrearRepresentanteComponent } from './components/representante/crear-representante/crear-representante.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,10 @@ import { ClientEditarPerfilComponent } from './components/client/client-editar-p
     VerPerfilComponent,
     EditarPerfilComponent,
     ClientVerPerfilComponent,
-    ClientEditarPerfilComponent
+    ClientEditarPerfilComponent,
+    ListaRepresentantesComponent,
+    EditarRepresentanteComponent,
+    CrearRepresentanteComponent
   ],
   imports: [
     BrowserModule,
