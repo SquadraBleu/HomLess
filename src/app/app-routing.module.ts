@@ -18,6 +18,7 @@ import { ClientEditarPerfilComponent } from './components/client/client-editar-p
 import { ListaRepresentantesComponent } from './components/representante/lista-representantes/lista-representantes.component';
 import { CrearRepresentanteComponent } from './components/representante/crear-representante/crear-representante.component';
 import { EditarRepresentanteComponent } from './components/representante/editar-representante/editar-representante.component';
+import { ClientChatComponent } from './components/client/client-chat/client-chat.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/public/home'},
@@ -39,6 +40,7 @@ const routes: Routes = [
   {path: 'inmobiliaria/lista-representantes', component: ListaRepresentantesComponent},
   {path: 'inmobiliaria/crear-representante', component: CrearRepresentanteComponent},
   {path: 'inmobiliaria/editar-representante', component: EditarRepresentanteComponent},
+  {path: 'cliente/chat', component: ClientChatComponent},
   {path: '**', redirectTo: '/error404'}
 ];
 
