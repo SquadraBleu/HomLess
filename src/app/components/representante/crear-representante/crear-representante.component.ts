@@ -31,9 +31,9 @@ export class CrearRepresentanteComponent implements OnInit {
     this.representante.IDInmobiliaria = this.idInmobiliria;
     this.authSvc.registerUser(this.representante.Correo, this.contrasena, false, false, this.representante)
     .then((res) => {
-      // tslint ignore:line
+      // @ts-ignore
       console.log('resUser', res.user.uid);
-      // tslint ignore:line
+      // @ts-ignore
       this.representante.UID = res.user.uid;
       this.repreService.createRepresentante(this.representante);
       this.router.navigate(['inmobiliaria/lista-representantes/' + this.idInmobiliria]);
