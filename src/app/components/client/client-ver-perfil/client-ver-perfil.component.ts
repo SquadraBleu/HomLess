@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Cliente} from 'src/app/models/cliente';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InmuebleServiceService} from '../../../services/inmueble-service.service';
-import {Router, ActivatedRoute} from '@angular/router';
 import {ClientService} from '../../../services/client.service';
 import {AuthService} from 'src/app/services/auth.service';
 
