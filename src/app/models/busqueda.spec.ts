@@ -18,6 +18,6 @@ describe('Busqueda', () => {
       true,
       'IDCCC',
       ['123', 'ABC'],
-      'test@domain.tld')).toBeTruthy();
+      'test@domain.tld', 1 )).toBeTruthy();
   });
 });

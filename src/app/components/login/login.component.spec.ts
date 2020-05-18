@@ -38,7 +38,7 @@ describe('LoginComponent', () => {
     comp.loginForm.controls.email.setValue('amarillo@inmobiliaria.com');
     comp.loginForm.controls.password.setValue('amarillo');
     ele.click();
-    expect(comp.onLogin).toHaveBeenCalledTimes(1);
+    expect(comp.isError).toBeFalse();
   }));
 });
 
