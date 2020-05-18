@@ -5,21 +5,21 @@
             <div class="col">
                 <label for="nombre"><h6>Nombre</h6></label>
                 <input type="text" name="nombre" id="nombre" class="form-control" required
-                [(ngModel)]="representante.nombre" #txtNombre="ngModel">
+                [(ngModel)]="representante.Nombre" #txtNombre="ngModel">
                 <div [hidden]="txtNombre.valid || !txtNombre.touched" class="alert alert-danger">
                     El Nombre es obligatorio
                 </div>
 
                 <label for="cedula"><h6>Cédula</h6></label>
                 <input type="text" name="cedula" id="cedula" class="form-control" required
-                [(ngModel)]="representante.cedula" #txtCedula="ngModel">
+                [(ngModel)]="representante.Cedula" #txtCedula="ngModel">
                 <div [hidden]="txtCedula.valid || !txtCedula.touched" class="alert alert-danger">
                     La cédula es obligatoria
                 </div>
 
                 <label for="telefono"><h6>Teléfono</h6></label>
                 <input type="text" name="telefono" id="telefono" class="form-control" required
-                [(ngModel)]="representante.telefono" #txtTelefono="ngModel">
+                [(ngModel)]="representante.Telefono" #txtTelefono="ngModel">
                 <div [hidden]="txtTelefono.valid || !txtTelefono.touched" class="alert alert-danger">
                     El teléfono es obligatorio
                 </div>
@@ -27,14 +27,14 @@
             <div class="col">
                 <label for="correo"><h6>Correo</h6></label>
                 <input type="text" name="correo" id="correo" class="form-control" required
-                [(ngModel)]="representante.correo" #txtCorreo="ngModel">
+                [(ngModel)]="representante.Correo" #txtCorreo="ngModel">
                 <div [hidden]="txtCorreo.valid || !txtCorreo.touched" class="alert alert-danger">
                     El correo es obligatorio
                 </div>
 
                 <label for="clave"><h6>Clave</h6></label>
                 <input type="password" name="clave" id="clave" class="form-control" required
-                [(ngModel)]="representante.clave" #txtClave="ngModel">
+                [(ngModel)]="contrasena" #txtClave="ngModel">
                 <div [hidden]="txtClave.valid || !txtClave.touched" class="alert alert-danger">
                     La clave es obligatoria
                 </div>
@@ -44,7 +44,7 @@
             <div class="col">
                 <button type="submit" class="btn btn-info btn-lg btn-block" (click)="cancelar()">
                     Cancelar
-                </button> 
+                </button>
             </div>
             <div class="col">
 

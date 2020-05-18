@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Representante } from 'src/app/models/representante';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from '../../../models/user';
+import { RepresentanteService } from 'src/app/services/representante.service';
 
 @Component({
   selector: 'app-crear-representante',
@@ -10,18 +13,34 @@ import { Router } from '@angular/router';
 export class CrearRepresentanteComponent implements OnInit {
 
   public representante = new Representante('', '', '' , '', '', '');
+  public contrasena: string;
+  public idInmobiliria: string;
+
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private authSvc: AuthService,
+    private repreService: RepresentanteService
   ) { }
 
   ngOnInit(): void {
+    this.idInmobiliria = this.route.snapshot.paramMap.get('id');
   }
 
   crearRepresentante(){
-
+    this.representante.IDInmobiliaria = this.idInmobiliria;
+    this.authSvc.registerUser(this.representante.Correo, this.contrasena, false, false, this.representante)
+    .then((res) => {
+      // @ts-ignore
+      console.log('resUser', res.user.uid);
+      // @ts-ignore
+      this.representante.UID = res.user.uid;
+      this.repreService.createRepresentante(this.representante);
+      this.router.navigate(['inmobiliaria/lista-representantes/' + this.idInmobiliria]);
+    }).catch(err => console.log('err', err.message));
   }
 
   cancelar(){
-    this.router.navigate(['inmobiliaria/lista-representantes']);
+    this.router.navigate(['inmobiliaria/lista-representantes/'  + this.idInmobiliria]);
   }
 }
