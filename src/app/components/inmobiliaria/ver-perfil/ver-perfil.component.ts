@@ -66,6 +66,10 @@ export class VerPerfilComponent implements OnInit {
     this.router.navigate(['inmobiliaria/lista-inmuebles/' + this.id]);
   }
 
+  verRepresentantes(){
+
+  }
+
   volver(){
     this.router.navigate(['inmobiliaria/lista-inmuebles/' + this.id]);
   }
