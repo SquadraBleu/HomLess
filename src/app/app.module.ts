@@ -33,7 +33,7 @@ import { ListaRepresentantesComponent } from './components/representante/lista-r
 import { EditarRepresentanteComponent } from './components/representante/editar-representante/editar-representante.component';
 import { CrearRepresentanteComponent } from './components/representante/crear-representante/crear-representante.component';
 import { RepresentanteChatComponent } from './components/representante/representante-chat/representante-chat.component';
-
+import { HomeRepresentanteComponent } from './components/representante/home-representante/home-representante.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +58,8 @@ import { RepresentanteChatComponent } from './components/representante/represent
     EditarRepresentanteComponent,
     CrearRepresentanteComponent,
     ClientChatComponent,
-    RepresentanteChatComponent
+    RepresentanteChatComponent,
+    HomeRepresentanteComponent
   ],
   imports: [
     BrowserModule,

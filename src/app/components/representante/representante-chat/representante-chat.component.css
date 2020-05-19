@@ -150,3 +150,11 @@ color: rgba(255,255,255,0.6);
 	overflow-y: scroll;
 	margin-top: -2%;
 }
+
+.btn-info
+{
+	border-width: 0;
+	border-radius: 20px;
+	background-color: #64ceff;
+	color: black;
+}

@@ -130,4 +130,10 @@ export class ClientChatComponent implements OnInit, OnDestroy {
       console.log('recibí un nuevo mensaje', event.message.text);
     });
   }
+
+  terminarChat(): void
+  {
+    console.log('Chat terminado');
+  }
+
 }
