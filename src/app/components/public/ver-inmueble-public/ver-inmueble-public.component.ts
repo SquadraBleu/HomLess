@@ -19,6 +19,7 @@ export class VerInmueblePublicComponent implements OnInit {
 
   id: any = undefined;
   idSigned: any = undefined;
+  idInmobiliaria: any;
 
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
@@ -57,7 +58,7 @@ export class VerInmueblePublicComponent implements OnInit {
         this.idSigned = auth.uid;
         this.authSvc.isUserClient(this.idSigned).subscribe(userRole => {
           if (userRole !== undefined){
-            this.router.navigate(['cliente/chat/' + this.idSigned] );
+            this.router.navigate(['cliente/chat/' + this.idSigned + '/' + this.id + '/' + this.idInmobiliaria] );
             console.log(this.idSigned);
           }
         });
@@ -76,6 +77,7 @@ export class VerInmueblePublicComponent implements OnInit {
         if (res[index].id === this.id) {
           this.inmueble = res[index];
           this.urlImagenes = this.inmueble.DirFotos;
+          this.idInmobiliaria = res[index].IDInmobiliaria;
           //  console.log('VEEEERRR', this.inmueble);
         }
       }
