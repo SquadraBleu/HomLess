@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Cliente} from 'src/app/models/cliente';
 import {ActivatedRoute, Router} from '@angular/router';
-import {InmuebleServiceService} from '../../../services/inmueble-service.service';
 import {ClientService} from '../../../services/client.service';
 import {AuthService} from 'src/app/services/auth.service';
 
@@ -33,6 +32,7 @@ export class ClientVerPerfilComponent implements OnInit {
     // TODO INTEGRACION
   }
 
+
   darCliente() {
     this.clienteSvc.getClientes().subscribe(res => {
       // tslint:disable-next-line: prefer-for-of
@@ -43,7 +43,6 @@ export class ClientVerPerfilComponent implements OnInit {
       }
     });
   }
-
   editarPerfil() {
     console.log('cliente/editar-perfil/' + this.id);
     this.router.navigate(['cliente/editar-perfil/' + this.id]);
@@ -61,7 +60,8 @@ export class ClientVerPerfilComponent implements OnInit {
 
   verBusquedas() {
     console.log('to busquedas');
-    this.router.navigate(['cliente/ver-busquedas']);
+
+    this.router.navigate(['cliente/ver-busqueda/' + this.id]);
 
   }
 
