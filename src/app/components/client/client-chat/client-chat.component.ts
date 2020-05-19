@@ -29,4 +29,9 @@ export class ClientChatComponent implements OnInit {
     console.log(this.mensaje);
   }
 
+  terminarChat(): void
+  {
+    console.log('Chat terminado');
+  }
+
 }
