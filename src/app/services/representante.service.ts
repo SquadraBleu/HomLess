@@ -48,6 +48,12 @@ export class RepresentanteService {
   }
 
   getRepresentante(id: string){
-    return this.representantesCollection.doc(id).get();
+    this.representantesCollection.doc(id).ref.get().then( doc => {
+      if (doc.exists){
+        console.log(doc);
+        console.log(doc.data());
+        return doc.data();
+      }
+    });
   }
 }
