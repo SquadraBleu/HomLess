@@ -65,6 +65,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     let isRepresentante;
     let date;
     let messageHour;
+    // tslint:disable-next-line
     for (let value of this.channel.state.messages) {
       this.nMensajes++;
       newMessage = value;

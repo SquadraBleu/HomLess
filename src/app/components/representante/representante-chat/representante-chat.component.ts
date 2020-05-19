@@ -28,5 +28,4 @@ export class RepresentanteChatComponent implements OnInit {
   {
     console.log(this.mensaje);
   }
-
 }
