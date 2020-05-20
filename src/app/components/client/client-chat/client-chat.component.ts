@@ -123,9 +123,11 @@ export class ClientChatComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.docIdChat = this.id + this.idInmueble;
-    this.chatServ.createChatWithId(new Chat(this.id, this.idInmobiliaria, this.idInmueble, '', false, this.docIdChat), this.docIdChat);
-    this.fireChatUpdated = true;
+    if (this.nMensajes === 0 ){
+      this.docIdChat = this.id + this.idInmueble;
+      this.chatServ.createChatWithId(new Chat(this.id, this.idInmobiliaria, this.idInmueble, '', false, this.docIdChat), this.docIdChat);
+      this.fireChatUpdated = true;
+    }
   }
 
   async enviarMensaje() {
