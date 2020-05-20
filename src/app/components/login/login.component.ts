@@ -45,6 +45,8 @@ export class LoginComponent implements OnInit {
         console.log('err', err.message);
         this.isError = true;
         this.errMessage = err.message;
+        console.log('Falló');
+        console.log(this.isError);
     });
 
     /*

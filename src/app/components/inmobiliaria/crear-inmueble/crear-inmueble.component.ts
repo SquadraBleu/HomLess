@@ -97,6 +97,7 @@ export class CrearInmuebleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('Authh::', this.inmueble);
     this.authSvc.isAuth().subscribe(auth => {
       if (auth) {
         this.userUid = auth.uid;
@@ -105,7 +106,10 @@ export class CrearInmuebleComponent implements OnInit {
         });
       }
     });
+
+    console.log('oninit', this.inmueble);
     this.obtenerTags();
+    console.log('tags', this.inmueble);
   }
 
   cancelar(){
@@ -117,6 +121,7 @@ export class CrearInmuebleComponent implements OnInit {
     this.inmueble.FechaCreacion = this.fechaCreate;
     this.inmueble.FechaModificacion = 0;
     console.log('fechita ' + this.inmueble.FechaCreacion);
+    console.log('CONSOLE IDI', this.inmueble);
     this.inmuService.createInmueble(this.inmueble)
     .then(res => {
       this.IDinmueble = res.id;
@@ -494,20 +499,16 @@ export class CrearInmuebleComponent implements OnInit {
     this.tagsExistentes.forEach(ele => {
       this.inmuService.updateTags(ele, ele.id);
     });
-    console.log('despues', this.tagsN);
     this.inmueble.TagsIDS = this.tagsN;
     this.inmueble.DirFotos = this.fotos;
     this.inmueble.IDInmobiliaria = this.userUid;
     this.inmueble.IDI = this.IDinmueble;
-    console.log(this.inmueble);
-    this.inmuService.updateInmueble(this.inmueble, this.IDinmueble);
-    this.inmobiliariaLoged.Inmuebles.push(this.IDinmueble);
-    this.inmuService.updateInmobiliaria(this.inmobiliariaLoged, this.userUid);
-
+    this.inmuService.updateInmueble ( this.inmueble, this.IDinmueble );
+    this.inmobiliariaLoged.Inmuebles.push( this.IDinmueble );
+    this.inmuService.updateInmobiliaria ( this.inmobiliariaLoged, this.userUid );
     this.tagsN = [];
     this.fotos = [];
     this.IDinmueble = null;
-
     this.router.navigate(['inmobiliaria/lista-inmuebles/' + this.userUid]);
   }
 }

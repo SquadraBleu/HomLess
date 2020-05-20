@@ -1,10 +1,9 @@
-
-import { Component, OnInit } from '@angular/core';
-import { Busqueda } from 'src/app/models/busqueda';
-import { Tag } from 'src/app/models/tag';
-import { database } from 'firebase';
-import { Router, ActivatedRoute } from '@angular/router';
-import { BusquedaService } from 'src/app/services/busqueda.service';
+import {Component, OnInit} from '@angular/core';
+import {Busqueda} from 'src/app/models/busqueda';
+import {Tag} from 'src/app/models/tag';
+import {Router, ActivatedRoute} from '@angular/router';
+import {InmuebleServiceService} from '../../../services/inmueble-service.service';
+import {BusquedaService} from 'src/app/services/busqueda.service';
 
 @Component({
   selector: 'app-ver-busquedas',
@@ -14,23 +13,26 @@ import { BusquedaService } from 'src/app/services/busqueda.service';
 export class VerBusquedasComponent implements OnInit {
 
   public busquedas: Busqueda[] = [];
-
+  idactivate: boolean;
 
   public headers: string[][] = [];
   public data: string[][] = [];
   id: any = undefined;
+  tagsExistentes: Tag[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private inmuService: InmuebleServiceService,
     private busquedaService: BusquedaService
   ) {
   }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log(this.route.snapshot.paramMap.get('id'));
-    this.mostrarBusquedas();
+    console.log('ID comeeee', this.route.snapshot.paramMap.get('id'));
+    this.obtenerTags();
+    this.getSearches();
     console.log(this.data);
     console.log(this.headers);
   }
@@ -38,33 +40,30 @@ export class VerBusquedasComponent implements OnInit {
   activarBusqueda(i: number): void {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = true;
-
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
-    this.router.navigate(['inmobiliaria/ver-inmueble/' + this.busquedas[i].IDBusqueda]);
-    console.log('Se editó');
-    console.log('Activar alerta de busqueda en la posicion ' + i + ' de busquedas');
+    console.log('ACTIVO.>' , this.busquedas[i] );
+    this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }
 
   desactivarBusqueda(i: number): void {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = false;
-
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
-    this.router.navigate(['inmobiliaria/ver-inmueble/' + this.busquedas[i].IDBusqueda]);
-    console.log('Se editó');
-    console.log('Desactivar alerta de busqueda en la posicion ' + i + ' de busquedas');
+    console.log('DESACTIVO.>' , this.busquedas[i] );
+    this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }
 
 
-  eliminarBusqueda(i: number): void
-  {
+  eliminarBusqueda(i: number): void {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = false;
     this.busquedaService.deleteBusqueda(this.busquedas[i].IDBusqueda);
     console.log('Eliminar busqueda en la posicion ' + i + ' de busquedas');
+    this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }
 
   mostrarBusquedas(): void {
+    console.log('MOstrar busquedas', this.busquedas.length);
     this.headers = [];
     this.data = [];
     // tslint:disable-next-line: prefer-for-of
@@ -145,42 +144,64 @@ export class VerBusquedasComponent implements OnInit {
         j++;
       }
 
-     /*if (this.busquedas[i].Tags !== undefined && this.busquedas[i].Tags != null)
-      {
+      if (this.busquedas[i].Tags !== undefined && this.busquedas[i].Tags != null) {
         let etiquetas = '';
-        for (let k = 0; k < this.busquedas[i].Tags.length; k++)
-
-      /* if (this.busquedas[i].Tags !== undefined && this.busquedas[i].Tags != null)
-
-        {
-          let etiquetas = '';
-          for (let k = 0; k < this.busquedas[i].Tags.length; k++)
-          {
-            // etiquetas = etiquetas + this.busquedas[i].Tags[k].Hashtag;
-            if (k !== this.busquedas[i].Tags.length - 1)
-            {
-              etiquetas = etiquetas + ', ';
+        for (let k = 0; k < this.busquedas[i].Tags.length; k++) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let index = 0; index < this.tagsExistentes.length; index++) {
+            if (this.tagsExistentes[index].id.trim() === this.busquedas[i].Tags[k].trim()) {
+              etiquetas = etiquetas + this.tagsExistentes[index].Hashtag;
+              index = this.tagsExistentes.length;
             }
           }
-          header[j] = 'Tags'; datos[j] = etiquetas; j++;
-        }*/
+          if (k !== this.busquedas[i].Tags.length - 1) {
+            etiquetas = etiquetas + ', ';
+          }
+        }
+        header[j] = 'Tags';
+        datos[j] = etiquetas;
+        j++;
 
+      }
       this.data[i] = datos;
       this.headers[i] = header;
     }
   }
 
+
   getSearches() {
+
     this.busquedaService.getBusquedas().subscribe(res => {
-      // tslint:disable-next-line:prefer-for-of
+      this.busquedas = [];
+      // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < res.length; index++) {
         if (res[index].IDCliente === this.id) {
+          console.log('Seacrh', res[index]);
           this.busquedas.push(res[index]);
-          // console.log('VEEEERRR', this.inmuebles);
+          console.log('Intooo');
         }
       }
+      // tslint:disable-next-line:only-arrow-functions
+      this.busquedas.sort(function(n1, n2) {
+        if (n1.Fecha < n2.Fecha) {
+          return 1;
+        }
+        if (n1.Fecha > n2.Fecha) {
+          return -1;
+        }
+        return 0;
+      });
+      this.obtenerTags();
+      console.log(' getsearches --> TAGS', this.tagsExistentes);
+      console.log('SORT', this.busquedas);
+      this.mostrarBusquedas();
     });
-    console.log('Busquedas: get()', this.busquedas);
+
   }
 
+  obtenerTags() {
+    this.inmuService.getTags().subscribe(res => {
+      this.tagsExistentes = res;
+    });
+  }
 }

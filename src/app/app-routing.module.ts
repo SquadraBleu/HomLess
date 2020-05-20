@@ -39,12 +39,13 @@ const routes: Routes = [
   {path: 'inmobiliaria/editar-perfil/:id', component: EditarPerfilComponent},
   {path: 'cliente/ver-perfil/:id', component: ClientVerPerfilComponent},
   {path: 'cliente/editar-perfil/:id', component: ClientEditarPerfilComponent},
+  {path: 'cliente/ver-busqueda/:id', component: VerBusquedasComponent},
   {path: 'inmobiliaria/lista-representantes/:id', component: ListaRepresentantesComponent},
   {path: 'inmobiliaria/crear-representante/:id', component: CrearRepresentanteComponent},
   {path: 'inmobiliaria/editar-representante/:id', component: EditarRepresentanteComponent},
-  {path: 'cliente/chat/:id', component: ClientChatComponent},
+  {path: 'cliente/chat/:id/:idIn/:idInmo', component: ClientChatComponent},
   {path: 'representante/chat/:id', component: RepresentanteChatComponent},
-  {path: 'representante/home/:id', component: HomeRepresentanteComponent},
+  {path: 'representante/home', component: HomeRepresentanteComponent},
   {path: '**', redirectTo: '/error404'}
 ];
 

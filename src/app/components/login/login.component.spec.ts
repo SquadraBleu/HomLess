@@ -27,7 +27,7 @@ describe('LoginComponent', () => {
       ]
     }).compileComponents();
   });
-  it('should got logged', (() => {
+  it('should got logged Inmobiliaria', (() => {
     const fixture = TestBed.createComponent(LoginComponent);
     const comp = fixture.componentInstance;
     const deb = fixture.debugElement.query(By.css('form'));
@@ -36,10 +36,25 @@ describe('LoginComponent', () => {
     spyOn(comp, 'onLogin');
     ele = fixture.debugElement.query(By.css('button')).nativeElement;
     comp.loginForm.controls.email.setValue('amarillo@inmobiliaria.com');
-    comp.loginForm.controls.password.setValue('amarillo');
+    comp.loginForm.controls.password.setValue('amarill');
     ele.click();
     expect(comp.isError).toBeFalse();
   }));
+
+  it('should got logged CLient', (() => {
+    const fixture = TestBed.createComponent(LoginComponent);
+    const comp = fixture.componentInstance;
+    const deb = fixture.debugElement.query(By.css('form'));
+    let ele = deb.nativeElement;
+    fixture.detectChanges();
+    spyOn(comp, 'onLogin');
+    ele = fixture.debugElement.query(By.css('button')).nativeElement;
+    comp.loginForm.controls.email.setValue('ncp.434@hotmail.com');
+    comp.loginForm.controls.password.setValue('ncp.434');
+    ele.click();
+    expect(comp.isError).toBeFalse();
+  }));
+
 });
 
 

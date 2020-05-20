@@ -1,19 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl, NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import {AuthService} from 'src/app/services/auth.service';
 import {Inmueble} from 'src/app/models/inmueble';
 import {InmuebleServiceService} from 'src/app/services/inmueble-service.service';
 import {Busqueda} from 'src/app/models/busqueda';
 import {BusquedaService} from 'src/app/services/busqueda.service';
-import {Cliente} from 'src/app/models/cliente';
 import {ClientService} from 'src/app/services/client.service';
-import {Tag} from 'src/app/models/tag';
 import {environment} from 'src/environments/environment';
 import algoliasearch from 'algoliasearch';
+import {Tag} from 'src/app/models/tag';
 import {firestore} from 'firebase';
-
-import { Mail } from 'src/app/models/mail';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 const client = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
 const indexAlg = client.initIndex('inmuebles_search');
@@ -26,23 +23,19 @@ const indexAlg = client.initIndex('inmuebles_search');
 export class SearchComponent implements OnInit {
   constructor(
     private router: Router,
+    private authSvc: AuthService,
     private inmuService: InmuebleServiceService,
     private clienteService: ClientService,
-    private busquedaService: BusquedaService,
-    private authSvc: AuthService
-    )
-    {
+    private busquedaService: BusquedaService
+  ) {
     // this.searchGroup = new FormGroup({search: new FormControl() });
   }
 
-  // searchGroup: FormGroup;
 
   IDBusqueda: any = null;
-  busqueda = new Busqueda( '', '', '',
-    0, 0, 0, 0, '', '',
-    0, 0, 0, 0,
-    false, '', [], '', null);
-   minPriceArriendo = 0; // de 0 a 5000000, de 50000
+  busqueda = new Busqueda('', '', '', 0, 0, 0, 0, '', '', 0, 0, 0, 0, false, '', [], '', null);
+  minPriceArriendo = 0; // de 0 a 5000000, de 50000
+
   maxPriceArriendo = 0; // de 0 a 5000000, de 50000
   minPriceVenta = 0; // de 0 a 1000, de 1 en 1
   maxPriceVenta = 0; // de 0 a 1000, de 1 en 1
@@ -73,12 +66,8 @@ export class SearchComponent implements OnInit {
   filters = '';
   multipleFilters = false;
   rangeArea = false;
-  inmuebles: Inmueble[] = [/*
-    new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined
-    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [], ''),
-    new Inmueble('Esta es una propiedad', '', 200, undefined, 500000, 2000000, undefined
-    , 'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [], '')*/
-  ];
+  inmuebles: Inmueble[] = [];
+  arrayAlltags: Tag[] = [];
 
   tiposDeInmueble: string[] = [
     '',
@@ -128,16 +117,32 @@ export class SearchComponent implements OnInit {
   clientMail = '';
   arraytags: string[];
   arrayIDstags: string [] = [];
-  activate = false;
   date: any;
+
+  SearchForm = new FormGroup ({
+    searchTerm: new FormControl('', Validators.required),
+    tags: new FormControl('', Validators.required),
+    minArea : new FormControl('', Validators.required),
+    maxArea : new FormControl('', Validators.required),
+    minPriceArriendo : new FormControl('', Validators.required),
+    maxPriceArriendo : new FormControl('', Validators.required),
+    minPriceVenta : new FormControl('', Validators.required),
+    maxPriceVenta : new FormControl('', Validators.required),
+    nhabitaciones : new FormControl('', Validators.required),
+    nbanos : new FormControl('', Validators.required),
+    zona : new FormControl('', Validators.required),
+    localidad : new FormControl('', Validators.required),
+    tipoInmueble : new FormControl('', Validators.required)
+  });
 
   ngOnInit(): void {
     this.authSvc.isAuth().subscribe(auth => {
       if (auth) {
         this.userUid = auth.uid;
-        this.authSvc.isUserClient(this.userUid).subscribe(userRole => { // se si es una inmo
-          if (userRole !== undefined){
+        this.authSvc.isUserClient(this.userUid).subscribe(userRole => {
+          if (userRole !== undefined) {
             this.getClientMail();
+           // this.getTags();
           }
         });
       }
@@ -146,8 +151,10 @@ export class SearchComponent implements OnInit {
   }
 
   submitSearch(): void {
-    console.log('Init Submit to Algolia');
+    this.getTags();
+    console.log('Init Submit to Algolia tags', this.tags, ' IDS::', this.arrayIDstags);
     this.filters = '';
+    this.arrayIDstags = [];
     console.log(this.tags); // String separado por comas, es necesario hacer trim al string completo
                             // y luego a cada string parseado, por si el usuario puso espacios antes o
                             // después de la palabra. Ojo que podrían haber espacios entre el tag y eso sí es válido
@@ -258,18 +265,21 @@ export class SearchComponent implements OnInit {
       }
     }
     if (this.tags !== '') {
-
       console.log('tags before->');
       console.log(this.tags);
 
-      if (this.multipleFilters){
+      this.arrayIDstags = [];
+      console.log(':::Befores TAgs in the search: ', this.arrayIDstags);
+      this.getIDTags();
+      console.log(':::TAgs in the search: ', this.arrayIDstags);
+
+      if (this.multipleFilters) {
 
         this.filters += ' AND ';
       }
       this.filters += '_tags:"' + this.tags.replace(new RegExp(', ', 'g'), '" AND _tags:"') + '"';
-      this.newtags = this.tags;
 
-      this.getTags();
+      this.newtags = this.tags;
     }
     indexAlg.search(this.searchTerm, {
       // @ts-ignore
@@ -280,25 +290,21 @@ export class SearchComponent implements OnInit {
     });
     console.log(this.filters);
 
-    if ( this.userUid !== '' && this.clientMail !== '' ){
-
-      console.log('GUARDAR');
-
+    if (this.userUid !== '' && this.clientMail !== '') {
+      console.log('GGtags->>>', this.arrayIDstags);
       this.date = firestore.Timestamp.fromDate(new Date());
-      this.busqueda = new Busqueda( '', this.searchTerm , this.tipoInmueble,
-        this.maxArea, this.minArea, this.nhabitaciones, this.nbanos, this.zona, this.localidad,
+      this.busqueda = new Busqueda('', this.searchTerm, this.tipoInmueble,
+        this.minArea, this.maxArea, this.nhabitaciones, this.nbanos, this.zona, this.localidad,
         this.minPriceVenta, this.maxPriceVenta, this.minPriceArriendo, this.maxPriceArriendo,
-        this.activarAlerta, this.userUid, this.arrayIDstags, this.clientMail, this.date );
-      this.arrayIDstags = [];
+        this.activarAlerta, this.userUid, this.arrayIDstags, this.clientMail, this.date);
+      console.log('New busqueda antes create', this.busqueda);
       this.createBusqueda();
-
     }
-
     this.multipleFilters = false;
     this.rangeArea = false;
     this.filters = '';
     this.tags = '';
-
+    this.arrayIDstags = [];
     if (this.inmuebles.length === 0 && this.madeSearch) {
       alert('No hay resultados de búsqueda');
 
@@ -310,47 +316,58 @@ export class SearchComponent implements OnInit {
       console.log('End Search');
     }
   }
-  getTags()
-  {
-    this.arraytags = this.newtags.split(', ');
-    this.inmuService.getTags().subscribe( res => {
-        // tslint:disable-next-line:prefer-for-of
-      for (let index = 0; index < res.length; index++) {
 
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.arraytags.length; i++) {
-          if (res[index].Hashtag.toLowerCase() === this.arraytags[i].toLowerCase() ){
-            console.log('array::', res[index].id);
-            this.arrayIDstags.push(res[index].id);
+  getTags() {
+   this.inmuService.getTags().subscribe(res => {
+        this.arrayAlltags = res;
+      }
+    );
+   console.log('ALL TAGS DB',  this.arrayAlltags);
+  }
+
+  getIDTags() {
+    this.arraytags = [];
+    this.arraytags = this.tags.split(', ');
+    console.log('SPLIT: ', this.arraytags);
+    this.arrayIDstags = [];
+    // tslint:disable-next-line: prefer-for-of
+    for (let index = 0; index < this.arrayAlltags.length; index++) {
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < this.arraytags.length; i++) {
+        if ( this.arrayAlltags[index].Hashtag.toLowerCase().trim() === this.arraytags[i].toLowerCase().trim()) {
+          console.log('array::', this.arrayAlltags[index].id);
+          this.arrayIDstags.push(this.arrayAlltags[index].id.trim());
+        }
+      }
+    }
+
+  }
+
+
+  getClientMail() {
+    this.clienteService.getClientes().subscribe(res => {
+        // tslint:disable-next-line: prefer-for-of
+        for (let index = 0; index < res.length; index++) {
+          if (res[index].id === this.userUid) {
+            this.clientMail = res[index].Correo;
           }
         }
       }
-    }
     );
   }
 
-
-  getClientMail()
-  {
-    this.clienteService.getClientes().subscribe( res => {
-        // tslint:disable-next-line:prefer-for-of
-      for (let index = 0; index < res.length; index++) {
-        if (res[index].id === this.userUid ){
-          this.clientMail = res[index].Correo;
-        }
-
-      }
-    }
-    );
-  }
-
-  createBusqueda(){
-    this.busquedaService.createBusqueda(this.busqueda)
+  async createBusqueda() {
+    console.log('array', this.arrayIDstags);
+    this.busqueda.Tags = this.arrayIDstags;
+    console.log('create', this.busqueda);
+    await this.busquedaService.createBusqueda(this.busqueda)
       .then(res => {
         this.busqueda.IDBusqueda = res.id;
-        console.log('cccc', this.busqueda.IDBusqueda );
+        console.log('cccc', this.busqueda.IDBusqueda);
+        console.log('create', this.busqueda);
         this.busquedaService.updateBusqueda(this.busqueda, this.busqueda.IDBusqueda);
-      }).catch ( err => console.log('err', err.message));
+        console.log('update', this.busqueda);
+      }).catch(err => console.log('err', err.message));
   }
 
 

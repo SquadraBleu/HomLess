@@ -7,7 +7,7 @@
       <div class="row">
         <h2 class="ml-auto mr-auto">¿Qué estás buscando?</h2>
       </div>
-      <form (ngSubmit)="submitSearch();" #createForm="ngForm">
+      <form [formGroup]="SearchForm" (ngSubmit)="submitSearch();" #createForm="ngForm">
         <div class="row">
           <div class="col-8 mx-auto">
             <div class="card-body text-center">
@@ -64,11 +64,8 @@
             </div>
             <div class="col-2">
               <label class="small" for="titulo">Número de baños: </label>
-              <input type="text" min="0" max="10" name="nbanos" id="nbanos" class="form-control" [(ngModel)]="nbanos">
+              <input type="number" min="0" max="10" name="nbanos" id="nbanos" class="form-control" [(ngModel)]="nbanos">
             </div>
-            <label for="Nbanos">Número de baños</label>
-            <input type="number" name="banos" id="banos" class="form-control" required
-                   [(ngModel)]="busqueda.NBanos" #numBanos="ngModel">
             <div class="col-2">
               <label class="small" for="zonas">Zona: </label>
               <select [(ngModel)]="zona" name="zonas" id="zonas" class="form-control">
