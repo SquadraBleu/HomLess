@@ -3,6 +3,7 @@ import { Representante } from 'src/app/models/representante';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RepresentanteService } from 'src/app/services/representante.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 
 @Component({
   selector: 'app-lista-representantes',
@@ -16,17 +17,21 @@ export class ListaRepresentantesComponent implements OnInit {
   public confirmacionDelete = true;
   public contrasenaInmobiliaria = '';
   public contrasenaRepresentante = '';
+  public emailRepre = '';
+  public emailInmo = '';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private authSvc: AuthService,
+    private inmuService: InmuebleServiceService,
     private repreService: RepresentanteService
   ) { }
 
   ngOnInit(): void {
     this.idInmobiliria = this.route.snapshot.paramMap.get('id');
     this.darRepresentantes();
+    this.darEmailInmo();
   }
 
   darRepresentantes(){
@@ -35,6 +40,18 @@ export class ListaRepresentantesComponent implements OnInit {
       for (let index = 0; index < res.length; index++) {
         if (res[index].IDInmobiliaria === this.idInmobiliria ){
           this.representantes.push(res[index]);
+          // console.log('VEEEERRR', this.inmuebles);
+        }
+      }
+    });
+  }
+
+  darEmailInmo(){
+    this.inmuService.getInmobiliarias().subscribe( res => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < res.length; index++) {
+        if (res[index].IDInmobiliaria === this.idInmobiliria ){
+          this.emailInmo = res[index].Correo;
           // console.log('VEEEERRR', this.inmuebles);
         }
       }
@@ -53,15 +70,23 @@ export class ListaRepresentantesComponent implements OnInit {
     this.router.navigate(['inmobiliaria/editar-representante/' + ID]);
   }
 
-  eliminarRepresentante(ID: string){
+  eliminarRepresentante(ID: string, email: string){
     this.confirmacionDelete = false;
-    this.repreService.deleteRepresentante(ID);
+    this.emailRepre = email;
+    // this.repreService.deleteRepresentante(ID);
     /*
     this.authSvc.deleteUser().then(
       (res) => {
         this.router.navigate(['/public/home']);
       }
     );*/
+  }
+
+  confirmarEliminar(){
+    this.authSvc.loginByEmail(this.emailRepre, this.contrasenaRepresentante);
+    // this.authSvc.deleteUser();
+    this.authSvc.loginByEmail(this.emailInmo, this.contrasenaInmobiliaria);
+    this.router.navigate(['inmobiliaria/lista-representantes/' + this.idInmobiliria]);
   }
 
 }

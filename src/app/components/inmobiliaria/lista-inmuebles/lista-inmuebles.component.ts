@@ -55,7 +55,7 @@ export class ListaInmueblesComponent implements OnInit {
   }
 
   agregarInmueble(){
-    this.router.navigate(['inmobiliaria/crear-inmueble']);
+    this.router.navigate(['inmobiliaria/crear-inmueble/' + this.id]);
   }
 
   darInmuebles(){
@@ -65,7 +65,11 @@ export class ListaInmueblesComponent implements OnInit {
       // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < res.length; index++) {
         if (res[index].IDInmobiliaria === this.id ){
+          // console.log(res[index].Titulo + ' fecha ' + res[index].FechaCreacion);
+          const fechaCreacion = new Date((Math.trunc(res[index].FechaCreacion) - 62135596800) * 1000);
+          res[index].FechaCreacion = fechaCreacion;
           this.inmuebles.push(res[index]);
+          // console.log('fecha ' + fechaCreacion);
           // console.log('VEEEERRR', this.inmuebles);
         }
       }
@@ -94,7 +98,29 @@ export class ListaInmueblesComponent implements OnInit {
     // console.log('Limpiar paises, no se como :(');
   }
 
-  ordenarInmuebles(){
+  ordenarInmueblesMasRecientes(){
+    // tslint:disable-next-line: only-arrow-functions
+    this.inmuebles.sort(function(n1, n2) {
+      if (n1.FechaCreacion < n2.FechaCreacion) {
+        return 1;
+      }
+      if (n1.FechaCreacion > n2.FechaCreacion) {
+        return -1;
+      }
+      return 0;
+    });
+  }
 
+  ordenarInmueblesMasAntiguas(){
+    // tslint:disable-next-line: only-arrow-functions
+    this.inmuebles.sort(function(n1, n2) {
+      if (n1.FechaCreacion < n2.FechaCreacion) {
+        return -1;
+      }
+      if (n1.FechaCreacion > n2.FechaCreacion) {
+        return 1;
+      }
+      return 0;
+    });
   }
 }

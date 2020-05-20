@@ -50,7 +50,7 @@ export class ClientVerPerfilComponent implements OnInit {
   }
 
   borrarPerfil() {
-    this.clienteSvc.deleteCliente(this.id);
+    // this.clienteSvc.deleteCliente(this.id);
     this.authSvc.deleteUser().then(
       (res) => {
         this.router.navigate(['/public/home']);
@@ -60,7 +60,6 @@ export class ClientVerPerfilComponent implements OnInit {
 
   verBusquedas() {
     console.log('to busquedas');
-
     this.router.navigate(['cliente/ver-busqueda/' + this.id]);
 
   }
@@ -68,6 +67,7 @@ export class ClientVerPerfilComponent implements OnInit {
   abrirChat()
   {
     console.log('to chat');
+    this.router.navigate(['cliente/chat/' + this.id]);
   }
 
 }

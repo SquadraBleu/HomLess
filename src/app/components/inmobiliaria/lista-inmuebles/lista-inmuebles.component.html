@@ -21,10 +21,15 @@
             </button>
         </div>
         <div class="col">
-            <button class="btn btn-success btn-sm" (click)="ordenarInmuebles()">
-                Ordenar por fecha
+            <button class="btn btn-success btn-sm" (click)="ordenarInmueblesMasRecientes()">
+                Ordenar por fecha mas reciente
             </button>
         </div>
+        <div class="col">
+          <button class="btn btn-success btn-sm" (click)="ordenarInmueblesMasAntiguas()">
+              Ordenar por fecha mas antigua
+          </button>
+      </div>
     </div>
     <div class="row alert alert-warning seleccion" *ngFor="let inmueble of inmuebles" (click)="verInmueble(inmueble.IDI)">
         <div class="col-2">
@@ -50,23 +55,21 @@
                     {{inmueble.AreaConstruida}}
                 </div>
                 <div class="col-2">
-        
+
                     <div *ngIf="inmueble.MontoVenta">
                         <h6>Monto de venta $$: </h6>
                         {{inmueble.MontoVenta}}
                     </div>
-        
+
                     <div *ngIf="inmueble.MontoArriendo">
                         <h6>Monto de arriendo $$: </h6>
                         {{inmueble.MontoArriendo}}
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <h6>Fecha de creación: </h6>
-                    ARREGLEN EL MODELO DE INMUEBLE Y PONGAN LA FECHA ACA JUAZ JUAZ
-                </div>
+                  <div class="col">
+                      <h6>Fecha de creación: </h6>
+                      {{inmueble.FechaCreacion | date:'short'}}
+              </div>
             </div>
         </div>
     </div>
@@ -75,5 +78,5 @@
     <h1 class="alert-heading">Holy Guacamole!</h1>
     <p>Parece que no tienes inmuebles en tu inmobiliaria</p>
     <hr>
-    <p><a href="inmobiliaria/crear-inmueble">Haz click aquí para crear un inmueble!</a></p>
+    <p><a (click)="agregarInmueble()" >Haz click aquí para crear un inmueble!</a></p>
 </div>
