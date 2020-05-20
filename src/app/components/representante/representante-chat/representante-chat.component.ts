@@ -99,8 +99,13 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
         isRepresentante = false;
       }
       if (newMessage.text !== ('This message was deleted.')) {
-        this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, messageHour));
-        console.log('Checking message with guest id: ' + newMessage.user.id);
+        if (newMessage.text !== ('chat_killed_by_client') && newMessage.text !== ('chat_killed_by_representante')){
+          this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, messageHour));
+          console.log('Checking message with guest id: ' + newMessage.user.id);
+        }
+        else {
+          this.router.navigate(['/representante/home/' + this.idRepresentante]);
+        }
       }
     }
   }
@@ -137,7 +142,8 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
                   this.idInmueble = uchat.IDInmueble;
                   this.idDocChat = uchat.id;
                   console.log(uchat.id);
-                  this.chat = new Chat(this.idClient, this.idInmobiliaria, this.idInmueble, this.idRepresentante, true);
+                  this.chat = new Chat(this.idClient, this.idInmobiliaria, this.idInmueble, this.idRepresentante,
+                    true, this.idClient + this.idInmueble);
                   this.chatServ.updateChat(this.chat, this.idDocChat);
                   this.representante.ChatsAceptados.push(this.idChat);
                 }
@@ -196,7 +202,12 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
         } else {
           messageHour += date.getMinutes().toString();
         }
-        this.mensajes.push(new Mensaje(event.message.text, true, messageHour));
+        if (event.message.text !== ('chat_killed_by_client')){
+          this.mensajes.push(new Mensaje(event.message.text, true, messageHour));
+        }
+        else {
+          this.router.navigate(['/representante/home/' + this.idRepresentante]);
+        }
       });
     }
   }
@@ -208,6 +219,8 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     }
     this.mensaje = 'Gracias por usar Homless :) Este chat ha finalizado, recuerda que hablaste con: ';
     this.mensaje += this.representante.Nombre;
+    this.enviarMensaje();
+    this.mensaje = 'chat_killed_by_representante';
     this.enviarMensaje();
     this.representante.ChatsAceptados = [];
     this.repreServ.updateRepresentante(this.representante, this.representante.UID);

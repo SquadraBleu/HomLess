@@ -6,7 +6,7 @@ import {ChatService} from '../../../services/chat.service';
 import {Chat} from '../../../models/chat';
 import {RepresentanteService} from '../../../services/representante.service';
 import {Representante} from '../../../models/representante';
-
+import { AngularFirestore} from '@angular/fire/firestore';
 let chatClient: any;
 
 @Component({
@@ -20,7 +20,8 @@ export class ClientChatComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private chatServ: ChatService,
-              private reprServ: RepresentanteService) {
+              private reprServ: RepresentanteService,
+              private afs: AngularFirestore) {
   }
 
   id: any;
@@ -32,6 +33,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
   state: any;
   idInmobiliaria: any;
   idInmueble: any;
+  fireChatUpdated: boolean;
   mensajes: Mensaje[] = [/*new Mensaje('Hola, en que te ayudo?', true, '7:00pm'),
                          new Mensaje('hola, quiero saber sobre la casa', false, '7:02pm'),
                          new Mensaje('Claro, qué quieres saber?', true, '7:05pm'),
@@ -43,6 +45,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
   mensaje: string;
 
   ngOnInit() {
+    this.fireChatUpdated = false;
     console.log('Constructor llamado ');
     chatClient = new StreamChat('smdsdgujshu4');
     this.initializeChat();
@@ -67,7 +70,6 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     );
     this.channel = chatClient.channel('messaging', this.id + this.idInmueble, {
     name: this.id,
-    members: [this.id, this.id + this.idInmueble],
     invites: [this.id + this.idInmueble]
     });
     this.state = await this.channel.watch();
@@ -112,10 +114,18 @@ export class ClientChatComponent implements OnInit, OnDestroy {
         isRepresentante = true;
       }
       if (newMessage.text !== ('This message was deleted.')) {
-        this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, messageHour));
-        console.log('Checking message with guest id: ' + newMessage.user.id);
+        if (newMessage.text !== ('chat_killed_by_client') && newMessage.text !== ('chat_killed_by_representante')){
+          this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, messageHour));
+          console.log('Checking message with guest id: ' + newMessage.user.id);
+        }
+        else {
+          this.nMensajes = 0;
+        }
       }
     }
+    this.docIdChat = this.id + this.idInmueble;
+    this.chatServ.createChatWithId(new Chat(this.id, this.idInmobiliaria, this.idInmueble, '', false, this.docIdChat), this.docIdChat);
+    this.fireChatUpdated = true;
   }
 
   async enviarMensaje() {
@@ -143,7 +153,9 @@ export class ClientChatComponent implements OnInit, OnDestroy {
       console.log(this.idInmueble + ': IDInmueble');
       console.log(this.idInmobiliaria + ': IDInmobiliaria');
       console.log(this.id + ': IDCliente');
-      this.chatServ.createChat(new Chat(this.id, this.idInmobiliaria, this.idInmueble, '', false));
+      this.docIdChat = this.id + this.idInmueble;
+      this.chatServ.createChatWithId(new Chat(this.id, this.idInmobiliaria, this.idInmueble, '', false, this.docIdChat), this.docIdChat);
+      this.fireChatUpdated = true;
     }
     this.nMensajes++;
   }
@@ -174,6 +186,10 @@ export class ClientChatComponent implements OnInit, OnDestroy {
 
   terminarChat(): void
   {
+    const text = 'chat_killed_by_client';
+    const response = this.channel.sendMessage({
+      text
+    });
     this.idRepresentante = '';
     this.chatServ.getChats().subscribe( ren => {
       for (let cht of ren){
