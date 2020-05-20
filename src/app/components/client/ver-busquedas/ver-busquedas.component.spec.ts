@@ -4,7 +4,6 @@ import {By} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
-import {SearchComponent} from "../../public/search/search.component";
 
 describe('VerBusquedasComponent', () => {
   // tslint:disable-next-line:prefer-const

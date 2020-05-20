@@ -115,6 +115,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     this.idRepresentante = this.route.snapshot.paramMap.get('id');
     console.log(this.idRepresentante);
     this.repreServ.getRepresentantes().subscribe(res => {
+      // tslint:disable-next-line
       for (let repr of res) {
         if (repr.UID === this.idRepresentante) {
           this.idInmobiliaria = repr.IDInmobiliaria;

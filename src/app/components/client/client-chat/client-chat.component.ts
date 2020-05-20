@@ -180,7 +180,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
   async comprobarMensajes() {
     this.channel.on('message.new', event => {
       console.log('recibí un nuevo mensaje', event.message.text);
-      let date = new Date(event.message.created_at);
+      const date = new Date(event.message.created_at);
       console.log(date);
       let messageHour = date.getHours().toString() + ':';
       if ( date.getMinutes() < 10) {
@@ -202,6 +202,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     });
     this.idRepresentante = '';
     this.chatServ.getChats().subscribe( ren => {
+      // tslint:disable-next-line
       for (let cht of ren){
         if (cht.IDCliente === this.id && cht.IDInmueble === this.idInmueble){
           this.idRepresentante = cht.IDRepresentante;
@@ -212,6 +213,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     this.chatServ.deleteChat(this.docIdChat);
     if (this.idRepresentante !== ''){
       this.reprServ.getRepresentantes().subscribe( res => {
+        // tslint:disable-next-line
         for (let rep of res){
           if (rep.UID === this.idRepresentante){
             this.representante = new Representante(rep.Cedula,
