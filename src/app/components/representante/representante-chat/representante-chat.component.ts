@@ -51,7 +51,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
   async initializeChat() {
     await this.assignChat();
     await this.delay(2000);
-    if (this.idChat === ''){
+    if (this.idChat === '') {
       return;
     }
     console.log('Finished!');
@@ -65,13 +65,17 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     this.channel.on('message.new', event => {
       console.log('Arrived new message!');
       if (!event.message.user.id.includes(this.idRepresentante)) {
-        let messageH = date.getHours().toString() + ':';
-        if (date.getMinutes() < 10) {
-          messageH += '0' + date.getMinutes().toString();
+        if (event.message.text !== 'chat_killed_by_client') {
+          let messageH = date.getHours().toString() + ':';
+          if (date.getMinutes() < 10) {
+            messageH += '0' + date.getMinutes().toString();
+          } else {
+            messageH += date.getMinutes().toString();
+          }
+          this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
         } else {
-          messageH += date.getMinutes().toString();
+          this.router.navigate(['/representante/home/' + this.idRepresentante]);
         }
-        this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
       } else {
         console.log('Not my business');
       }
@@ -99,12 +103,9 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
         isRepresentante = false;
       }
       if (newMessage.text !== ('This message was deleted.')) {
-        if (newMessage.text !== ('chat_killed_by_client') && newMessage.text !== ('chat_killed_by_representante')){
+        if (newMessage.text !== ('chat_killed_by_client') && newMessage.text !== ('chat_killed_by_representante')) {
           this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, messageHour));
           console.log('Checking message with guest id: ' + newMessage.user.id);
-        }
-        else {
-          this.router.navigate(['/representante/home/' + this.idRepresentante]);
         }
       }
     }
@@ -166,7 +167,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
   }
 
   async enviarMensaje() {
-    if (this.idChat === ''){
+    if (this.idChat === '') {
       return;
     }
     console.log(this.mensaje);
@@ -202,10 +203,9 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
         } else {
           messageHour += date.getMinutes().toString();
         }
-        if (event.message.text !== ('chat_killed_by_client')){
+        if (event.message.text !== ('chat_killed_by_client')) {
           this.mensajes.push(new Mensaje(event.message.text, true, messageHour));
-        }
-        else {
+        } else {
           this.router.navigate(['/representante/home/' + this.idRepresentante]);
         }
       });
@@ -213,7 +213,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
   }
 
   terminarChat(): void {
-    if (this.idChat === ''){
+    if (this.idChat === '') {
       this.router.navigate(['/representante/home/' + this.idRepresentante]);
       return;
     }
