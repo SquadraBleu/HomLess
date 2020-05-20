@@ -61,11 +61,6 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     this.mensajes = [];
   }
 
-  // tslint:disable-next-line: use-lifecycle-interface
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
-
   async initializeChat() {
     this.idInmueble = this.route.snapshot.paramMap.get('idIn');
     this.id = this.route.snapshot.paramMap.get('id');
@@ -94,6 +89,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
             messageH += date.getMinutes().toString();
           }
           this.mensajes = [...this.mensajes, new Mensaje(event.message.text, true, messageH)];
+          this.scrollToBottom();
         }
       }
       else{

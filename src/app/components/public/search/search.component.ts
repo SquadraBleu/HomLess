@@ -119,6 +119,7 @@ export class SearchComponent implements OnInit {
   arrayIDstags: string [] = [];
   date: any;
 
+  /*
   SearchForm = new FormGroup ({
     searchTerm: new FormControl('', Validators.required),
     tags: new FormControl('', Validators.required),
@@ -134,7 +135,7 @@ export class SearchComponent implements OnInit {
     localidad : new FormControl('', Validators.required),
     tipoInmueble : new FormControl('', Validators.required)
   });
-
+*/
   ngOnInit(): void {
     this.authSvc.isAuth().subscribe(auth => {
       if (auth) {

@@ -70,14 +70,14 @@ export class EditarRepresentanteComponent implements OnInit {
 
   confirmarEditar(){
     if (this.contrasenaRepresentante !== ''){
-      this.authSvc.logout();
-      this.authSvc.loginByEmail(this.representante.Correo, this.contrasena);
-      console.log('RRRRR2' + this.contrasenaRepresentante);
+      // this.authSvc.logout();
+      // this.authSvc.loginByEmail(this.representante.Correo, this.contrasena);
+      // console.log('RRRRR2' + this.contrasenaRepresentante);
       // this.authSvc.changePassword(this.contrasenaRepresentante);
-      this.authSvc.logout();
-      console.log('RRRRR' + this.contrasenaInmobiliaria);
+      // this.authSvc.logout();
+      // console.log('RRRRR' + this.contrasenaInmobiliaria);
       this.authSvc.loginByEmail(this.emailInmo, this.contrasenaInmobiliaria);
-      console.log('gonorrea ome gnorre');
+      // console.log('gonorrea ome gnorre');
       this.router.navigate(['inmobiliaria/lista-representantes/' + this.representante.IDInmobiliaria]);
     }else{
       this.router.navigate(['inmobiliaria/lista-representantes/' + this.representante.IDInmobiliaria]);

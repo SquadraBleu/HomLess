@@ -30,20 +30,7 @@
                 [(ngModel)]="representante.Correo" #txtCorreo="ngModel" disabled>
 
 
-                <label for="clave"><h6>Contraseña antigua (Opcional)</h6></label>
-                <input type="password" name="clave" id="clave" class="form-control"
-                [(ngModel)]="contrasena" #txtClave="ngModel">
-                <div [hidden]="txtClave.valid || !txtClave.touched" class="alert alert-danger">
-                    La contraseña es obligatoria
-                </div>
 
-
-                <label for="clave"><h6>Contraseña nueva (Opcional)</h6></label>
-                <input type="password" name="contrasenaRepresentante" class="form-control" id="contrasenaRepresentante"
-                [(ngModel)]="contrasenaRepresentante" #txtcontrasenaRepresentante="ngModel">
-                <div [hidden]="txtcontrasenaRepresentante.valid ||!txtcontrasenaRepresentante.touched" class="alert alert-danger">
-                    La contraseña es obligatoria
-                </div>
             </div>
         </div>
         <div class="row" style="margin-top: 20px;">
