@@ -45,7 +45,7 @@ const routes: Routes = [
   {path: 'inmobiliaria/editar-representante/:id', component: EditarRepresentanteComponent},
   {path: 'cliente/chat/:id/:idIn/:idInmo', component: ClientChatComponent},
   {path: 'representante/chat/:id', component: RepresentanteChatComponent},
-  {path: 'representante/home', component: HomeRepresentanteComponent},
+  {path: 'representante/home/:id', component: HomeRepresentanteComponent},
   {path: '**', redirectTo: '/error404'}
 ];
 

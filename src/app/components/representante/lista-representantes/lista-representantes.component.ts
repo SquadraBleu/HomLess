@@ -83,10 +83,11 @@ export class ListaRepresentantesComponent implements OnInit {
   }
 
   confirmarEliminar(){
-    this.authSvc.loginByEmail(this.emailRepre, this.contrasenaRepresentante);
+    // this.authSvc.loginByEmail(this.emailRepre, this.contrasenaRepresentante);
     // this.authSvc.deleteUser();
-    this.authSvc.loginByEmail(this.emailInmo, this.contrasenaInmobiliaria);
+    // this.authSvc.loginByEmail(this.emailInmo, this.contrasenaInmobiliaria);
     this.router.navigate(['inmobiliaria/lista-representantes/' + this.idInmobiliria]);
+    window.location.reload();
   }
 
 }

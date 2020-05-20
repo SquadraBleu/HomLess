@@ -105,7 +105,7 @@ export class AuthService {
         Chats: cosa.Chats,
         CitasSolicitadas: cosa.CitasSolicitadas,
         CitasAceptadas: cosa.CitasAceptadas,
-        InteresadoEn: cosa.InteresadoEn
+        Busquedas: cosa.Busquedas
       });
       /*
       return this.afs.collection('Clientes').add({

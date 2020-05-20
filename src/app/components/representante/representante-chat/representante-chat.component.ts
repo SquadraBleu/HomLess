@@ -50,11 +50,6 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     this.mensajes = [];
   }
 
-  // tslint:disable-next-line: use-lifecycle-interface
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
-
   keyDownFunction(event: any) {
     if (event.keyCode === 13) {
       this.enviarMensaje();
@@ -87,6 +82,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
             messageH += date.getMinutes().toString();
           }
           this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
+          this.scrollToBottom();
         } else {
           this.router.navigate(['/representante/home/' + this.idRepresentante]);
         }
