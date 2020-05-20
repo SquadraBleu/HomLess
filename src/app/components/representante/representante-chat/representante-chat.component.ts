@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {Mensaje} from 'src/app/models/mensaje';
 import {ChatService} from '../../../services/chat.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -17,6 +17,7 @@ let chatClient: any;
 
 export class RepresentanteChatComponent implements OnInit, OnDestroy {
 
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   constructor(private route: ActivatedRoute,
               private router: Router,
               private chatServ: ChatService,
@@ -37,6 +38,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
   state: any;
 
   ngOnInit(): void {
+    this.scrollToBottom();
     console.log('Constructor llamado');
     chatClient = new StreamChat('smdsdgujshu4');
     this.initializeChat();
@@ -46,6 +48,18 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     console.log('Destroy that Chat');
     chatClient.disconnect();
     this.mensajes = [];
+  }
+
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  keyDownFunction(event: any) {
+    if (event.keyCode === 13) {
+      this.enviarMensaje();
+      // rest of your code
+    }
   }
 
   async initializeChat() {
@@ -228,6 +242,12 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     this.chatServ.deleteChat(this.idDocChat);
     this.router.navigate(['/representante/home/' + this.idRepresentante]);
     console.log('Chat terminado');
+  }
+
+  scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
 }
