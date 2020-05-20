@@ -75,7 +75,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
         else{
           messageH += date.getMinutes().toString();
         }
-        this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
+        this.mensajes = [...this.mensajes, new Mensaje(event.message.text, true, messageH)];
       }
       else{
         console.log('Not my business');
