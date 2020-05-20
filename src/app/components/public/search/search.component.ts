@@ -10,6 +10,7 @@ import {environment} from 'src/environments/environment';
 import algoliasearch from 'algoliasearch';
 import {Tag} from 'src/app/models/tag';
 import {firestore} from 'firebase';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 const client = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
 const indexAlg = client.initIndex('inmuebles_search');
@@ -22,15 +23,14 @@ const indexAlg = client.initIndex('inmuebles_search');
 export class SearchComponent implements OnInit {
   constructor(
     private router: Router,
+    private authSvc: AuthService,
     private inmuService: InmuebleServiceService,
     private clienteService: ClientService,
-    private busquedaService: BusquedaService,
-    private authSvc: AuthService
+    private busquedaService: BusquedaService
   ) {
     // this.searchGroup = new FormGroup({search: new FormControl() });
   }
 
-  // searchGroup: FormGroup;
 
   IDBusqueda: any = null;
   busqueda = new Busqueda('', '', '', 0, 0, 0, 0, '', '', 0, 0, 0, 0, false, '', [], '', null);
@@ -118,6 +118,22 @@ export class SearchComponent implements OnInit {
   arraytags: string[];
   arrayIDstags: string [] = [];
   date: any;
+
+  SearchForm = new FormGroup ({
+    searchTerm: new FormControl('', Validators.required),
+    tags: new FormControl('', Validators.required),
+    minArea : new FormControl('', Validators.required),
+    maxArea : new FormControl('', Validators.required),
+    minPriceArriendo : new FormControl('', Validators.required),
+    maxPriceArriendo : new FormControl('', Validators.required),
+    minPriceVenta : new FormControl('', Validators.required),
+    maxPriceVenta : new FormControl('', Validators.required),
+    nhabitaciones : new FormControl('', Validators.required),
+    nbanos : new FormControl('', Validators.required),
+    zona : new FormControl('', Validators.required),
+    localidad : new FormControl('', Validators.required),
+    tipoInmueble : new FormControl('', Validators.required)
+  });
 
   ngOnInit(): void {
     this.authSvc.isAuth().subscribe(auth => {

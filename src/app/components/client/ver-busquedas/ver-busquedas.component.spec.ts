@@ -20,23 +20,5 @@ describe('VerBusquedasComponent', () => {
       ]
     }).compileComponents();
   });
-  /*
-    it('should activate notifications', (() => {
-      const fixture = TestBed.createComponent(VerBusquedasComponent);
-      const comp = fixture.componentInstance;
-      const deb = fixture.debugElement.query(By.css('form'));
-      fixture.detectChanges();
-      spyOn(comp, 'activarBusqueda').withArgs(1);
-      expect(comp.busquedas[1].SiNotificacion).toBeTrue();
-    }));
-  */
-  it('should get Searches', (() => {
-    const fixture = TestBed.createComponent(VerBusquedasComponent);
-    const comp = fixture.componentInstance;
-    const deb = fixture.debugElement.query(By.css('form'));
-    fixture.detectChanges();
-    spyOn(comp, 'ngOnInit');
-    // @ts-ignore
-    expect(comp.busquedas.length()).toEqual(5);
-  }));
+
 });
