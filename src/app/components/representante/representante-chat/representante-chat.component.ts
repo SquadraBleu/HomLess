@@ -30,6 +30,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
   idInmueble = '';
   mensaje: string;
   idChat: any;
+  idDocChat: any;
   representante: any;
   channel: any;
   state: any;
@@ -47,9 +48,11 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
 
   async initializeChat() {
     await this.assignChat();
+    await this.delay(2000);
+    console.log('Finished!');
     await chatClient.setUser({
       id: this.idRepresentante,
-      name: this.idRepresentante,
+      name: this.idChat,
     }, chatClient.devToken(this.idRepresentante));
     this.channel = chatClient.channel('messaging', this.idChat);
     console.log( 'Connecting to ' + this.idInmueble);
@@ -66,9 +69,9 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
       console.log(date);
       messageHour = date.getHours().toString() + ':' + date.getMinutes().toString();
       if (newMessage.user.id.includes(this.idRepresentante)) {
-        isRepresentante = false;
-      } else {
         isRepresentante = true;
+      } else {
+        isRepresentante = false;
       }
       if (newMessage.text !== ('This message was deleted.')) {
         this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, date.getHours().toString()));
@@ -76,7 +79,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
       }
     }
   }
-  assignChat() {
+  async assignChat() {
     this.idRepresentante = this.route.snapshot.paramMap.get('id');
     console.log(this.idRepresentante);
     this.repreServ.getRepresentantes().subscribe( res => {
@@ -88,7 +91,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
         }
       }
       if (this.idInmobiliaria !== ''){
-        this.chatServ.getChats().subscribe( ren => {
+         this.chatServ.getChats().subscribe( ren => {
           for (let uchat of ren){
             console.log('UCHAT' + uchat.SiAceptado + ' ' + uchat.IDInmobiliaria);
             console.log('Nosotros: ' + this.idRepresentante);
@@ -97,23 +100,44 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
                 this.idChat = uchat.IDCliente + uchat.IDInmueble;
                 this.idClient = uchat.IDCliente;
                 this.idInmueble = uchat.IDInmueble;
-                console.log(uchat);
+                this.idDocChat = uchat.id;
+                console.log(uchat.id);
+                this.chat = new Chat(this.idClient, this.idInmobiliaria, this.idInmueble, this.idRepresentante, true);
+                this.chatServ.updateChat(this.chat, this.idDocChat);
+              }
+              else if (uchat.IDRepresentante === this.idRepresentante){
+                this.idChat = uchat.IDCliente + uchat.IDInmueble;
+                this.idClient = uchat.IDCliente;
+                this.idInmueble = uchat.IDInmueble;
+                this.idDocChat = uchat.id;
+                console.log(uchat.id);
               }
             }
           }
         });
       }
     });
-
-    // @ts-ignore
-    console.log(this.representante);
-
-    return '';
-
   }
-  enviarMensaje(): void
+  delay(ms: number)
+  {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  async enviarMensaje()
   {
     console.log(this.mensaje);
+    const text = this.mensaje;
+    const response = await this.channel.sendMessage({
+      text
+    });
+    console.log('El mensaje ha sido enviado');
+    console.log(this.channel.state.messages);
+    let newMessage;
+    newMessage = this.channel.state.messages[this.channel.state.messages.length - 1];
+    const date = new Date(newMessage.created_at);
+    const messageHour = date.getHours().toString() + ':' + date.getMinutes().toString();
+    console.log(newMessage.created_at);
+    this.mensajes.push(new Mensaje(newMessage.text, true, messageHour));
+    this.mensaje = '';
   }
 
   terminarChat(): void
