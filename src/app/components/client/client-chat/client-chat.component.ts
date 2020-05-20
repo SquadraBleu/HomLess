@@ -77,14 +77,16 @@ export class ClientChatComponent implements OnInit, OnDestroy {
       console.log('Arrived new message!');
       if (!event.message.user.id.includes(this.id))
       {
-        let messageH = date.getHours().toString() + ':';
-        if ( date.getMinutes() < 10) {
-          messageH += '0' + date.getMinutes().toString();
+        if (event.message.text !== ('chat_killed_by_representante')){
+          let messageH = date.getHours().toString() + ':';
+          if ( date.getMinutes() < 10) {
+            messageH += '0' + date.getMinutes().toString();
+          }
+          else{
+            messageH += date.getMinutes().toString();
+          }
+          this.mensajes = [...this.mensajes, new Mensaje(event.message.text, true, messageH)];
         }
-        else{
-          messageH += date.getMinutes().toString();
-        }
-        this.mensajes = [...this.mensajes, new Mensaje(event.message.text, true, messageH)];
       }
       else{
         console.log('Not my business');
@@ -130,7 +132,13 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
   async enviarMensaje() {
+    if (this.nMensajes === 0){
+      await this.delay(500);
+    }
     const text = this.mensaje;
     const response = await this.channel.sendMessage({
       text
@@ -200,6 +208,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
         }
       }
   });
+    console.log(this.docIdChat);
     this.chatServ.deleteChat(this.docIdChat);
     if (this.idRepresentante !== ''){
       this.reprServ.getRepresentantes().subscribe( res => {
