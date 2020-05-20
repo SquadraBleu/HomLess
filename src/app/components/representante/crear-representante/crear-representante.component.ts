@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Representante } from 'src/app/models/representante';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -69,4 +69,5 @@ export class CrearRepresentanteComponent implements OnInit {
   cancelar(){
     this.router.navigate(['inmobiliaria/lista-representantes/'  + this.idInmobiliria]);
   }
+
 }
