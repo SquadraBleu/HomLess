@@ -65,4 +65,9 @@ export class ClientVerPerfilComponent implements OnInit {
 
   }
 
+  abrirChat()
+  {
+    console.log('to chat');
+  }
+
 }

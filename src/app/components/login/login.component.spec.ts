@@ -36,7 +36,7 @@ describe('LoginComponent', () => {
     spyOn(comp, 'onLogin');
     ele = fixture.debugElement.query(By.css('button')).nativeElement;
     comp.loginForm.controls.email.setValue('amarillo@inmobiliaria.com');
-    comp.loginForm.controls.password.setValue('amarillo');
+    comp.loginForm.controls.password.setValue('amarill');
     ele.click();
     expect(comp.isError).toBeFalse();
   }));
