@@ -66,14 +66,20 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     this.state = await this.channel.watch();
     this.channel.on('message.new', event => {
       console.log('Arrived new message!');
-      let messageH = date.getHours().toString() + ':';
-      if ( date.getMinutes() < 10) {
-        messageH += '0' + date.getMinutes().toString();
+      if (!event.message.user.id.includes(this.id))
+      {
+        let messageH = date.getHours().toString() + ':';
+        if ( date.getMinutes() < 10) {
+          messageH += '0' + date.getMinutes().toString();
+        }
+        else{
+          messageH += date.getMinutes().toString();
+        }
+        this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
       }
       else{
-        messageH += date.getMinutes().toString();
+        console.log('Not my business');
       }
-      this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
     });
     console.log(this.channel.state.messages);
     let newMessage;
@@ -115,9 +121,15 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     let newMessage;
     newMessage = this.channel.state.messages[this.channel.state.messages.length - 1];
     const date = new Date(newMessage.created_at);
-    const messageHour = date.getHours().toString() + ':' + date.getMinutes().toString();
+    let messageHour = date.getHours().toString() + ':';
+    if ( date.getMinutes() < 10) {
+      messageHour += '0' + date.getMinutes().toString();
+    }
+    else{
+      messageHour += date.getMinutes().toString();
+    }
     console.log(newMessage.created_at);
-    this.mensajes.push(new Mensaje(newMessage.text, false, messageHour));
+    this.mensajes.push(new Mensaje(this.mensaje, false, messageHour));
     this.mensaje = '';
 
     if (this.nMensajes === 0) {

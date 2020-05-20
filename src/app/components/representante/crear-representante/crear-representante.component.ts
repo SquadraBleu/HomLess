@@ -12,7 +12,7 @@ import { RepresentanteService } from 'src/app/services/representante.service';
 })
 export class CrearRepresentanteComponent implements OnInit {
 
-  public representante = new Representante('', '', '' , '', '', '');
+  public representante = new Representante('', '', '' , '', '', [], '');
   public contrasena: string;
   public idInmobiliria: string;
   public contrasenaInmobiliaria = '';

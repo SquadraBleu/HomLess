@@ -31,7 +31,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
   mensaje: string;
   idChat: any;
   idDocChat: any;
-  representante: any;
+  representante: Representante;
   channel: any;
   state: any;
 
@@ -59,14 +59,20 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     this.state = await this.channel.watch();
     this.channel.on('message.new', event => {
       console.log('Arrived new message!');
-      let messageH = date.getHours().toString() + ':';
-      if ( date.getMinutes() < 10) {
-        messageH += '0' + date.getMinutes().toString();
+      if (!event.message.user.id.includes(this.idRepresentante))
+      {
+        let messageH = date.getHours().toString() + ':';
+        if ( date.getMinutes() < 10) {
+          messageH += '0' + date.getMinutes().toString();
+        }
+        else{
+          messageH += date.getMinutes().toString();
+        }
+        this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
       }
       else{
-        messageH += date.getMinutes().toString();
+        console.log('Not my business');
       }
-      this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
     });
     console.log(this.channel.state.messages);
     let newMessage;
@@ -105,6 +111,13 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
         if (repr.UID === this.idRepresentante)
         {
           this.idInmobiliaria = repr.IDInmobiliaria;
+          this.representante = new Representante(repr.Cedula,
+            repr.Nombre,
+            repr.Telefono,
+            repr.Correo,
+            repr.IDInmobiliaria,
+            repr.ChatsAceptados,
+            repr.id);
           break;
         }
       }
@@ -115,13 +128,16 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
             console.log('Nosotros: ' + this.idRepresentante);
             if (uchat.IDInmobiliaria === this.idInmobiliaria) {
               if (uchat.SiAceptado === false) {
-                this.idChat = uchat.IDCliente + uchat.IDInmueble;
-                this.idClient = uchat.IDCliente;
-                this.idInmueble = uchat.IDInmueble;
-                this.idDocChat = uchat.id;
-                console.log(uchat.id);
-                this.chat = new Chat(this.idClient, this.idInmobiliaria, this.idInmueble, this.idRepresentante, true);
-                this.chatServ.updateChat(this.chat, this.idDocChat);
+                if (this.representante.ChatsAceptados.length === 0){
+                  this.idChat = uchat.IDCliente + uchat.IDInmueble;
+                  this.idClient = uchat.IDCliente;
+                  this.idInmueble = uchat.IDInmueble;
+                  this.idDocChat = uchat.id;
+                  console.log(uchat.id);
+                  this.chat = new Chat(this.idClient, this.idInmobiliaria, this.idInmueble, this.idRepresentante, true);
+                  this.chatServ.updateChat(this.chat, this.idDocChat);
+                  this.representante.ChatsAceptados.push(this.idChat);
+                }
               }
               else if (uchat.IDRepresentante === this.idRepresentante){
                 this.idChat = uchat.IDCliente + uchat.IDInmueble;
@@ -152,9 +168,15 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     let newMessage;
     newMessage = this.channel.state.messages[this.channel.state.messages.length - 1];
     const date = new Date(newMessage.created_at);
-    const messageHour = date.getHours().toString() + ':' + date.getMinutes().toString();
+    let messageHour = date.getHours().toString() + ':';
+    if ( date.getMinutes() < 10) {
+      messageHour += '0' + date.getMinutes().toString();
+    }
+    else{
+      messageHour += date.getMinutes().toString();
+    }
     console.log(newMessage.created_at);
-    this.mensajes.push(new Mensaje(newMessage.text, true, messageHour));
+    this.mensajes.push(new Mensaje(this.mensaje, true, messageHour));
     this.mensaje = '';
   }
   async comprobarMensajes() {
