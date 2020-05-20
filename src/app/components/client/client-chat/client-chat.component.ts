@@ -52,13 +52,23 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     this.idInmueble = this.route.snapshot.paramMap.get('idIn');
     this.id = this.route.snapshot.paramMap.get('id');
     this.idInmobiliaria = this.route.snapshot.paramMap.get('idInmo');
-    await chatClient.setGuestUser({
-      id: this.id
-    }).then(() => {
-      this.channel = chatClient.channel('messaging', this.id + this.idInmueble, {
-        name: this.id
-      });
+    await chatClient.setUser({
+      id: this.id,
+      name: this.id,
+    },
+      chatClient.devToken(this.id),
+    );
+    this.channel = chatClient.channel('messaging', this.id + this.idInmueble, {
+    name: this.id,
+    members: [this.id, this.id + this.idInmueble],
+    invites: [this.id + this.idInmueble]
     });
+    // await chatClient.setGuestUser({
+    //   id: this.id
+    // }).then(() => {
+    //
+    //   });
+    // });
     this.state = await this.channel.watch();
     console.log(this.channel.state.messages);
     let newMessage;

@@ -47,13 +47,7 @@ export class RepresentanteService {
     return this.representantes;
   }
 
-  getRepresentante(id: string){
-    this.representantesCollection.doc(id).ref.get().then( doc => {
-      if (doc.exists){
-        console.log(doc);
-        console.log(doc.data());
-        return doc.data();
-      }
-    });
+   getRepresentante(id: string) {
+    return this.afs.collection('Representantes').doc(id).ref.get();
   }
 }
