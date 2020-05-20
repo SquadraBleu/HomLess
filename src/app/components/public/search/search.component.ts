@@ -8,7 +8,6 @@ import {BusquedaService} from 'src/app/services/busqueda.service';
 import {ClientService} from 'src/app/services/client.service';
 import {environment} from 'src/environments/environment';
 import algoliasearch from 'algoliasearch';
-import {Tag} from 'src/app/models/tag';
 import {firestore} from 'firebase';
 
 const client = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
@@ -67,7 +66,6 @@ export class SearchComponent implements OnInit {
   multipleFilters = false;
   rangeArea = false;
   inmuebles: Inmueble[] = [];
-  arrayAlltags: Tag[] = [];
 
   tiposDeInmueble: string[] = [
     '',
@@ -126,7 +124,6 @@ export class SearchComponent implements OnInit {
         this.authSvc.isUserClient(this.userUid).subscribe(userRole => {
           if (userRole !== undefined) {
             this.getClientMail();
-           // this.getTags();
           }
         });
       }
@@ -135,10 +132,8 @@ export class SearchComponent implements OnInit {
   }
 
   submitSearch(): void {
-    this.getTags();
-    console.log('Init Submit to Algolia tags', this.tags, ' IDS::', this.arrayIDstags);
+    console.log('Init Submit to Algolia');
     this.filters = '';
-    this.arrayIDstags = [];
     console.log(this.tags); // String separado por comas, es necesario hacer trim al string completo
                             // y luego a cada string parseado, por si el usuario puso espacios antes o
                             // después de la palabra. Ojo que podrían haber espacios entre el tag y eso sí es válido
@@ -249,15 +244,11 @@ export class SearchComponent implements OnInit {
       }
     }
     if (this.tags !== '') {
+
       console.log('tags before->');
       console.log(this.tags);
 
-      this.arrayIDstags = [];
-      console.log(':::Befores TAgs in the search: ', this.arrayIDstags);
-      this.getIDTags();
-      console.log(':::TAgs in the search: ', this.arrayIDstags);
-
-      if (this.multipleFilters) {
+      if (this.multipleFilters){
 
         this.filters += ' AND ';
       }
@@ -275,14 +266,15 @@ export class SearchComponent implements OnInit {
     console.log(this.filters);
 
     if (this.userUid !== '' && this.clientMail !== '') {
+      this.getTags();
       console.log('GGtags->>>', this.arrayIDstags);
       this.date = firestore.Timestamp.fromDate(new Date());
       this.busqueda = new Busqueda('', this.searchTerm, this.tipoInmueble,
         this.minArea, this.maxArea, this.nhabitaciones, this.nbanos, this.zona, this.localidad,
         this.minPriceVenta, this.maxPriceVenta, this.minPriceArriendo, this.maxPriceArriendo,
         this.activarAlerta, this.userUid, this.arrayIDstags, this.clientMail, this.date);
-      console.log('New busqueda antes create', this.busqueda);
       this.createBusqueda();
+      console.log('New BUsqueda', this.busqueda);
     }
     this.multipleFilters = false;
     this.rangeArea = false;
@@ -301,36 +293,31 @@ export class SearchComponent implements OnInit {
     }
   }
 
+
   getTags() {
-   this.inmuService.getTags().subscribe(res => {
-        this.arrayAlltags = res;
+    this.arraytags = this.newtags.split(', ');
+    this.inmuService.getTags().subscribe(res => {
+      // tslint:disable-next-line: prefer-for-of
+        for (let index = 0; index < res.length; index++) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let i = 0; i < this.arraytags.length; i++) {
+            if (res[index].Hashtag.toLowerCase().trim() === this.arraytags[i].toLowerCase().trim()) {
+              console.log('array::', res[index].id);
+              this.arrayIDstags.push(res[index].id.trim());
+            }
+          }
+        }
+        console.log('array->>>>>', this.arrayIDstags);
       }
     );
-   console.log('ALL TAGS DB',  this.arrayAlltags);
-  }
-
-  getIDTags() {
-    this.arraytags = [];
-    this.arraytags = this.tags.split(', ');
-    console.log('SPLIT: ', this.arraytags);
-    this.arrayIDstags = [];
-    // tslint:disable-next-line: prefer-for-of
-    for (let index = 0; index < this.arrayAlltags.length; index++) {
-      // tslint:disable-next-line: prefer-for-of
-      for (let i = 0; i < this.arraytags.length; i++) {
-        if ( this.arrayAlltags[index].Hashtag.toLowerCase().trim() === this.arraytags[i].toLowerCase().trim()) {
-          console.log('array::', this.arrayAlltags[index].id);
-          this.arrayIDstags.push(this.arrayAlltags[index].id.trim());
-        }
-      }
-    }
-
   }
 
 
-  getClientMail() {
+
+
+  getClientMail(){
     this.clienteService.getClientes().subscribe(res => {
-        // tslint:disable-next-line: prefer-for-of
+      // tslint:disable-next-line: prefer-for-of
         for (let index = 0; index < res.length; index++) {
           if (res[index].id === this.userUid) {
             this.clientMail = res[index].Correo;
@@ -340,17 +327,13 @@ export class SearchComponent implements OnInit {
     );
   }
 
-  async createBusqueda() {
-    console.log('array', this.arrayIDstags);
-    this.busqueda.Tags = this.arrayIDstags;
-    console.log('create', this.busqueda);
-    await this.busquedaService.createBusqueda(this.busqueda)
+  createBusqueda(){
+    this.busquedaService.createBusqueda(this.busqueda)
       .then(res => {
         this.busqueda.IDBusqueda = res.id;
         console.log('cccc', this.busqueda.IDBusqueda);
-        console.log('create', this.busqueda);
+        this.busqueda.Tags = this.arrayIDstags;
         this.busquedaService.updateBusqueda(this.busqueda, this.busqueda.IDBusqueda);
-        console.log('update', this.busqueda);
       }).catch(err => console.log('err', err.message));
   }
 
