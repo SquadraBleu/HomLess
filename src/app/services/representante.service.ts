@@ -31,6 +31,7 @@ export class RepresentanteService {
       Telefono: value.Telefono,
       Correo: value.Correo,
       IDInmobiliaria: value.IDInmobiliaria,
+      ChatsAceptados: value.ChatsAceptados,
       UID: value.UID
     });
   }
@@ -47,7 +48,7 @@ export class RepresentanteService {
     return this.representantes;
   }
 
-  getRepresentante(id: string){
-    return this.representantesCollection.doc(id).get();
+   getRepresentante(id: string) {
+    return this.afs.collection('Representantes').doc(id).ref.get();
   }
 }

@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./editar-representante.component.css']
 })
 export class EditarRepresentanteComponent implements OnInit {
-  public representante = new Representante('', '', '', '', '', '');
+  public representante = new Representante('', '', '', '', '', [], '');
   public contrasena = '';
   public contrasenaRepresentante = '';
   public contrasenaInmobiliaria = '';

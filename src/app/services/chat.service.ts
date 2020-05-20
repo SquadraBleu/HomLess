@@ -25,6 +25,15 @@ export class ChatService {
       SiAceptado: value.SiAceptado
     });
   }
+  createChatWithId(value: any, id: string){
+    return this.afs.collection('Chats').doc(id).set({
+      IDCliente: value.IDCliente,
+      IDInmobiliaria: value.IDInmobiliaria,
+      IDInmueble: value.IDInmueble,
+      IDRepresentante: value.IDRepresentante,
+      SiAceptado: value.SiAceptado
+    });
+  }
 
   updateChat(value: any, id: string) {
     return this.afs.collection('Chats').doc(id).set(Object.assign({}, value));
