@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { Mensaje } from 'src/app/models/mensaje';
+import {Mensaje} from 'src/app/models/mensaje';
 import {ChatService} from '../../../services/chat.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Chat} from '../../../models/chat';
 import {RepresentanteService} from '../../../services/representante.service';
 import {Representante} from '../../../models/representante';
-import { StreamChat } from 'stream-chat';
+import {StreamChat} from 'stream-chat';
 
 let chatClient: any;
 
@@ -18,6 +18,7 @@ let chatClient: any;
 export class RepresentanteChatComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private chatServ: ChatService,
               private repreServ: RepresentanteService) {
   }
@@ -40,6 +41,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     chatClient = new StreamChat('smdsdgujshu4');
     this.initializeChat();
   }
+
   ngOnDestroy() {
     console.log('Destroy that Chat');
     chatClient.disconnect();
@@ -49,28 +51,28 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
   async initializeChat() {
     await this.assignChat();
     await this.delay(2000);
+    if (this.idChat === ''){
+      return;
+    }
     console.log('Finished!');
     await chatClient.setUser({
       id: this.idRepresentante,
       name: this.idChat,
     }, chatClient.devToken(this.idRepresentante));
     this.channel = chatClient.channel('messaging', this.idChat);
-    console.log( 'Connecting to ' + this.idInmueble);
+    console.log('Connecting to ' + this.idInmueble);
     this.state = await this.channel.watch();
     this.channel.on('message.new', event => {
       console.log('Arrived new message!');
-      if (!event.message.user.id.includes(this.idRepresentante))
-      {
+      if (!event.message.user.id.includes(this.idRepresentante)) {
         let messageH = date.getHours().toString() + ':';
-        if ( date.getMinutes() < 10) {
+        if (date.getMinutes() < 10) {
           messageH += '0' + date.getMinutes().toString();
-        }
-        else{
+        } else {
           messageH += date.getMinutes().toString();
         }
         this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
-      }
-      else{
+      } else {
         console.log('Not my business');
       }
     });
@@ -85,10 +87,9 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
       date = new Date(newMessage.created_at);
       console.log(date);
       messageHour = date.getHours().toString() + ':';
-      if ( date.getMinutes() < 10) {
+      if (date.getMinutes() < 10) {
         messageHour += '0' + date.getMinutes().toString();
-      }
-      else{
+      } else {
         messageHour += date.getMinutes().toString();
       }
       console.log(messageHour);
@@ -103,13 +104,13 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   async assignChat() {
     this.idRepresentante = this.route.snapshot.paramMap.get('id');
     console.log(this.idRepresentante);
-    this.repreServ.getRepresentantes().subscribe( res => {
-      for (let repr of res){
-        if (repr.UID === this.idRepresentante)
-        {
+    this.repreServ.getRepresentantes().subscribe(res => {
+      for (let repr of res) {
+        if (repr.UID === this.idRepresentante) {
           this.idInmobiliaria = repr.IDInmobiliaria;
           this.representante = new Representante(repr.Cedula,
             repr.Nombre,
@@ -121,14 +122,16 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
           break;
         }
       }
-      if (this.idInmobiliaria !== ''){
-         this.chatServ.getChats().subscribe( ren => {
-          for (let uchat of ren){
+      if (this.idInmobiliaria !== '') {
+        this.chatServ.getChats().subscribe(ren => {
+          this.idChat = '';
+          // tslint:disable-next-line
+          for (let uchat of ren) {
             console.log('UCHAT' + uchat.SiAceptado + ' ' + uchat.IDInmobiliaria);
             console.log('Nosotros: ' + this.idRepresentante);
             if (uchat.IDInmobiliaria === this.idInmobiliaria) {
               if (uchat.SiAceptado === false) {
-                if (this.representante.ChatsAceptados.length === 0){
+                if (this.representante.ChatsAceptados.length === 0) {
                   this.idChat = uchat.IDCliente + uchat.IDInmueble;
                   this.idClient = uchat.IDCliente;
                   this.idInmueble = uchat.IDInmueble;
@@ -138,8 +141,7 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
                   this.chatServ.updateChat(this.chat, this.idDocChat);
                   this.representante.ChatsAceptados.push(this.idChat);
                 }
-              }
-              else if (uchat.IDRepresentante === this.idRepresentante){
+              } else if (uchat.IDRepresentante === this.idRepresentante) {
                 this.idChat = uchat.IDCliente + uchat.IDInmueble;
                 this.idClient = uchat.IDCliente;
                 this.idInmueble = uchat.IDInmueble;
@@ -152,12 +154,15 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
       }
     });
   }
-  delay(ms: number)
-  {
+
+  delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  async enviarMensaje()
-  {
+
+  async enviarMensaje() {
+    if (this.idChat === ''){
+      return;
+    }
     console.log(this.mensaje);
     const text = this.mensaje;
     const response = await this.channel.sendMessage({
@@ -169,27 +174,26 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     newMessage = this.channel.state.messages[this.channel.state.messages.length - 1];
     const date = new Date(newMessage.created_at);
     let messageHour = date.getHours().toString() + ':';
-    if ( date.getMinutes() < 10) {
+    if (date.getMinutes() < 10) {
       messageHour += '0' + date.getMinutes().toString();
-    }
-    else{
+    } else {
       messageHour += date.getMinutes().toString();
     }
     console.log(newMessage.created_at);
     this.mensajes.push(new Mensaje(this.mensaje, true, messageHour));
     this.mensaje = '';
   }
+
   async comprobarMensajes() {
-    while (true){
+    while (true) {
       this.channel.on('message.new', event => {
         console.log('recibí un nuevo mensaje', event.message.text);
         const date = new Date(event.message.created_at);
         console.log(date);
         let messageHour = date.getHours().toString() + ':';
-        if ( date.getMinutes() < 10) {
+        if (date.getMinutes() < 10) {
           messageHour += '0' + date.getMinutes().toString();
-        }
-        else{
+        } else {
           messageHour += date.getMinutes().toString();
         }
         this.mensajes.push(new Mensaje(event.message.text, true, messageHour));
@@ -197,8 +201,18 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  terminarChat(): void
-  {
+  terminarChat(): void {
+    if (this.idChat === ''){
+      this.router.navigate(['/representante/home/' + this.idRepresentante]);
+      return;
+    }
+    this.mensaje = 'Gracias por usar Homless :) Este chat ha finalizado, recuerda que hablaste con: ';
+    this.mensaje += this.representante.Nombre;
+    this.enviarMensaje();
+    this.representante.ChatsAceptados = [];
+    this.repreServ.updateRepresentante(this.representante, this.representante.UID);
+    this.chatServ.deleteChat(this.idDocChat);
+    this.router.navigate(['/representante/home/' + this.idRepresentante]);
     console.log('Chat terminado');
   }
 

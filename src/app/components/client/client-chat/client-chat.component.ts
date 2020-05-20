@@ -4,6 +4,8 @@ import {StreamChat, ChannelData, Message, User} from 'stream-chat';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ChatService} from '../../../services/chat.service';
 import {Chat} from '../../../models/chat';
+import {RepresentanteService} from '../../../services/representante.service';
+import {Representante} from '../../../models/representante';
 
 let chatClient: any;
 
@@ -16,10 +18,15 @@ let chatClient: any;
 export class ClientChatComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
-              private chatServ: ChatService) {
+              private router: Router,
+              private chatServ: ChatService,
+              private reprServ: RepresentanteService) {
   }
 
   id: any;
+  docIdChat: any;
+  idRepresentante: any;
+  representante: Representante;
   channel: any;
   nMensajes: any;
   state: any;
@@ -167,6 +174,32 @@ export class ClientChatComponent implements OnInit, OnDestroy {
 
   terminarChat(): void
   {
+    this.idRepresentante = '';
+    this.chatServ.getChats().subscribe( ren => {
+      for (let cht of ren){
+        if (cht.IDCliente === this.id && cht.IDInmueble === this.idInmueble){
+          this.idRepresentante = cht.IDRepresentante;
+        }
+      }
+  });
+    this.chatServ.deleteChat(this.docIdChat);
+    if (this.idRepresentante !== ''){
+      this.reprServ.getRepresentantes().subscribe( res => {
+        for (let rep of res){
+          if (rep.UID === this.idRepresentante){
+            this.representante = new Representante(rep.Cedula,
+              rep.Nombre,
+              rep.Telefono,
+              rep.Correo,
+              rep.IDInmobiliaria,
+              [],
+              rep.UID);
+            this.reprServ.updateRepresentante(this.representante, rep.id);
+          }
+        }
+      });
+    }
+    this.router.navigate(['cliente/ver-perfil/' + this.id]);
     console.log('Chat terminado');
   }
 
