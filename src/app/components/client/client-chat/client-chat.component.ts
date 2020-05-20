@@ -63,13 +63,18 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     members: [this.id, this.id + this.idInmueble],
     invites: [this.id + this.idInmueble]
     });
-    // await chatClient.setGuestUser({
-    //   id: this.id
-    // }).then(() => {
-    //
-    //   });
-    // });
     this.state = await this.channel.watch();
+    this.channel.on('message.new', event => {
+      console.log('Arrived new message!');
+      let messageH = date.getHours().toString() + ':';
+      if ( date.getMinutes() < 10) {
+        messageH += '0' + date.getMinutes().toString();
+      }
+      else{
+        messageH += date.getMinutes().toString();
+      }
+      this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
+    });
     console.log(this.channel.state.messages);
     let newMessage;
     let isRepresentante;
@@ -81,14 +86,20 @@ export class ClientChatComponent implements OnInit, OnDestroy {
       newMessage = value;
       date = new Date(newMessage.created_at);
       console.log(date);
-      messageHour = date.getHours().toString() + ':' + date.getMinutes().toString();
+      messageHour = date.getHours().toString() + ':';
+      if ( date.getMinutes() < 10) {
+        messageHour += '0' + date.getMinutes().toString();
+      }
+      else{
+        messageHour += date.getMinutes().toString();
+      }
       if (newMessage.user.id.includes(this.id)) {
         isRepresentante = false;
       } else {
         isRepresentante = true;
       }
       if (newMessage.text !== ('This message was deleted.')) {
-        this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, date.getHours().toString()));
+        this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, messageHour));
         console.log('Checking message with guest id: ' + newMessage.user.id);
       }
     }
@@ -125,21 +136,21 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     console.log(this.channel.state.messages.length);
   }
 
-  comprobarMensajes(): void {
-    chatClient = new StreamChat('smdsdgujshu4');
-    this.id = this.route.snapshot.paramMap.get('id');
-    chatClient.setGuestUser({
-      id: this.id + 'sdfg'
-    }).then(() => {
-      this.channel = chatClient.channel('messaging', 'miPrimerChat', {
-        name: this.id
-      });
-      this.state = this.channel.watch();
-    });
-    console.log('hajkflsdjlk;dfsafasdljk;      ' + this.channel.state.messages.length);
+  async comprobarMensajes() {
     this.channel.on('message.new', event => {
       console.log('recibí un nuevo mensaje', event.message.text);
+      let date = new Date(event.message.created_at);
+      console.log(date);
+      let messageHour = date.getHours().toString() + ':';
+      if ( date.getMinutes() < 10) {
+        messageHour += '0' + date.getMinutes().toString();
+      }
+      else{
+        messageHour += date.getMinutes().toString();
+      }
+      this.mensajes.push(new Mensaje(event.message.text, true, messageHour));
     });
+    this.comprobarMensajes();
   }
 
   terminarChat(): void

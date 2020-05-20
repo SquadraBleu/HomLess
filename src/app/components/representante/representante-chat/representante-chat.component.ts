@@ -57,6 +57,17 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     this.channel = chatClient.channel('messaging', this.idChat);
     console.log( 'Connecting to ' + this.idInmueble);
     this.state = await this.channel.watch();
+    this.channel.on('message.new', event => {
+      console.log('Arrived new message!');
+      let messageH = date.getHours().toString() + ':';
+      if ( date.getMinutes() < 10) {
+        messageH += '0' + date.getMinutes().toString();
+      }
+      else{
+        messageH += date.getMinutes().toString();
+      }
+      this.mensajes = [...this.mensajes, new Mensaje(event.message.text, false, messageH)];
+    });
     console.log(this.channel.state.messages);
     let newMessage;
     let isRepresentante;
@@ -67,14 +78,21 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
       newMessage = value;
       date = new Date(newMessage.created_at);
       console.log(date);
-      messageHour = date.getHours().toString() + ':' + date.getMinutes().toString();
+      messageHour = date.getHours().toString() + ':';
+      if ( date.getMinutes() < 10) {
+        messageHour += '0' + date.getMinutes().toString();
+      }
+      else{
+        messageHour += date.getMinutes().toString();
+      }
+      console.log(messageHour);
       if (newMessage.user.id.includes(this.idRepresentante)) {
         isRepresentante = true;
       } else {
         isRepresentante = false;
       }
       if (newMessage.text !== ('This message was deleted.')) {
-        this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, date.getHours().toString()));
+        this.mensajes.push(new Mensaje(newMessage.text, isRepresentante, messageHour));
         console.log('Checking message with guest id: ' + newMessage.user.id);
       }
     }
@@ -138,6 +156,23 @@ export class RepresentanteChatComponent implements OnInit, OnDestroy {
     console.log(newMessage.created_at);
     this.mensajes.push(new Mensaje(newMessage.text, true, messageHour));
     this.mensaje = '';
+  }
+  async comprobarMensajes() {
+    while (true){
+      this.channel.on('message.new', event => {
+        console.log('recibí un nuevo mensaje', event.message.text);
+        const date = new Date(event.message.created_at);
+        console.log(date);
+        let messageHour = date.getHours().toString() + ':';
+        if ( date.getMinutes() < 10) {
+          messageHour += '0' + date.getMinutes().toString();
+        }
+        else{
+          messageHour += date.getMinutes().toString();
+        }
+        this.mensajes.push(new Mensaje(event.message.text, true, messageHour));
+      });
+    }
   }
 
   terminarChat(): void
