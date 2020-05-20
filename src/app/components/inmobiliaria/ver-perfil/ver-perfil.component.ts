@@ -54,7 +54,7 @@ export class VerPerfilComponent implements OnInit {
   }
 
   borrarPerfil(){
-    this.inmuSvc.deleteInmobiliaria(this.id);
+    // this.inmuSvc.deleteInmobiliaria(this.id);
     this.authSvc.deleteUser().then(
       (res) => {
         this.router.navigate(['/public/home']);

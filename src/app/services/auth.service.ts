@@ -7,6 +7,7 @@ import { auth } from 'firebase/app';
 import { Inmobiliaria } from '../models/inmobiliaria';
 import { Cliente } from '../models/cliente';
 import { FirebaseAuth } from 'angularfire2';
+import { Representante } from '../models/representante';
 
 
 @Injectable({
@@ -27,6 +28,28 @@ export class AuthService {
         this.updateUserData(userData.user, isInmo, isCli, cosa);
       }).catch(err => console.log(reject(err)));
     });
+  }
+
+  createUser(email: string, pass: string){
+    this.afsAut.auth.createUserWithEmailAndPassword(email, pass)
+    .catch(
+      err => console.log('Error: ' + err)
+    );
+  }
+
+  ingresarUser(email: string, pass: string){
+    this.afsAut.auth.signInWithEmailAndPassword(email, pass)
+    .catch(
+      err => console.log('Error: ' + err)
+    );
+  }
+
+  cambiarPass(nuevo: string){
+    const user = this.afsAut.auth.currentUser;
+    user.updatePassword(nuevo)
+    .catch(
+      err => console.log('Error: ' + err)
+    );
   }
 
   loginByEmail(email: string, pass: string){
@@ -124,5 +147,9 @@ export class AuthService {
 
   isUserClient(userUid){
     return this.afs.doc<Cliente>(`Clientes/${userUid}`).valueChanges();
+  }
+
+  isUserRepre(userUid){
+    return this.afs.doc<Representante>(`Representantes/${userUid}`).valueChanges();
   }
 }

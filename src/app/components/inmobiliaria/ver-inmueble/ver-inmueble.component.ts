@@ -29,7 +29,7 @@ export class VerInmuebleComponent implements OnInit {
   userUid: string = null;
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
-    , '', '', undefined, undefined, '', [], '', '', '', [], '');
+    , '', '', undefined, undefined, '', [], '', '', '', [], '', undefined, undefined);
   public urlImagenes: string[];
 
   ngOnInit(): void{

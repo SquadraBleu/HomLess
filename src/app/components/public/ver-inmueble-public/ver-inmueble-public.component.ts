@@ -16,7 +16,7 @@ export class VerInmueblePublicComponent implements OnInit {
   id: any = undefined;
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
-  , '', '', undefined, undefined, '', [], '', '', '', [], '');
+  , '', '', undefined, undefined, '', [], '', '', '', [], '', undefined, undefined);
   public urlImagenes: string[];
 
   ngOnInit(): void{

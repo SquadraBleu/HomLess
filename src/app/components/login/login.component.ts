@@ -72,6 +72,12 @@ export class LoginComponent implements OnInit {
             this.authSvc.isUserClient(this.userUid).subscribe( user => {
               if (user !== undefined){
                 this.route.navigate(['cliente/ver-perfil/' + this.userUid]);
+              }else{
+                this.authSvc.isUserRepre(this.userUid).subscribe( userR => {
+                  if (userR !== undefined){
+                    this.route.navigate(['representante/home/' + this.userUid]);
+                  }
+                });
               }
             });
           }

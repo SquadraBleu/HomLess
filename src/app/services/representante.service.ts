@@ -31,6 +31,7 @@ export class RepresentanteService {
       Telefono: value.Telefono,
       Correo: value.Correo,
       IDInmobiliaria: value.IDInmobiliaria,
+      ChatsAceptados: value.ChatsAceptados,
       UID: value.UID
     });
   }
