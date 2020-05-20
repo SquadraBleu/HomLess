@@ -13,7 +13,7 @@ import {BusquedaService} from 'src/app/services/busqueda.service';
 export class VerBusquedasComponent implements OnInit {
 
   public busquedas: Busqueda[] = [];
-
+  idactivate: boolean;
 
   public headers: string[][] = [];
   public data: string[][] = [];
@@ -41,9 +41,7 @@ export class VerBusquedasComponent implements OnInit {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = true;
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
-    console.log('Se editó');
-    console.log('Activar alerta de busqueda en la posicion ' + i + ' de busquedas');
-    this.busquedas = [];
+    console.log('ACTIVO.>' , this.busquedas[i] );
     this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }
 
@@ -51,10 +49,7 @@ export class VerBusquedasComponent implements OnInit {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = false;
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
-    console.log('Se editó');
-    console.log('Desactivar alerta de busqueda en la posicion ' + i + ' de busquedas');
-    this.busquedas = [];
-
+    console.log('DESACTIVO.>' , this.busquedas[i] );
     this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }
 
@@ -64,8 +59,6 @@ export class VerBusquedasComponent implements OnInit {
     this.busquedas[i].SiNotificacion = false;
     this.busquedaService.deleteBusqueda(this.busquedas[i].IDBusqueda);
     console.log('Eliminar busqueda en la posicion ' + i + ' de busquedas');
-    this.busquedas = [];
-
     this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }
 
@@ -156,23 +149,17 @@ export class VerBusquedasComponent implements OnInit {
         for (let k = 0; k < this.busquedas[i].Tags.length; k++) {
           // tslint:disable-next-line: prefer-for-of
           for (let index = 0; index < this.tagsExistentes.length; index++) {
-            console.log('id->', this.tagsExistentes[index].id.trim(), '<-bsuquedas:->>', this.busquedas[i].Tags[k].trim(), '<-');
             if (this.tagsExistentes[index].id.trim() === this.busquedas[i].Tags[k].trim()) {
               etiquetas = etiquetas + this.tagsExistentes[index].Hashtag;
-              console.log('hashtag: ', this.tagsExistentes[index].Hashtag);
-              console.log('etiquetas: ', etiquetas);
               index = this.tagsExistentes.length;
             }
           }
-          // console.log(this.tagsExistentes[1].id);
-          // etiquetas = etiquetas + this.busquedas[i].Tags[k].Hashtag;
           if (k !== this.busquedas[i].Tags.length - 1) {
             etiquetas = etiquetas + ', ';
           }
         }
         header[j] = 'Tags';
         datos[j] = etiquetas;
-        console.log('header::::::', etiquetas);
         j++;
 
       }
@@ -184,8 +171,8 @@ export class VerBusquedasComponent implements OnInit {
 
   getSearches() {
 
-    console.log('GETsearches');
     this.busquedaService.getBusquedas().subscribe(res => {
+      this.busquedas = [];
       // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < res.length; index++) {
         if (res[index].IDCliente === this.id) {
@@ -213,7 +200,6 @@ export class VerBusquedasComponent implements OnInit {
   }
 
   obtenerTags() {
-    console.log('OBTENER -- TAGS', this.tagsExistentes);
     this.inmuService.getTags().subscribe(res => {
       this.tagsExistentes = res;
     });
