@@ -45,7 +45,7 @@ export class SearchComponent implements OnInit {
   isMaxPriceVenta = false;
   isVenta = false;
   isArriendo = false;
-
+  currentResults: any;
   searchTerm = '';
   tags = '';
   newtags = '';
@@ -118,6 +118,7 @@ export class SearchComponent implements OnInit {
   arraytags: string[];
   arrayIDstags: string [] = [];
   date: any;
+  finished: boolean;
 
   SearchForm = new FormGroup ({
     searchTerm: new FormControl('', Validators.required),
@@ -136,7 +137,9 @@ export class SearchComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    console.log(this.authSvc.isAuth());
     this.authSvc.isAuth().subscribe(auth => {
+      console.log(auth);
       if (auth) {
         this.userUid = auth.uid;
         this.authSvc.isUserClient(this.userUid).subscribe(userRole => {
@@ -147,10 +150,11 @@ export class SearchComponent implements OnInit {
         });
       }
     });
-    this.submitSearch();
+    // this.submitSearch();
   }
 
-  submitSearch(): void {
+  submitSearch(): number{
+    this.finished = false;
     this.getTags();
     console.log('Init Submit to Algolia tags', this.tags, ' IDS::', this.arrayIDstags);
     this.filters = '';
@@ -281,12 +285,16 @@ export class SearchComponent implements OnInit {
 
       this.newtags = this.tags;
     }
-    indexAlg.search(this.searchTerm, {
+    this.currentResults = -1;
+    const hitsP = indexAlg.search(this.searchTerm, {
       // @ts-ignore
       filters: this.filters
     }).then(({hits}) => {
       // @ts-ignore
       this.inmuebles = hits;
+      this.currentResults = hits.length;
+      console.log(hits);
+      return hits;
     });
     console.log(this.filters);
 
@@ -311,10 +319,18 @@ export class SearchComponent implements OnInit {
       this.searchTerm = '';
       this.inmuebles = [];
     } else {
+      console.log('made Search value -> ' + this.madeSearch);
       console.log(this.inmuebles);
       this.madeSearch = true;
       console.log('End Search');
     }
+    this.finished = true;
+    this.currentResults = this.inmuebles.length;
+    console.log('Resultados actuales' + this.currentResults);
+    return this.currentResults;
+  }
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   getTags() {

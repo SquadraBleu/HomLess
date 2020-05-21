@@ -33,7 +33,7 @@ describe('LoginComponent', () => {
     const deb = fixture.debugElement.query(By.css('form'));
     let ele = deb.nativeElement;
     fixture.detectChanges();
-    spyOn(comp, 'onLogin');
+    // spyOn(comp, 'onLogin');
     ele = fixture.debugElement.query(By.css('button')).nativeElement;
     comp.loginForm.controls.email.setValue('amarillo@inmobiliaria.com');
     comp.loginForm.controls.password.setValue('amarill');
@@ -47,7 +47,7 @@ describe('LoginComponent', () => {
     const deb = fixture.debugElement.query(By.css('form'));
     let ele = deb.nativeElement;
     fixture.detectChanges();
-    spyOn(comp, 'onLogin');
+    // spyOn(comp, 'onLogin');
     ele = fixture.debugElement.query(By.css('button')).nativeElement;
     comp.loginForm.controls.email.setValue('ncp.434@hotmail.com');
     comp.loginForm.controls.password.setValue('ncp.434');
