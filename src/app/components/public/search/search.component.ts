@@ -150,10 +150,19 @@ export class SearchComponent implements OnInit {
         });
       }
     });
-    // this.submitSearch();
+  }
+  async algoliaTrigger(query: string, filterParam: string){
+    return indexAlg.search(query, {
+      // @ts-ignore
+      filters: filterParam
+    }).then(({hits}) => {
+      // @ts-ignore
+      console.log(hits);
+      return hits;
+    });
   }
 
-  submitSearch(): number{
+  async submitSearch(){
     this.finished = false;
     this.getTags();
     console.log('Init Submit to Algolia tags', this.tags, ' IDS::', this.arrayIDstags);
@@ -285,16 +294,11 @@ export class SearchComponent implements OnInit {
 
       this.newtags = this.tags;
     }
-    this.currentResults = -1;
-    const hitsP = indexAlg.search(this.searchTerm, {
-      // @ts-ignore
-      filters: this.filters
-    }).then(({hits}) => {
+    await this.algoliaTrigger(this.searchTerm, this.filters).then(hits => {
       // @ts-ignore
       this.inmuebles = hits;
       this.currentResults = hits.length;
       console.log(hits);
-      return hits;
     });
     console.log(this.filters);
 
@@ -327,7 +331,6 @@ export class SearchComponent implements OnInit {
     this.finished = true;
     this.currentResults = this.inmuebles.length;
     console.log('Resultados actuales' + this.currentResults);
-    return this.currentResults;
   }
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
