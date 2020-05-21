@@ -58,6 +58,7 @@ describe('VerBusquedasComponent', () => {
   });
   it('should activate de search', () => {
     let fixture: ComponentFixture<VerBusquedasComponent>;
+    // tslint:disable-next-line
     router = TestBed.get(Router);
     fixture = TestBed.createComponent(VerBusquedasComponent);
     const component = fixture.componentInstance;
@@ -75,6 +76,7 @@ describe('VerBusquedasComponent', () => {
 
   it('should desactivate the search', () => {
     let fixture: ComponentFixture<VerBusquedasComponent>;
+    // tslint:disable-next-line
     router = TestBed.get(Router);
     fixture = TestBed.createComponent(VerBusquedasComponent);
     const component = fixture.componentInstance;
@@ -96,6 +98,7 @@ describe('VerBusquedasComponent', () => {
 
   it('should delete a search', () => {
     let fixture: ComponentFixture<VerBusquedasComponent>;
+    // tslint:disable-next-line
     router = TestBed.get(Router);
     fixture = TestBed.createComponent(VerBusquedasComponent);
     const component = fixture.componentInstance;

@@ -54,6 +54,7 @@ describe('LoginComponent', () => {
     authStub.authState = of(null);
   });
   it('should refuse to log an Inmobiliaria', fakeAsync(() => {
+    // tslint:disable-next-line
     const mock = TestBed.get(AngularFireAuth);
     const spy = spyOn(authStub.auth, 'signInWithEmailAndPassword').and.callThrough();
     mock.auth = authStub.auth;
@@ -74,6 +75,7 @@ describe('LoginComponent', () => {
   }));
 
   it('should got logged as Inmobiliaria', fakeAsync(() => {
+    // tslint:disable-next-line
     const mock = TestBed.get(AngularFireAuth);
     const spy = spyOn(authStub.auth, 'signInWithEmailAndPassword').and.callThrough();
     mock.auth = authStub.auth;
@@ -94,6 +96,7 @@ describe('LoginComponent', () => {
   }));
 
   it('should got logged as Client', fakeAsync(() => {
+    // tslint:disable-next-line
     const mock = TestBed.get(AngularFireAuth);
     const spy = spyOn(authStub.auth, 'signInWithEmailAndPassword').and.callThrough();
     mock.auth = authStub.auth;
@@ -114,6 +117,7 @@ describe('LoginComponent', () => {
   }));
 
   it('should refuse to log a Client', fakeAsync(() => {
+    // tslint:disable-next-line
     const mock = TestBed.get(AngularFireAuth);
     const spy = spyOn(authStub.auth, 'signInWithEmailAndPassword').and.callThrough();
     mock.auth = authStub.auth;
