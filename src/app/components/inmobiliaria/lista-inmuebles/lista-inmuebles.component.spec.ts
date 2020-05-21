@@ -17,10 +17,14 @@ describe('ListaInmueblesComponent', () => {
     inmuServiceSpy = {
       getInmuebles(): Observable<any[]>{
         const inmuebles$ = new Subject<Inmueble[]>();
-        inmuebles$.next([new Inmueble ('Casa Linda','Remanso',234 ,3000,
-        0,0,0,'','',0,0,'',[],'123','','',[], '','',''),new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
-        0,0,0,'','',0,0,'',[],'234','','',[], '','','')]);
-
+        let inmo1 = new Inmueble ('Casa Linda','Remanso',234 ,3000,
+        0,0,0,'','',0,0,'',[],'123','','',[], '','','');
+        let inmo2 = new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
+        0,0,0,'','',0,0,'',[],'234','','',[], '','','');
+        console.log(inmo1);
+        inmuebles$.next([inmo1]);
+        
+        console.log(inmuebles$.asObservable());
         /*inmuebles$.next([new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
         0,0,0,'','',0,0,'',[],'234','','',[], '','','')]);*/
         return inmuebles$.asObservable();
@@ -42,10 +46,10 @@ describe('ListaInmueblesComponent', () => {
     const fixture = TestBed.createComponent(ListaInmueblesComponent);
     const comp = fixture.componentInstance;
     fixture.detectChanges();
-    spyOn(comp, 'darInmuebles');
+    //spyOn(comp, 'ngOnInit').and.returnValue();
     comp.id = '123';
-    comp.darInmuebles();
-    expect(comp.inmuebles.length).toBeGreaterThanOrEqual(1);
+    //comp.darInmuebles();
+    expect(comp.inmuebles.length).toEqual(1);
   });
 
   it('Funtion agregarInmueble ', () => {

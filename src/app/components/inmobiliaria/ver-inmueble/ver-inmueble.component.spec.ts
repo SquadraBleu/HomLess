@@ -16,6 +16,12 @@ describe('VerInmuebleComponent', () => {
   let activedSpy =  { snapshot: { paramMap: convertToParamMap( { 'id': '123' } ) } };
 
   beforeEach(() => {
+    let mockAuthService: Partial<AuthService>;
+    mockAuthService = {
+      isAuth(): Observable<firebase.User> {
+        return new Observable<firebase.User>();
+      }
+    };
     let authServiceSpy: Partial<AuthService>;
     authServiceSpy = {
       isUserInmo(userUid: any): Observable<Inmobiliaria>{
@@ -45,7 +51,7 @@ describe('VerInmuebleComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [ VerInmuebleComponent ],
-      providers: [{provide: AuthService, useValue: authServiceSpy},
+      providers: [{provide: AuthService, useValue: mockAuthService},
         {provide: Router, useValue: routerSpy},
         {provide: AngularFireStorage, useValue: angularFSSpy},
         {provide: InmuebleServiceService, useValue: inmuebleSSpy},

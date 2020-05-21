@@ -28,7 +28,8 @@ export class ListaInmueblesComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log(this.route.snapshot.paramMap.get('id'));
+    console.log('NG ONINIT ROUTER'+ this.route.snapshot.paramMap.get('id'));
+    console.log('NG ONINIT '+this.id);
     this.darInmuebles();
   }
 
@@ -63,7 +64,7 @@ export class ListaInmueblesComponent implements OnInit {
       // this.inmuebles = res;
       // console.log(res);
       // tslint:disable-next-line: prefer-for-of
-      console.log('VEEEERRR ->', res.length );
+      console.log('VEEEERRR ->', res[0] );
       for (let index = 0; index < res.length; index++) {
         console.log('VEEEERRR ->', res[index].IDInmobiliaria );
         if (res[index].IDInmobiliaria === this.id ){
