@@ -4,7 +4,13 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadlessCI'],
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
@@ -30,10 +36,11 @@ module.exports = function (config) {
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['ChromeHeadless'],
-    singleRun: false,
+    logLevel: config.LOG_ERROR,
+    autoWatch: false,
+    singleRun: true,
+    browserNoActivityTimeout: 40000,
+    browsers: ['ChromeHeadlessCI'],
     restartOnFileChange: true
   });
 };
