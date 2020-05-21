@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Inmueble } from '../models/inmueble';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +67,9 @@ export class InmuebleServiceService {
       TipoInmueble: value.TipoInmueble,
       IDInmobiliaria: value.IDInmobiliaria,
       Localidad: value.Localidad,
-      Zona: value.Zona
+      Zona: value.Zona,
+      FechaCreacion: firestore.Timestamp.fromDate(new Date()),
+      FechaModificacion: value.FechaModificacion
     });
   }
 

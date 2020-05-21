@@ -13,6 +13,7 @@ import { Template } from 'src/app/models/template';
 import { MailService } from 'src/app/services/mail.service';
 import { TemplateService } from 'src/app/services/template.service';
 import { BusquedaService} from '../../../services/busqueda.service';
+import { firestore } from 'firebase';
 
 @Component({
   selector: 'app-crear-inmueble',
@@ -22,7 +23,7 @@ import { BusquedaService} from '../../../services/busqueda.service';
 export class CrearInmuebleComponent implements OnInit {
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
-    , '', '', undefined, undefined, '', [], '', '', '', [], '');
+    , '', '', undefined, undefined, '', [], '', '', '', [], '', undefined, undefined);
 
   inmobiliariaLoged: any = null;
   userUid: string = null;
@@ -40,6 +41,7 @@ export class CrearInmuebleComponent implements OnInit {
   cc: boolean;
   privacidad: boolean;
   tags = '';
+  fechaCreate: any = null;
 
   localidades: string[] = [
     '',
@@ -115,7 +117,10 @@ export class CrearInmuebleComponent implements OnInit {
   }
 
   crearInmueble(){
-
+    this.fechaCreate = firestore.Timestamp.fromDate(new Date());
+    this.inmueble.FechaCreacion = this.fechaCreate;
+    this.inmueble.FechaModificacion = 0;
+    console.log('fechita ' + this.inmueble.FechaCreacion);
     console.log('CONSOLE IDI', this.inmueble);
     this.inmuService.createInmueble(this.inmueble)
     .then(res => {
