@@ -158,3 +158,14 @@ color: rgba(255,255,255,0.6);
 	background-color: #64ceff;
 	color: black;
 }
+
+textarea
+{
+	min-height: 40px;
+	overflow: auto;
+	resize: vertical;
+	width: 100%;
+	margin: 0;
+  outline: 0;
+  vertical-align: middle;
+}

@@ -8,6 +8,7 @@ import { InmuebleServiceService } from '../../../services/inmueble-service.servi
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Tag } from 'src/app/models/tag';
+import { firestore } from 'firebase';
 
 @Component({
   selector: 'app-editar-inmueble',
@@ -18,7 +19,7 @@ import { Tag } from 'src/app/models/tag';
 export class EditarInmuebleComponent implements OnInit {
 
   inmueble: Inmueble = new Inmueble('', '', undefined, undefined, undefined, undefined, undefined
-  , '', '', undefined, undefined, '', [], '', '', '', [], '');
+  , '', '', undefined, undefined, '', [], '', '', '', [], '', undefined, undefined);
 
   inmobiliariaLoged: any = null;
   userUid: string = null;
@@ -97,6 +98,7 @@ export class EditarInmuebleComponent implements OnInit {
   editarInmueble(): void
   {
     console.log(this.inmueble);
+    this.inmueble.FechaModificacion = firestore.Timestamp.fromDate(new Date());
     this.inmuService.updateInmueble(this.inmueble, this.IDinmueble);
     this.router.navigate(['inmobiliaria/ver-inmueble/' + this.IDinmueble]);
     console.log('Se editó');

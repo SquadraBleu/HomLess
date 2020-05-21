@@ -1,4 +1,4 @@
-<div class="container card-body msg_card_body scroll-style">
+<div #scrollMe class="container-flex card-body msg_card_body scroll-style">
 	<div *ngFor="let mensaje of mensajes">
 		<div *ngIf="!mensaje.FromRepresentante">
 			<div class="d-flex justify-content-start mb-4">
@@ -29,10 +29,10 @@
 		<div class="input-group-append">
 			<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
 		</div>
-		<textarea name="" class="form-control type_msg" [(ngModel)]="mensaje" placeholder="Escribe un mensaje..."></textarea>
-		<div class="input-group-append">
-			<span class="input-group-text send_btn" (click)="enviarMensaje()">Enviar</span>
-		</div>
-		<button class="ml-2 mr-2 btn-info" (click)="terminarChat()"><small>Terminar conversación</small></button>
+			<textarea (keyup.enter)="enviarMensaje()" type="submit text" name="mensaje" class="form-control type_msg" [(ngModel)]="mensaje" placeholder="Escribe un mensaje..."></textarea>
+			<div class="input-group-append">
+				<span (click)="enviarMensaje()" class="input-group-text send_btn" >Enviar</span>
+			</div>
+		<button (click)="terminarChat()" class="ml-2 mr-2 btn-info"><small>Terminar conversación</small></button>
 	</div>
 </div>
