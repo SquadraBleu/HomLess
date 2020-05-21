@@ -8,6 +8,7 @@ describe('Representante', () => {
       '3103000000',
       'test@domain.tld',
       'UNIQUEIDINM',
+      [],
       'UNIQUEIDREP'
     )).toBeTruthy();
   });

@@ -36,13 +36,17 @@ export class VerBusquedasComponent implements OnInit {
     console.log(this.data);
     console.log(this.headers);
   }
+  reload()
+  {
+    this.router.navigate(['cliente/ver-busqueda/' + this.id]);
+  }
 
   activarBusqueda(i: number): void {
     console.log(this.busquedas[i]);
     this.busquedas[i].SiNotificacion = true;
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
     console.log('ACTIVO.>' , this.busquedas[i] );
-    this.router.navigate(['cliente/ver-busqueda/' + this.id]);
+    this.reload();
   }
 
   desactivarBusqueda(i: number): void {
@@ -50,7 +54,8 @@ export class VerBusquedasComponent implements OnInit {
     this.busquedas[i].SiNotificacion = false;
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
     console.log('DESACTIVO.>' , this.busquedas[i] );
-    this.router.navigate(['cliente/ver-busqueda/' + this.id]);
+    this.reload();
+    // this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }
 
 
@@ -59,7 +64,9 @@ export class VerBusquedasComponent implements OnInit {
     this.busquedas[i].SiNotificacion = false;
     this.busquedaService.deleteBusqueda(this.busquedas[i].IDBusqueda);
     console.log('Eliminar busqueda en la posicion ' + i + ' de busquedas');
-    this.router.navigate(['cliente/ver-busqueda/' + this.id]);
+    this.busquedas.splice(i, i + 1);
+    this.reload();
+    // this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }
 
   mostrarBusquedas(): void {
@@ -170,7 +177,6 @@ export class VerBusquedasComponent implements OnInit {
 
 
   getSearches() {
-
     this.busquedaService.getBusquedas().subscribe(res => {
       this.busquedas = [];
       // tslint:disable-next-line: prefer-for-of
