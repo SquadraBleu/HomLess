@@ -1,19 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Inmueble } from 'src/app/models/inmueble';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ListaInmueblesComponent } from './lista-inmuebles.component';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
+import { Observable, Subject } from 'rxjs';
 
 describe('ListaInmueblesComponent', () => {
-  // tslint:disable-next-line:prefer-const
-  let activatedRouteSpy;
-  // tslint:disable-next-line:prefer-const
-  let routerSpy;
-  // tslint:disable-next-line:prefer-const
-  let inmuServiceSpy;
+  let activatedRouteSpy = { snapshot: { paramMap: convertToParamMap( { 'id': '123' } ) } };;
+  let routerSpy = {navigate: jasmine.createSpy('navigate')};
+  
 
   beforeEach(() => {
+    let inmuServiceSpy: Partial<InmuebleServiceService>;
+    inmuServiceSpy = {
+      getInmuebles(): Observable<any[]>{
+        const inmuebles$ = new Subject<Inmueble[]>();
+        inmuebles$.next([new Inmueble ('Casa Linda','Remanso',234 ,3000,
+        0,0,0,'','',0,0,'',[],'123','','',[], '')],);
+
+        inmuebles$.next([new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
+        0,0,0,'','',0,0,'',[],'234','','',[], '')],)
+        return inmuebles$.asObservable();
+      }
+    };
+
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
@@ -25,21 +36,29 @@ describe('ListaInmueblesComponent', () => {
     }).compileComponents();
   });
 
-  it('Funtion verInmueble ', () => {
+  it('Funtion darInmuebles ', () => {
     const fixture = TestBed.createComponent(ListaInmueblesComponent);
     const comp = fixture.componentInstance;
-    comp.id ='bTujfJUC7zaGKtbFD3eaRXfKlmE3';
-    comp.inmuebles.push( new Inmueble('Esta es una propiedad', '', 200, undefined, 2000000, 0, undefined,
-    'Una propiedad que esta bien bonita', '', undefined, undefined, '', [], '', '', '', [],""));
-    comp.inmuebles.push(new Inmueble('Es una propiedad', '', 200, undefined, 0, 2000000, undefined, 
-    'Una propiedad que bien bonita', '', undefined, undefined, '', [], '', '', '', [],""));
-
-    comp.busqueda = 'Esta';
-    comp.buscarInmueble();
-
-    expect(comp.inmuebles.length).toEqual(1);
+    expect(comp.inmuebles.length).toBe(1);
   });
 
-  //dar Inmuebles
-  //Boton limpiar busqueda
+  it('Funtion agregarInmueble ', () => {
+    const fixture = TestBed.createComponent(ListaInmueblesComponent);
+    const comp = fixture.componentInstance;
+    comp.agregarInmueble();
+    expect (routerSpy.navigate).toHaveBeenCalledWith(['inmobiliaria/crear-inmueble']);
+  });
+
+  it('Funtion limpiarBusqueda ', () => {
+    const fixture = TestBed.createComponent(ListaInmueblesComponent);
+    const comp = fixture.componentInstance;
+
+    spyOn(comp, 'limpiarBusqueda');
+
+    let button = fixture.debugElement.nativeElement.querySelector('button');
+    button.click();
+
+    expect (comp.busqueda).toBe(['']);
+  });
+
 });
