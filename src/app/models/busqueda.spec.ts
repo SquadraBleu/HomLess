@@ -2,7 +2,8 @@ import {Busqueda} from './busqueda';
 
 describe('Busqueda', () => {
   it('should create an instance', () => {
-    expect(new Busqueda('AAAA',
+    expect(
+      new Busqueda('AAAA',
       'BusquedaDescription',
       'Casa',
       10,
