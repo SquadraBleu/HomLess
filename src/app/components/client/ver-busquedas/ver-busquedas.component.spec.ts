@@ -75,4 +75,64 @@ describe('VerBusquedasComponent', () => {
     expect(component.busquedas[0].SiNotificacion).toBeTrue();
   });
 
+  it('should delete one search', () => {
+    let fixture: ComponentFixture<VerBusquedasComponent>;
+    router = TestBed.get(Router);
+    fixture = TestBed.createComponent(VerBusquedasComponent);
+    const component = fixture.componentInstance;
+    component.busquedas.push(new Busqueda('asdf542asd4f'
+      , 'Casita', '', 0, 0,
+      0, 0, '', '', 0,
+      0, 0, 0, false,
+      '', [], '', 5)
+    );
+    component.id = 'asdfasd65f54';
+    spyOn(component, 'reload').and.returnValue();
+    console.log(component.id);
+    console.log(component.busquedas[0]);
+    const navigateSpy = spyOn( router, 'navigate');
+    component.activarBusqueda(0);
+    const expected = 'cliente/ver-busqueda/' + component.id;
+    expect(component.busquedas[0].SiNotificacion).toBeTrue();
+  });
+
+  it('should delete a search', () => {
+    let fixture: ComponentFixture<VerBusquedasComponent>;
+    router = TestBed.get(Router);
+    fixture = TestBed.createComponent(VerBusquedasComponent);
+    const component = fixture.componentInstance;
+    component.busquedas.push(new Busqueda('123'
+      , 'Casita1', '', 0, 0,
+      0, 0, '', '', 0,
+      0, 0, 0, false,
+      '', [], '', 5)
+    );
+    component.busquedas.push(new Busqueda('345'
+      , 'Casita2', '', 0, 0,
+      0, 0, '', '', 0,
+      0, 0, 0, false,
+      '', [], '', 5)
+    );
+    component.busquedas.push(new Busqueda('678'
+      , 'Casita3', '', 0, 0,
+      0, 0, '', '', 0,
+      0, 0, 0, false,
+      '', [], '', 5)
+    );
+    component.id = 'asdfasd65f54';
+    spyOn(component, 'reload').and.returnValue();
+    console.log(component.id);
+    console.log(component.busquedas[0]);
+    const navigateSpy = spyOn( router, 'navigate');
+    component.eliminarBusqueda(0);
+    const expected = 'cliente/ver-busqueda/' + component.id;
+
+    component.busquedas.push(new Busqueda('910'
+      , 'Casita4', '', 0, 0,
+      0, 0, '', '', 0,
+      0, 0, 0, false,
+      '', [], '', 5)
+    );
+    expect(component.busquedas.length).toEqual(3);
+  });
 });
