@@ -46,8 +46,7 @@ export class VerBusquedasComponent implements OnInit {
     this.busquedas[i].SiNotificacion = true;
     this.busquedaService.updateBusqueda(this.busquedas[i], this.busquedas[i].IDBusqueda);
     console.log('ACTIVO.>' , this.busquedas[i] );
-   // this.reload();
-    window.location.reload();
+    this.reload();
   }
 
   desactivarBusqueda(i: number): void {

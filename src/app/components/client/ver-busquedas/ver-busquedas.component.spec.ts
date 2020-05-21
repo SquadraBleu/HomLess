@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {VerBusquedasComponent} from './ver-busquedas.component';
 import {By} from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -16,17 +16,24 @@ describe('VerBusquedasComponent', () => {
   let routerSpy = {
     navigate: jasmine.createSpy('navigate')
   };
-  // tslint:disable-next-line:prefer-const
   let router: Router;
+  // tslint:disable-next-line:prefer-const
   beforeEach(() => {
     let busquedaServiceSpy: Partial<BusquedaService>;
     busquedaServiceSpy = {
       getBusquedas(): Observable<any[]> {
         const observable$ = new Subject<Busqueda[]>();
         observable$.next(
-          [new Busqueda('', 'Casita', '', 0, 0, 0, 0, '', '', 0, 0, 0, 0, false, '', [], '', null)
+          [new Busqueda('asdf542asd4f'
+            , 'Casita', '', 0, 0,
+            0, 0, '', '', 0,
+            0, 0, 0, false,
+            '', [], '', 5)
           ]);
         return observable$.asObservable();
+      },
+      updateBusqueda(value: any, id: string): Promise<void> {
+        return Promise.resolve();
       }
     };
     let inmuebleServiceSpy: Partial<InmuebleServiceService>;
@@ -44,20 +51,28 @@ describe('VerBusquedasComponent', () => {
       providers: [
         {provide: BusquedaService, useValue: busquedaServiceSpy},
         {provide: InmuebleServiceService, useValue: inmuebleServiceSpy},
-        {provide: Router, useValue: routerSpy},
       ]
     }).compileComponents();
-
-
-
   });
   it('should click link', () => {
-    const fixture = TestBed.createComponent(VerBusquedasComponent);
-    const component = fixture.componentInstance;
+    let fixture: ComponentFixture<VerBusquedasComponent>;
     router = TestBed.get(Router);
+    fixture = TestBed.createComponent(VerBusquedasComponent);
+    const component = fixture.componentInstance;
+    component.busquedas.push(new Busqueda('asdf542asd4f'
+      , 'Casita', '', 0, 0,
+      0, 0, '', '', 0,
+      0, 0, 0, false,
+      '', [], '', 5)
+    );
+    component.id = 'asdfasd65f54';
+    spyOn(component, 'reload').and.returnValue();
+    console.log(component.id);
+    console.log(component.busquedas[0]);
     const navigateSpy = spyOn( router, 'navigate');
     component.activarBusqueda(0);
-    expect(navigateSpy).toHaveBeenCalledWith('cliente/ver-busqueda/' + component.id);
+    const expected = 'cliente/ver-busqueda/' + component.id;
+    expect(component.busquedas[0].SiNotificacion).toBeTrue();
   });
 
 });

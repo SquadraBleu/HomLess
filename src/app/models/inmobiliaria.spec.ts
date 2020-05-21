@@ -26,7 +26,7 @@ describe('Inmobiliaria', () => {
         'Usaquen',
         'Norte',
         ['123', 'ABC'],
-        'UNIQUEIDTEST'),
+        'UNIQUEIDTEST', 8, 8),
         new Inmueble('TITULO DE INMUEBLE',
           'BARRIOSTR',
           100,
@@ -44,7 +44,7 @@ describe('Inmobiliaria', () => {
           'Usaquen',
           'Norte',
           ['123', 'ABC'],
-          'UNIQUEIDTEST1')],
+          'UNIQUEIDTEST1', 7, 8)],
       'INMOBUNIQUEID')).toBeTruthy();
   });
 });
