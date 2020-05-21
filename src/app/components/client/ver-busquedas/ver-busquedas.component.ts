@@ -64,6 +64,7 @@ export class VerBusquedasComponent implements OnInit {
     this.busquedas[i].SiNotificacion = false;
     this.busquedaService.deleteBusqueda(this.busquedas[i].IDBusqueda);
     console.log('Eliminar busqueda en la posicion ' + i + ' de busquedas');
+    this.busquedas.splice(i, i + 1);
     this.reload();
     // this.router.navigate(['cliente/ver-busqueda/' + this.id]);
   }

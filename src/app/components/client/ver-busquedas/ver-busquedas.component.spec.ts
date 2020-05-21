@@ -33,6 +33,9 @@ describe('VerBusquedasComponent', () => {
       },
       updateBusqueda(value: any, id: string): Promise<void> {
         return Promise.resolve();
+      },
+      deleteBusqueda(id: string): Promise<void> {
+        return Promise.resolve();
       }
     };
     let inmuebleServiceSpy: Partial<InmuebleServiceService>;
@@ -116,12 +119,8 @@ describe('VerBusquedasComponent', () => {
     );
     component.id = 'asdfasd65f54';
     spyOn(component, 'reload').and.returnValue();
-    console.log(component.id);
-    console.log(component.busquedas[0]);
     const navigateSpy = spyOn( router, 'navigate');
     component.eliminarBusqueda(0);
-    const expected = 'cliente/ver-busqueda/' + component.id;
-
     component.busquedas.push(new Busqueda('910'
       , 'Casita4', '', 0, 0,
       0, 0, '', '', 0,
