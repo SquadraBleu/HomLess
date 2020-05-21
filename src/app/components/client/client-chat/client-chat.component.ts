@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {Mensaje} from 'src/app/models/mensaje';
 import {StreamChat, ChannelData, Message, User} from 'stream-chat';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -16,6 +16,8 @@ let chatClient: any;
 })
 
 export class ClientChatComponent implements OnInit, OnDestroy {
+
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -45,6 +47,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
   mensaje: string;
 
   ngOnInit() {
+    this.scrollToBottom();
     this.fireChatUpdated = false;
     console.log('Constructor llamado ');
     chatClient = new StreamChat('smdsdgujshu4');
@@ -86,6 +89,7 @@ export class ClientChatComponent implements OnInit, OnDestroy {
             messageH += date.getMinutes().toString();
           }
           this.mensajes = [...this.mensajes, new Mensaje(event.message.text, true, messageH)];
+          this.scrollToBottom();
         }
       }
       else{
@@ -129,6 +133,13 @@ export class ClientChatComponent implements OnInit, OnDestroy {
       this.docIdChat = this.id + this.idInmueble;
       this.chatServ.createChatWithId(new Chat(this.id, this.idInmobiliaria, this.idInmueble, '', false, this.docIdChat), this.docIdChat);
       this.fireChatUpdated = true;
+    }
+  }
+
+  keyDownFunction(event: any) {
+    if (event.keyCode === 13) {
+      this.enviarMensaje();
+      // rest of your code
     }
   }
 
@@ -230,6 +241,12 @@ export class ClientChatComponent implements OnInit, OnDestroy {
     }
     this.router.navigate(['cliente/ver-perfil/' + this.id]);
     console.log('Chat terminado');
+  }
+
+  scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
 }

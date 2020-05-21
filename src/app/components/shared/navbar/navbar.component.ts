@@ -39,7 +39,14 @@ export class NavbarComponent implements OnInit {
             if (user !== undefined){
               this.tituloNavBar = 'Bienvenido, ' + user.Nombre;
               // this.router.navigate(['cliente/ver-perfil/' + this.userUid]);
-            }
+            }/*
+            else{
+              this.authService.isUserRepre(this.userUid).subscribe( userR => {
+                if (userR !== undefined){
+                  this.tituloNavBar = 'Bienvenido, ' + userR.Nombre;
+                }
+              });
+            }*/
           });
         }
         /*
@@ -95,6 +102,12 @@ export class NavbarComponent implements OnInit {
             this.authService.isUserClient(this.userUid).subscribe( user => {
               if (user !== undefined){
                 this.router.navigate(['cliente/ver-perfil/' + this.userUid]);
+              }else{
+                this.authService.isUserRepre(this.userUid).subscribe( userR => {
+                  if (userR !== undefined){
+                    this.router.navigate(['representante/home/' + this.userUid]);
+                  }
+                });
               }
             });
           }
