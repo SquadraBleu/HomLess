@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ListaInmueblesComponent } from './lista-inmuebles.component';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 import { Observable, Subject } from 'rxjs';
+import {By} from '@angular/platform-browser';
 
 describe('ListaInmueblesComponent', () => {
   let activatedRouteSpy = { snapshot: { paramMap: convertToParamMap( { 'id': '123' } ) } };;
@@ -17,10 +18,11 @@ describe('ListaInmueblesComponent', () => {
       getInmuebles(): Observable<any[]>{
         const inmuebles$ = new Subject<Inmueble[]>();
         inmuebles$.next([new Inmueble ('Casa Linda','Remanso',234 ,3000,
-        0,0,0,'','',0,0,'',[],'123','','',[], '')],);
+        0,0,0,'','',0,0,'',[],'123','','',[], '','',''),new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
+        0,0,0,'','',0,0,'',[],'234','','',[], '','','')]);
 
-        inmuebles$.next([new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
-        0,0,0,'','',0,0,'',[],'234','','',[], '')],)
+        /*inmuebles$.next([new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
+        0,0,0,'','',0,0,'',[],'234','','',[], '','','')]);*/
         return inmuebles$.asObservable();
       }
     };
@@ -39,26 +41,35 @@ describe('ListaInmueblesComponent', () => {
   it('Funtion darInmuebles ', () => {
     const fixture = TestBed.createComponent(ListaInmueblesComponent);
     const comp = fixture.componentInstance;
-    expect(comp.inmuebles.length).toBe(1);
+    fixture.detectChanges();
+    spyOn(comp, 'darInmuebles');
+    comp.id = '123';
+    comp.darInmuebles();
+    expect(comp.inmuebles.length).toBeGreaterThanOrEqual(1);
   });
 
   it('Funtion agregarInmueble ', () => {
     const fixture = TestBed.createComponent(ListaInmueblesComponent);
     const comp = fixture.componentInstance;
+    comp.id = '123';
     comp.agregarInmueble();
-    expect (routerSpy.navigate).toHaveBeenCalledWith(['inmobiliaria/crear-inmueble']);
+    expect (routerSpy.navigate).toHaveBeenCalledWith(['inmobiliaria/crear-inmueble/123']);
   });
 
   it('Funtion limpiarBusqueda ', () => {
     const fixture = TestBed.createComponent(ListaInmueblesComponent);
     const comp = fixture.componentInstance;
-
+    let input = fixture.debugElement.query(By.css('input'));
+    let el = input.nativeElement;
+    el.value = 'someValue';
+    el.dispatchEvent(new Event('input'));
+    //expect (fixture.componentInstance.busqueda).toEqual('someValue');
     spyOn(comp, 'limpiarBusqueda');
 
     let button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
 
-    expect (comp.busqueda).toBe(['']);
+    expect (comp.busqueda).toEqual('');
   });
 
 });

@@ -20,6 +20,7 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
   // tslint:disable-next-line:prefer-const
   let routerSpy;
 
+  /*
   beforeEach(() => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -34,6 +35,7 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
       ]
     }).compileComponents();
   });
+  */
 /*  it('should got user autenticated', (() => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
@@ -43,6 +45,7 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
     expect(comp.userUid).toEqual('');
   }));
 */
+/*
   // Search Term
   it('should got inmuebles SearchTerm=rsales', (() => {
     const fixture = TestBed.createComponent(SearchComponent);
@@ -217,5 +220,5 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
     expect(comp.inmuebles.length).toEqual(1);
   }));
 
-
+*/
 });

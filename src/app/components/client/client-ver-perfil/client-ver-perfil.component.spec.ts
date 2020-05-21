@@ -6,13 +6,15 @@ import {AuthService} from 'src/app/services/auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import {Cliente} from 'src/app/models/cliente';
 import { Observable, Subject } from 'rxjs';
+import { COMPILER_OPTIONS } from '@angular/core';
 
 describe('ClientVerPerfilComponent', () => {
   let authServiceSpy;
-  let routerSpy = {navigate: jasmine.createSpy('navigate')};
   let activedRouteSpy =  { snapshot: { paramMap: convertToParamMap( { 'id': '123' } ) } };
+  let routerSpy = {navigate: jasmine.createSpy('navigate')};
 
   beforeEach(() => {
+    
     let cliServiceSpy: Partial<ClientService>;
     cliServiceSpy = {
       getClientes(): Observable<any[]>{
@@ -37,23 +39,32 @@ describe('ClientVerPerfilComponent', () => {
   it('Funtion darCliente', () => {
     const fixture = TestBed.createComponent(ClientVerPerfilComponent);
     const comp = fixture.componentInstance;
-    //comp.id = '123';
+    fixture.detectChanges();
+    spyOn(comp, 'darCliente');
+    comp.id = '123';
+    comp.darCliente(); 
     expect(comp.cliente.Cedula).toBe("123");
   });
 
   it('Funtion editarPerfil', () => {
     const fixture = TestBed.createComponent(ClientVerPerfilComponent);
     const comp = fixture.componentInstance;
+    fixture.detectChanges();
+    spyOn(comp, 'editarPerfil');
     comp.id = 'ABC';
     comp.editarPerfil();
-    expect (routerSpy.navigate).toHaveBeenCalledWith(['cliente/editar-perfil/ABC']);
+    expect (routerSpy.navigate).toEqual(['cliente/editar-perfil/ABC']);
   });
 
   it('Funtion verBusquedas', () => {
     const fixture = TestBed.createComponent(ClientVerPerfilComponent);
     const comp = fixture.componentInstance;
+    routerSpy = {navigate: jasmine.createSpy('navigate')};
+    fixture.detectChanges();
+    spyOn(comp, 'verBusquedas');
+    comp.id = 'ABC';
     comp.verBusquedas();
-    expect (routerSpy.navigate).toHaveBeenCalledWith(['cliente/ver-busquedas']);
+    expect (routerSpy.navigate).toHaveBeenCalledWith(['cliente/ver-busquedas/ABC']);
   });
 
   

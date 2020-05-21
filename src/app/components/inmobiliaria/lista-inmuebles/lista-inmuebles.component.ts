@@ -63,7 +63,9 @@ export class ListaInmueblesComponent implements OnInit {
       // this.inmuebles = res;
       // console.log(res);
       // tslint:disable-next-line: prefer-for-of
+      console.log('VEEEERRR ->', res.length );
       for (let index = 0; index < res.length; index++) {
+        console.log('VEEEERRR ->', res[index].IDInmobiliaria );
         if (res[index].IDInmobiliaria === this.id ){
           // console.log(res[index].Titulo + ' fecha ' + res[index].FechaCreacion);
           const fechaCreacion = new Date((Math.trunc(res[index].FechaCreacion) - 62135596800) * 1000);

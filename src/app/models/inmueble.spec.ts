@@ -19,6 +19,8 @@ describe('Inmueble', () => {
       'Usaquen',
       'Norte',
       ['123', 'ABC'],
-      'UNIQUEIDTEST')).toBeTruthy();
+      'UNIQUEIDTEST',
+      '22-12-19',
+      '22-12-20')).toBeTruthy();
   });
 });
