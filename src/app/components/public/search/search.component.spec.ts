@@ -76,182 +76,158 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
     fixture.detectChanges();
-    comp.searchTerm = ('Nonito');
+    comp.searchTerm = ('rsales');
     const query = 'rsales';
     const filters = '';
     await comp.algoliaTrigger( query, filters).then( hits => {
-      // @ts-ignore
       console.log(hits);
       expect(hits.length).toEqual(4);
     });
   }));
-  // it('should got inmuebles SearchTerm=Casita', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.searchTerm = ('Casita');
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('#')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(7);
-  // }));
-  // it('should got inmuebles SearchTerm=Csa', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.searchTerm = ('Csa');
-  //   comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(7);
-  // }));
-  //
-  // it('should got inmuebles SearchTerm=Casota', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.searchTerm = ('Casota');
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(7);
-  // }));
-  //
-  // // Tags
-  // it('should got inmuebles Tags=Parqueadero,Mascotas', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.tags = ('Parqueadero, Mascotas');
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(1);
-  // }));
-  //
-  // it('should got inmuebles Tags=Parqueadero,mascotas', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.tags = ('Parqueadero, mascotas');
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(0);
-  // }));
-  // it('should got inmuebles Tags=Mascotas', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.tags = ('Mascotas');
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(4);
-  // }));
-  // // Tipo Inmueble y Area
-  // it('should got inmuebles TipoInmueble=Apartaestudio, 17 < Area < 168', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.tipoInmueble = ('Apartaestudio');
-  //   comp.minArea = (17);
-  //   comp.maxArea = (168);
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(2);
-  // }));
-  // // Zona y Localidad
-  // it('should got inmuebles Zona=Norte, Localidad=Chapinero', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.zona = ('Norte');
-  //   comp.localidad = ('Chapinero');
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(4);
-  // }));
-  // it('should got inmuebles Zona=Norte', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.zona = ('Norte');
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(17);
-  // }));
-  // // Valor Arriendo y Venta
-  // it('should got inmuebles 200<PriceArriendo<400, 700<Price<1400', (() => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   comp.minPriceArriendo = (20000000);
-  //   comp.maxPriceArriendo = (40000000);
-  //   comp.minPriceVenta = (700000000);
-  //   comp.maxPriceVenta = (1400000000);
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   spyOn(comp, 'submitSearch');
-  //   ele = fixture.debugElement.query(By.css('button')).nativeElement;
-  //   ele.click();
-  //   expect(comp.inmuebles.length).toEqual(2);
-  // }));
-  //
-  // // Número de baños y habitaciones
-  // it('should got inmuebles Baños=4, Habitaciones=4', ( () => {
-  //   const fixture = TestBed.createComponent(SearchComponent);
-  //   const comp = fixture.componentInstance;
-  //   // spyOn(comp, 'submitSearch');
-  //   comp.nbanos = (4);
-  //   comp.nhabitaciones = (4);
-  //   // comp.ngOnInit();
-  //   const deb = fixture.debugElement.query(By.css('form'));
-  //   let ele = deb.nativeElement;
-  //   fixture.detectChanges();
-  //   expect(comp.currentResults).toEqual(1);
-  //   //ele = fixture.debugElement.nativeElement.querySelector('button');
-  //   //ele.click();
-  //   // await comp.delay(500);
-  //   /*if (comp.finished === true){
-  //     console.log('Número de resultados en el sepc ' + comp.currentResults);
-  //     expect(comp.currentResults).toEqual(1);
-  //   }
-  //   else {
-  //     expect(1).toEqual(0);
-  //   }*/
-  //
-  // }));
+  it('should got inmuebles SearchTerm=Casita', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    fixture.detectChanges();
+    comp.searchTerm = ('Casita');
+    const query = 'Casita';
+    const filters = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(8);
+    });
+  }));
+
+  it('should got inmuebles SearchTerm=Csa', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    fixture.detectChanges();
+    comp.searchTerm = ('Csa');
+    const query = 'Csa';
+    const filters = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(8);
+    });
+  }));
+
+  it('should got inmuebles SearchTerm=Casota', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    fixture.detectChanges();
+    comp.searchTerm = ('Casota');
+    const query = 'Casota';
+    const filters = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(8);
+    });
+  }));
+
+  // Tags
+  it('should got inmuebles Tags=Parqueadero,Mascotas', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    fixture.detectChanges();
+    comp.tags = ('Parqueadero, Mascotas');
+    const query = '';
+    const filters = '_tags:"Parqueadero" AND _tags:"Mascotas"';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(1);
+    });
+  }));
+
+  it('should got inmuebles Tags=Parqueadero,mascotas', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    comp.tags = ('Parqueadero, mascotas');
+    const query = '';
+    const filters = '_tags:"Parqueadero" AND _tags:"mascotas"';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(0);
+    });
+  }));
+  it('should got inmuebles Tags=Mascotas', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    comp.tags = ('Mascotas');
+    const query = '';
+    const filters = '_tags:"Mascotas"';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(6);
+    });
+  }));
+  // Tipo Inmueble y Area
+  it('should got inmuebles TipoInmueble=Apartaestudio, 17 < Area < 168', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    comp.tipoInmueble = ('Apartaestudio');
+    comp.minArea = (17);
+    comp.maxArea = (168);
+    let filters = '';
+    filters += 'TipoInmueble:' + 'Apartaestudio';
+    filters += ' AND AreaConstruida:17 TO 168';
+    const query = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(2);
+    });
+  }));
+  // Zona y Localidad
+  it('should got inmuebles Zona=Norte, Localidad=Chapinero', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    fixture.detectChanges();
+    comp.zona = ('Norte');
+    comp.localidad = ('Chapinero');
+    const filters = 'Zona:"Norte" AND Localidad:"Chapinero"';
+    const query = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(4);
+    });
+  }));
+  it('should got inmuebles Zona=Norte', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    comp.zona = ('Norte');
+    const query = '';
+    const filters = 'Zona:"Norte"';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(11);
+    });
+  }));
+  // Valor Arriendo y Venta
+  it('should got inmuebles 2<PriceArriendo<4, 20<Price<740', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    comp.minPriceArriendo = (2);
+    comp.maxPriceArriendo = (4);
+    comp.minPriceVenta = (20);
+    comp.maxPriceVenta = (740);
+    const query = '';
+    const filters = 'MontoArriendo:2000001 TO 4000001 AND MontoVenta: 20000001 TO 740000001';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(3);
+    });
+  }));
+
+  // Número de baños y habitaciones
+  it('should got inmuebles Baños=4, Habitaciones=4', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    comp.nbanos = (4);
+    comp.nhabitaciones = (4);
+    const query = '';
+    const filters = 'NBanos = 4 AND NHabitaciones = 4';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(1);
+    });
+  }));
 
 });
