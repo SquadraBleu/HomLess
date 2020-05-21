@@ -14,18 +14,18 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 12.8
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12.8
       uses: actions/setup-node@v1
       with:
         node-version: 12.8
-                        - name: Required Dependencies Triggers
+    - name: Required Dependencies Triggers
       run: npm install
-             - name: Linting All Code
+    - name: Linting All Code
       run: npm run lint
-             - name: Building to Production
+    - name: Building to Production
       run: npm run build -- --prod --aot
-             - name: Testing HomLess
+    - name: Testing HomLess
       run: npm test --
   deploy:
     name: Deploy
@@ -33,11 +33,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-          uses: actions/checkout@master
+        uses: actions/checkout@master
       - name: Download Artifact
-          uses: actions/download-artifact@master
-          with:
-            name: dist
+        uses: actions/download-artifact@master
+        with:
+          name: dist
       - name: Deploy to Firebase
           uses: w9jds/firebase-action@master
           with:
