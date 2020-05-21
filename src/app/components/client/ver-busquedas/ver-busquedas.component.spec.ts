@@ -1,9 +1,8 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {VerBusquedasComponent} from './ver-busquedas.component';
-import {By} from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {BusquedaService} from '../../../services/busqueda.service';
 import {InmuebleServiceService} from '../../../services/inmueble-service.service';
 import {Observable, Subject} from 'rxjs';
@@ -54,7 +53,7 @@ describe('VerBusquedasComponent', () => {
       ]
     }).compileComponents();
   });
-  it('should click link', () => {
+  it('should activate de search', () => {
     let fixture: ComponentFixture<VerBusquedasComponent>;
     router = TestBed.get(Router);
     fixture = TestBed.createComponent(VerBusquedasComponent);
@@ -67,15 +66,11 @@ describe('VerBusquedasComponent', () => {
     );
     component.id = 'asdfasd65f54';
     spyOn(component, 'reload').and.returnValue();
-    console.log(component.id);
-    console.log(component.busquedas[0]);
-    const navigateSpy = spyOn( router, 'navigate');
     component.activarBusqueda(0);
-    const expected = 'cliente/ver-busqueda/' + component.id;
     expect(component.busquedas[0].SiNotificacion).toBeTrue();
   });
 
-  it('should delete one search', () => {
+  it('should desactivate the search', () => {
     let fixture: ComponentFixture<VerBusquedasComponent>;
     router = TestBed.get(Router);
     fixture = TestBed.createComponent(VerBusquedasComponent);
@@ -83,7 +78,7 @@ describe('VerBusquedasComponent', () => {
     component.busquedas.push(new Busqueda('asdf542asd4f'
       , 'Casita', '', 0, 0,
       0, 0, '', '', 0,
-      0, 0, 0, false,
+      0, 0, 0, true,
       '', [], '', 5)
     );
     component.id = 'asdfasd65f54';
@@ -91,9 +86,9 @@ describe('VerBusquedasComponent', () => {
     console.log(component.id);
     console.log(component.busquedas[0]);
     const navigateSpy = spyOn( router, 'navigate');
-    component.activarBusqueda(0);
+    component.desactivarBusqueda(0);
     const expected = 'cliente/ver-busqueda/' + component.id;
-    expect(component.busquedas[0].SiNotificacion).toBeTrue();
+    expect(component.busquedas[0].SiNotificacion).toBeFalse();
   });
 
   it('should delete a search', () => {
