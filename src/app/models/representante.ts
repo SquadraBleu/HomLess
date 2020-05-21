@@ -5,6 +5,7 @@ export class Representante {
         public Telefono: string,
         public Correo: string,
         public IDInmobiliaria: string,
+        public ChatsAceptados: string[],
         public UID: string
         ){}
 }

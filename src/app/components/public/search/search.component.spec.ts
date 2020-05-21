@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed, inject, tick, fakeAsync} from '@angular/core/testing';
 import {SearchComponent} from './search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
@@ -7,32 +7,57 @@ import {BusquedaService} from 'src/app/services/busqueda.service';
 import {AuthService} from 'src/app/services/auth.service';
 import {InmuebleServiceService} from 'src/app/services/inmueble-service.service';
 import {ClientService} from 'src/app/services/client.service';
+import {Observable, Subject} from 'rxjs';
+import {Tag} from '../../../models/tag';
 
 describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
   // tslint:disable-next-line:prefer-const
   let busquedaServiceSpy;
   // tslint:disable-next-line:prefer-const
-  let authServiceSpy;
+  // let mockAuthService;
   // tslint:disable-next-line:prefer-const
-  let inmuebleServiceSpy;
   // tslint:disable-next-line:prefer-const
   let clienteServiceSpy;
   // tslint:disable-next-line:prefer-const
   let routerSpy;
+  // tslint:disable-next-line:prefer-const
 
   beforeEach(() => {
+    /*let userMocker = authServiceSpy.isAuth();
+    let ObservableMocker: Observable<any[]> = [];
+    let mockAuthService: any = {
+      isAuth: () => userMocker,
+    };
+    let inmuebleServiceSpy: any = {
+      getTags: () => ObservableMocker,
+    };*/
+    let mockAuthService: Partial<AuthService>;
+    mockAuthService = {
+      isAuth(): Observable<firebase.User> {
+        return new Observable<firebase.User>();
+      }
+    };
+    let inmuebleServiceSpy: Partial<InmuebleServiceService>;
+    inmuebleServiceSpy = {
+      getTags(): Observable<any[]> {
+        const observable$ = new Subject<Tag[]>();
+        observable$.next([new Tag('Parqueadero', [], '')]);
+        return  observable$.asObservable();
+      }
+    };
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
       declarations: [SearchComponent],
       providers: [
-        {provide: AuthService, useValue: authServiceSpy},
+        {provide: AuthService, useValue: mockAuthService},
         {provide: BusquedaService, useValue: busquedaServiceSpy},
         {provide: InmuebleServiceService, useValue: inmuebleServiceSpy},
         {provide: ClientService, useValue: clienteServiceSpy},
         {provide: Router, useValue: routerSpy},
       ]
     }).compileComponents();
+    TestBed.inject(AuthService);
   });
 /*  it('should got user autenticated', (() => {
     const fixture = TestBed.createComponent(SearchComponent);
@@ -44,178 +69,165 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
   }));
 */
   // Search Term
-  it('should got inmuebles SearchTerm=rsales', (() => {
+  it('should got inmuebles SearchTerm=rsales', ( async () => {
+    /* let mockAuthService = TestBed.get(AuthService);
+    spyOn(mockAuthService, 'isAuth').and.returnValue( of({
+    }));*/
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
     fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.searchTerm.setValue('rsales');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(4);
+    comp.searchTerm = ('rsales');
+    const query = 'rsales';
+    const filters = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(4);
+    });
   }));
-  it('should got inmuebles SearchTerm=Casita', (() => {
+  it('should got inmuebles SearchTerm=Casita', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
     fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.searchTerm.setValue('Casita');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(7);
-  }));
-  it('should got inmuebles SearchTerm=Csa', (() => {
-    const fixture = TestBed.createComponent(SearchComponent);
-    const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
-    fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.searchTerm.setValue('Csa');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(7);
+    comp.searchTerm = ('Casita');
+    const query = 'Casita';
+    const filters = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(8);
+    });
   }));
 
-  it('should got inmuebles SearchTerm=Casota', (() => {
+  it('should got inmuebles SearchTerm=Csa', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
     fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.searchTerm.setValue('Casota');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(7);
+    comp.searchTerm = ('Csa');
+    const query = 'Csa';
+    const filters = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(8);
+    });
+  }));
+
+  it('should got inmuebles SearchTerm=Casota', ( async () => {
+    const fixture = TestBed.createComponent(SearchComponent);
+    const comp = fixture.componentInstance;
+    fixture.detectChanges();
+    comp.searchTerm = ('Casota');
+    const query = 'Casota';
+    const filters = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(8);
+    });
   }));
 
   // Tags
-  it('should got inmuebles Tags=Parqueadero,Mascotas', (() => {
+  it('should got inmuebles Tags=Parqueadero,Mascotas', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
     fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.tags.setValue('Parqueadero, Mascotas');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(1);
+    comp.tags = ('Parqueadero, Mascotas');
+    const query = '';
+    const filters = '_tags:"Parqueadero" AND _tags:"Mascotas"';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(1);
+    });
   }));
 
-  it('should got inmuebles Tags=Parqueadero,mascotas', (() => {
+  it('should got inmuebles Tags=Parqueadero,mascotas', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
-    fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.tags.setValue('Parqueadero, mascotas');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(0);
+    comp.tags = ('Parqueadero, mascotas');
+    const query = '';
+    const filters = '_tags:"Parqueadero" AND _tags:"mascotas"';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(0);
+    });
   }));
-  it('should got inmuebles Tags=Mascotas', (() => {
+  it('should got inmuebles Tags=Mascotas', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
-    fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.tags.setValue('Mascotas');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(4);
+    comp.tags = ('Mascotas');
+    const query = '';
+    const filters = '_tags:"Mascotas"';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(6);
+    });
   }));
   // Tipo Inmueble y Area
-  it('should got inmuebles TipoInmueble=Apartaestudio, 17 < Area < 168', (() => {
+  it('should got inmuebles TipoInmueble=Apartaestudio, 17 < Area < 168', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
-    fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.tipoInmueble.setValue('Apartaestudio');
-    comp.SearchForm.controls.minArea.setValue(17);
-    comp.SearchForm.controls.maxArea.setValue(168);
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(2);
+    comp.tipoInmueble = ('Apartaestudio');
+    comp.minArea = (17);
+    comp.maxArea = (168);
+    let filters = '';
+    filters += 'TipoInmueble:' + 'Apartaestudio';
+    filters += ' AND AreaConstruida:17 TO 168';
+    const query = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(2);
+    });
   }));
   // Zona y Localidad
-  it('should got inmuebles Zona=Norte, Localidad=Chapinero', (() => {
+  it('should got inmuebles Zona=Norte, Localidad=Chapinero', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
     fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.zona.setValue('Norte');
-    comp.SearchForm.controls.localidad.setValue('Chapinero');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(4);
+    comp.zona = ('Norte');
+    comp.localidad = ('Chapinero');
+    const filters = 'Zona:"Norte" AND Localidad:"Chapinero"';
+    const query = '';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(4);
+    });
   }));
-  it('should got inmuebles Zona=Norte', (() => {
+  it('should got inmuebles Zona=Norte', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
-    fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.zona.setValue('Norte');
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(17);
+    comp.zona = ('Norte');
+    const query = '';
+    const filters = 'Zona:"Norte"';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(11);
+    });
   }));
   // Valor Arriendo y Venta
-  it('should got inmuebles 200<PriceArriendo<400, 700<Price<1400', (() => {
+  it('should got inmuebles 2<PriceArriendo<4, 20<Price<740', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
-    fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.minPriceArriendo.setValue(20000000);
-    comp.SearchForm.controls.maxPriceArriendo.setValue(40000000);
-    comp.SearchForm.controls.minPriceVenta.setValue(700000000);
-    comp.SearchForm.controls.maxPriceVenta.setValue(1400000000);
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(2);
+    comp.minPriceArriendo = (2);
+    comp.maxPriceArriendo = (4);
+    comp.minPriceVenta = (20);
+    comp.maxPriceVenta = (740);
+    const query = '';
+    const filters = 'MontoArriendo:2000001 TO 4000001 AND MontoVenta: 20000001 TO 740000001';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(3);
+    });
   }));
 
   // Número de baños y habitaciones
-  it('should got inmuebles Baños=4, Habitaciones=4', (() => {
+  it('should got inmuebles Baños=4, Habitaciones=4', ( async () => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
-    comp.ngOnInit();
-    const deb = fixture.debugElement.query(By.css('form'));
-    let ele = deb.nativeElement;
-    fixture.detectChanges();
-    spyOn(comp, 'submitSearch');
-    ele = fixture.debugElement.query(By.css('button')).nativeElement;
-    comp.SearchForm.controls.nbanos.setValue(4);
-    comp.SearchForm.controls.nhabitaciones.setValue(4);
-    ele.clink();
-    expect(comp.inmuebles.length).toEqual(1);
+    comp.nbanos = (4);
+    comp.nhabitaciones = (4);
+    const query = '';
+    const filters = 'NBanos = 4 AND NHabitaciones = 4';
+    await comp.algoliaTrigger( query, filters).then( hits => {
+      console.log(hits);
+      expect(hits.length).toEqual(1);
+    });
   }));
-
 
 });

@@ -10,7 +10,7 @@
                 <th>Correo</th>
                 <th>Teléfono</th>
                 <th></th>
-                <th></th>
+
             </tr>
         </thead>
         <tbody>
@@ -20,7 +20,7 @@
                 <td class="table-warning">{{rep.Correo}}</td>
                 <td class="table-warning">{{rep.Telefono}} </td>
                 <td class="table-warning"><button class="btn btn-warning btn-sm" (click)="editarRepresentante(rep.UID)">Editar representante</button></td>
-                <td class="table-warning"><button class="btn btn-danger btn-sm" (click)="eliminarRepresentante(rep.UID)">Eliminar representante</button></td>
+
             </tr>
         </tbody>
     </table>
@@ -31,24 +31,18 @@
 
         <div class="col-5">
             <label for="clave" style="margin-right: 10px;"><h6>Contraseña del representante</h6></label>
-            <input type="password" name="contrasenaRepresentante" id="contrasenaRepresentante" 
+            <input type="password" name="contrasenaRepresentante" id="contrasenaRepresentante"
             [(ngModel)]="contrasenaRepresentante" #txtcontrasenaRepresentante="ngModel">
-            <div [hidden]="!txtcontrasenaRepresentante.touched" class="alert alert-danger">
-                El correo es obligatorio
-            </div>
         </div>
 
         <div class="col-5">
             <label for="clave" style="margin-right: 10px;"><h6>Contraseña de tu Inmobiliaria </h6></label>
-            <input type="password" name="claveInmobiliaria" id="claveInmobiliaria" 
+            <input type="password" name="claveInmobiliaria" id="claveInmobiliaria"
             [(ngModel)]="contrasenaInmobiliaria" #txtClaveInmobiliaria="ngModel">
-            <div [hidden]="!txtClaveInmobiliaria.touched" class="alert alert-danger">
-                La contraseña es obligatoria
-            </div>
         </div>
-    
-        <div class="col">   
-            <button class="btn btn-success" [disabled]="!contrasenaInmobiliaria.length || !contrasenaRepresentante.length">Confirmar</button>
+
+        <div class="col">
+            <button class="btn btn-success" (click)="confirmarEliminar()" [disabled]="!contrasenaInmobiliaria.length && !contrasenaRepresentante.length">Confirmar</button>
         </div>
     </div>
 </div>

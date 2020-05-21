@@ -17,6 +17,8 @@ export class Inmueble {
         public Localidad: string,
         public Zona: string,
         public TagsIDS: string[],
-        public IDI: string
+        public IDI: string,
+        public FechaCreacion: any,
+        public FechaModificacion: any
     ){}
 }

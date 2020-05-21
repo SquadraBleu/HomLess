@@ -10,6 +10,7 @@ import {Observable, Subject} from 'rxjs';
 import {Tag} from '../../../models/tag';
 import {Busqueda} from 'src/app/models/busqueda';
 
+
 describe('VerBusquedasComponent', () => {
   // tslint:disable-next-line:prefer-const
   let routerSpy = {

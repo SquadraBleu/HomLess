@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/public/home'},
   {path: 'public/login', component: LoginComponent},
   {path: 'inmobiliaria/ver-inmueble/:id', component: VerInmuebleComponent},
-  {path: 'inmobiliaria/crear-inmueble', component: CrearInmuebleComponent},
+  {path: 'inmobiliaria/crear-inmueble/:id', component: CrearInmuebleComponent},
   {path: 'inmobiliaria/editar-inmueble/:id', component: EditarInmuebleComponent},
   {path: 'inmobiliaria/lista-inmuebles/:id', component: ListaInmueblesComponent},
   {path: 'cliente/ver-busquedas/:id', component: VerBusquedasComponent},
@@ -43,10 +43,9 @@ const routes: Routes = [
   {path: 'inmobiliaria/lista-representantes/:id', component: ListaRepresentantesComponent},
   {path: 'inmobiliaria/crear-representante/:id', component: CrearRepresentanteComponent},
   {path: 'inmobiliaria/editar-representante/:id', component: EditarRepresentanteComponent},
-
   {path: 'cliente/chat/:id/:idIn/:idInmo', component: ClientChatComponent},
-  {path: 'representante/chat/:id/:idIn', component: RepresentanteChatComponent},
-  {path: 'representante/home', component: HomeRepresentanteComponent},
+  {path: 'representante/chat/:id', component: RepresentanteChatComponent},
+  {path: 'representante/home/:id', component: HomeRepresentanteComponent},
   {path: '**', redirectTo: '/error404'}
 ];
 

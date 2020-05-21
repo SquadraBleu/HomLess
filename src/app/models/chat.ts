@@ -4,7 +4,8 @@ export class Chat {
     private IDInmobiliaria: string,
     private IDInmueble: string,
     private IDRepresentante: string,
-    private SiAceptado: boolean
+    private SiAceptado: boolean,
+    private IDChat: string
   ){
   }
 }
