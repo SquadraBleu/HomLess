@@ -64,9 +64,6 @@
                 <label for="clave" style="margin-right: 10px;"><h6>Contraseña de tu Inmobiliaria </h6></label>
                 <input type="password" name="claveInmobiliaria" id="claveInmobiliaria"
                 [(ngModel)]="contrasenaInmobiliaria" #txtClaveInmobiliaria="ngModel">
-                <div [hidden]="!txtClaveInmobiliaria.touched" class="alert alert-danger">
-                    La contraseña es obligatoria
-                </div>
             </div>
 
             <div class="col">
