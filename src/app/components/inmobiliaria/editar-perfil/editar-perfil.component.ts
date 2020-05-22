@@ -5,6 +5,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
 import { finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -22,6 +23,10 @@ export class EditarPerfilComponent implements OnInit {
 
   contrasena = '';
   id: any = undefined;
+
+  inmoEditarForm = new FormGroup ({
+    contrasena: new FormControl('', Validators.required)
+  });
 
   constructor(
     public router: Router,

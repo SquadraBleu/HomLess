@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 import { ClientService } from 'src/app/services/client.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-client-editar-perfil',
@@ -15,6 +16,10 @@ export class ClientEditarPerfilComponent implements OnInit {
 
   contrasena = '';
   id: any = undefined;
+
+  clientEditarForm = new FormGroup ({
+    contrasena: new FormControl('', Validators.required)
+  });
 
   constructor(
     public router: Router,
