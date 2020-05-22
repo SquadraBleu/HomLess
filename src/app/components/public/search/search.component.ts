@@ -146,7 +146,7 @@ export class SearchComponent implements OnInit {
         this.authSvc.isUserClient(this.userUid).subscribe(userRole => {
           if (userRole !== undefined) {
             this.getClientMail();
-           // this.getTags();
+            this.getTags();
           }
         });
       }
