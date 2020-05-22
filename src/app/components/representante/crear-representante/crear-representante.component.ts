@@ -6,6 +6,7 @@ import { User } from '../../../models/user';
 import { RepresentanteService } from 'src/app/services/representante.service';
 import { Inmobiliaria } from 'src/app/models/inmobiliaria';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-crear-representante',
@@ -46,14 +47,27 @@ export class CrearRepresentanteComponent implements OnInit {
     });
   }
 
-  confirmarRepresentante(){
-    this.authSvc.logout();
-    this.authSvc.ingresarUser(this.inmo.Correo, this.contrasenaInmobiliaria);
-    this.router.navigate(['inmobiliaria/lista-representantes/' + this.idInmobiliria]);
+  async confirmarRepresentante(){
+    // this.authSvc.logout();
+
+    this.representante.IDInmobiliaria = this.idInmobiliria;
+    // this.authSvc.createUser(this.representante.Correo, this.contrasena);
+    this.authSvc.registerUser(this.representante.Correo, this.contrasena, false, false, this.representante)
+    .then( async (res) => {
+      // @ts-ignore
+      console.log('resUser', res.user.uid);
+      // @ts-ignore
+      this.representante.UID = res.user.uid;
+      await this.repreService.createRepresentante(this.representante);
+      // this.authSvc.logout();
+      this.authSvc.ingresarUser(this.inmo.Correo, this.contrasenaInmobiliaria);
+      this.router.navigate(['inmobiliaria/lista-representantes/' + this.idInmobiliria]);
+    }).catch(err => console.log('err', err.message));
   }
 
   crearRepresentante(){
     this.confirmacionCreacion = false;
+    /*
     this.representante.IDInmobiliaria = this.idInmobiliria;
     // this.authSvc.createUser(this.representante.Correo, this.contrasena);
     this.authSvc.registerUser(this.representante.Correo, this.contrasena, false, false, this.representante)
@@ -63,7 +77,9 @@ export class CrearRepresentanteComponent implements OnInit {
       // @ts-ignore
       this.representante.UID = res.user.uid;
       this.repreService.createRepresentante(this.representante);
+      // this.authSvc.logout();
     }).catch(err => console.log('err', err.message));
+    */
   }
 
   cancelar(){
