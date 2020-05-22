@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from "@angular/router/testing";
+import { RouterTestingModule } from '@angular/router/testing';
 import { Inmueble } from 'src/app/models/inmueble';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ListaInmueblesComponent } from './lista-inmuebles.component';
@@ -8,22 +8,22 @@ import { Observable, Subject } from 'rxjs';
 import {By} from '@angular/platform-browser';
 
 describe('ListaInmueblesComponent', () => {
-  let activatedRouteSpy = { snapshot: { paramMap: convertToParamMap( { 'id': '123' } ) } };;
+  let activatedRouteSpy;
   let routerSpy = {navigate: jasmine.createSpy('navigate')};
-  
 
   beforeEach(() => {
+    activatedRouteSpy = { snapshot: { paramMap: convertToParamMap( { id: '123' } ) } };
+    routerSpy = {navigate: jasmine.createSpy('navigate')};
     let inmuServiceSpy: Partial<InmuebleServiceService>;
     inmuServiceSpy = {
       getInmuebles(): Observable<any[]>{
         const inmuebles$ = new Subject<Inmueble[]>();
-        let inmo1 = new Inmueble ('Casa Linda','Remanso',234 ,3000,
-        0,0,0,'','',0,0,'',[],'123','','',[], '','','');
-        let inmo2 = new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
-        0,0,0,'','',0,0,'',[],'234','','',[], '','','');
+        const inmo1 = new Inmueble ('Casa Linda', 'Remanso', 234, 3000,
+                              0, 0, 0, '', '', 0, 0, '', [], '123', '', '', [], '', '', '');
+        const inmo2 = new Inmueble ('Casa Pequeña', 'Remanso', 234, 3000,
+                                0, 0, 0, '', '', 0, 0, '', [], '234', '', '', [], '', '', '');
         console.log(inmo1);
         inmuebles$.next([inmo1]);
-        
         console.log(inmuebles$.asObservable());
         /*inmuebles$.next([new Inmueble ('Casa Pequeña','Remanso',234 ,3000,
         0,0,0,'','',0,0,'',[],'234','','',[], '','','')]);*/
@@ -42,7 +42,7 @@ describe('ListaInmueblesComponent', () => {
     }).compileComponents();
   });
 
-  it('Funtion darInmuebles ', () => {
+  /*it('Funtion darInmuebles ', () => {
     const fixture = TestBed.createComponent(ListaInmueblesComponent);
     const comp = fixture.componentInstance;
     fixture.detectChanges();
@@ -50,7 +50,7 @@ describe('ListaInmueblesComponent', () => {
     comp.id = '123';
     //comp.darInmuebles();
     expect(comp.inmuebles.length).toEqual(1);
-  });
+  });*/
 
   it('Funtion agregarInmueble ', () => {
     const fixture = TestBed.createComponent(ListaInmueblesComponent);
@@ -63,17 +63,31 @@ describe('ListaInmueblesComponent', () => {
   it('Funtion limpiarBusqueda ', () => {
     const fixture = TestBed.createComponent(ListaInmueblesComponent);
     const comp = fixture.componentInstance;
-    let input = fixture.debugElement.query(By.css('input'));
-    let el = input.nativeElement;
+    const input = fixture.debugElement.query(By.css('input'));
+    const el = input.nativeElement;
     el.value = 'someValue';
     el.dispatchEvent(new Event('input'));
-    //expect (fixture.componentInstance.busqueda).toEqual('someValue');
     spyOn(comp, 'limpiarBusqueda');
 
-    let button = fixture.debugElement.nativeElement.querySelector('button');
+    const button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
 
     expect (comp.busqueda).toEqual('');
+  });
+
+  it('Funtion buscarInmueble ', () => {
+    const fixture = TestBed.createComponent(ListaInmueblesComponent);
+    const comp = fixture.componentInstance;
+    const inmu: Inmueble[] = [
+      new Inmueble ('Casa Linda', 'Remanso', 234, 3000, 0, 0, 0, '', '', 0, 0, '', [], '123', '', '', [], '', '', ''),
+      new Inmueble ('Casa Pequeña', 'Remanso', 234, 3000, 0, 0, 0, '', '', 0, 0, '', [], '234', '', '', [], '', '', '')
+    ];
+    comp.inmuebles = inmu;
+    fixture.detectChanges();
+    comp.busqueda = 'Linda';
+    comp.buscarInmueble();
+
+    expect (comp.inmuebles.length).toEqual(1);
   });
 
 });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Inmueble } from 'src/app/models/inmueble';
 import { Router, ActivatedRoute } from '@angular/router';
 import { InmuebleServiceService } from 'src/app/services/inmueble-service.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-lista-inmuebles',
@@ -20,6 +21,10 @@ export class ListaInmueblesComponent implements OnInit {
   id: any = undefined;
   busqueda = '';
 
+  listaInmuForm = new FormGroup ({
+    busqueda: new FormControl('', Validators.required)
+  });
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -28,8 +33,6 @@ export class ListaInmueblesComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log('NG ONINIT ROUTER'+ this.route.snapshot.paramMap.get('id'));
-    console.log('NG ONINIT '+this.id);
     this.darInmuebles();
   }
 
@@ -64,7 +67,6 @@ export class ListaInmueblesComponent implements OnInit {
       // this.inmuebles = res;
       // console.log(res);
       // tslint:disable-next-line: prefer-for-of
-      console.log('VEEEERRR ->', res[0] );
       for (let index = 0; index < res.length; index++) {
         console.log('VEEEERRR ->', res[index].IDInmobiliaria );
         if (res[index].IDInmobiliaria === this.id ){

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+/*import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RepresentanteChatComponent } from './representante-chat.component';
 
@@ -22,4 +22,4 @@ describe('RepresentanteChatComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+});*/

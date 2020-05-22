@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ClientEditarPerfilComponent } from './client-editar-perfil.component';
 import { convertToParamMap, Router, ActivatedRoute } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
@@ -40,18 +39,17 @@ describe('ClientEditarPerfilComponent', () => {
   let afs: AngularFirestore;
 
   beforeEach(() => {
-    activatedRouteSpy = { snapshot: { paramMap: convertToParamMap( { 'id': '123' } ) } };
+    activatedRouteSpy = { snapshot: { paramMap: convertToParamMap( { id: '123' } ) } };
     routerSpy = {navigate: jasmine.createSpy('navigate')};
     authServiceSpy = new AuthService( authStub, afs);
     let cliServiceSpy: Partial<ClientService>;
     cliServiceSpy = {
       getClientes(): Observable<any[]>{
         const clientes$ = new Subject<Cliente[]>();
-        clientes$.next([new Cliente ('Rosalia','','','','123',[],[],[],[]),
-        new Cliente ('Jose','','','','234',[],[],[],[])]);
+        clientes$.next([new Cliente ('Rosalia', '', '', '', '123', [], [], [], []),
+        new Cliente ('Jose', '', '', '', '234', [], [], [], [])]);
         return clientes$.asObservable();
       }
-      //updateCliente():
     };
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -60,7 +58,7 @@ describe('ClientEditarPerfilComponent', () => {
       providers: [{provide: Router, useValue: routerSpy},
         {provide: ActivatedRoute, useValue: activatedRouteSpy},
         {provide: ClientService, useValue: cliServiceSpy},
-        {provide: AuthService, useValue: authServiceSpy},        
+        {provide: AuthService, useValue: authServiceSpy},
         {provide: AngularFireAuth, useValue: authStub}
       ]
     }).compileComponents();
@@ -77,7 +75,7 @@ describe('ClientEditarPerfilComponent', () => {
     expect(comp.cliente.Nombre).toBe('Rosalia');
   });*/
 
-  it('Funtion guardarPerfil', () => { 
+  it('Funtion guardarPerfil', () => {
     // tslint:disable-next-line
     const mock = TestBed.get(AngularFireAuth);
     const spy = spyOn(authStub.auth, 'changePassword').and.callThrough();
@@ -93,23 +91,23 @@ describe('ClientEditarPerfilComponent', () => {
     ele = fixture.debugElement.query(By.css('button')).nativeElement;
     comp.clientEditarForm.controls.contrasena.setValue('amarillo');
     ele.click();
-    //comp.contrasena = 'amarillo';
-    //comp.guardarPerfil();
+    // comp.contrasena = 'amarillo';
+    // comp.guardarPerfil();
     expect (routerSpy.navigate).toHaveBeenCalledWith(['cliente/ver-perfil/123']);
   });
 
-  it('Funtion cancelar', () => { 
+  it('Funtion cancelar', () => {
     const fixture = TestBed.createComponent(ClientEditarPerfilComponent);
     const comp = fixture.componentInstance;
     fixture.detectChanges();
     comp.id = '123';
-    //comp.cancelar();
+    // comp.cancelar();
     const deb = fixture.debugElement.query(By.css('form'));
     let ele = deb.nativeElement;
 
     ele = fixture.debugElement.query(By.css('button')).nativeElement;
     ele.click();
-    
+
     expect (routerSpy.navigate).toHaveBeenCalledWith(['cliente/ver-perfil/123']);
   });
 });
