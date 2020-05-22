@@ -23,7 +23,6 @@ export class ListaRepresentantesComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authSvc: AuthService,
     private inmuService: InmuebleServiceService,
     private repreService: RepresentanteService
   ) { }

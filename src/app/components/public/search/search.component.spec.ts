@@ -22,6 +22,7 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
   let routerSpy;
   // tslint:disable-next-line:prefer-const
 
+  /*
   beforeEach(() => {
     /*let userMocker = authServiceSpy.isAuth();
     let ObservableMocker: Observable<any[]> = [];
@@ -59,6 +60,7 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
     }).compileComponents();
     TestBed.inject(AuthService);
   });
+  */
 /*  it('should got user autenticated', (() => {
     const fixture = TestBed.createComponent(SearchComponent);
     const comp = fixture.componentInstance;
@@ -68,6 +70,7 @@ describe('SearchComponent', () => {  // tslint:disable-next-line:prefer-const
     expect(comp.userUid).toEqual('');
   }));
 */
+/*
   // Search Term
   it('should got inmuebles SearchTerm=rsales', ( async () => {
     /* let mockAuthService = TestBed.get(AuthService);
